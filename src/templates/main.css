@@ -1,0 +1,135 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #edeef0;
+    font-family: Tahoma;
+    font-size: 16px;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+
+.main {
+    display: grid;
+    grid-template-areas:
+        "header header"
+        "menu content"
+        "footer footer";
+    grid-template-rows: 80px auto 80px;
+    grid-template-columns: 1fr 5fr;
+    gap: 15px;
+    margin: 0 auto;
+    max-width: 1200px;
+
+}
+
+.header {
+    display: grid;
+    grid-area: header;
+    padding: 15px;
+    background-color: white;
+}
+
+.header h1 {
+    margin: auto;
+    font-size: 24px;
+}
+
+.main__menu {
+    grid-area: menu;
+    padding: 15px;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.main__menu-item {
+    margin-bottom: 10px;
+}
+
+.content {
+    display: grid;
+    grid-template-rows: auto auto;
+    gap: 15px;
+}
+
+.profile {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    border-radius: 5px;
+    background-color: white;
+    padding: 15px;
+}
+
+.profile__info {
+    margin-left: 15px;
+}
+
+.profile__name {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.profile__description {
+    margin-bottom: 10px;
+}
+
+.posts {
+    padding: 15px;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.posts__title {
+    margin-bottom: 15px;
+    font-size: 20px;
+    font-weight: normal;
+}
+
+.posts__new {
+    display: grid;
+    grid-template-rows: minmax(50px, auto) 35px;
+    margin-bottom: 15px;
+}
+
+.posts__input {
+    margin-bottom: 15px;
+    font-family: inherit;
+}
+
+.posts__button {
+    width: 200px;
+    justify-self: end;
+    background-color: orange;
+    font-family: inherit;
+    border-radius: 3px;
+    border: none;
+}
+
+.posts__list {
+    list-style: inside;
+}
+
+
+.posts__item {
+    margin-bottom: 15px;
+}
+
+.footer {
+    display: grid;
+    grid-area: footer;
+    padding: 15px;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.footer p {
+    margin: auto;
+    font-size: 20px;
+}
