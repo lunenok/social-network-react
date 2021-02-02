@@ -8,16 +8,24 @@ import {Developing} from "./components/developing"
 import {BrowserRouter, Route} from "react-router-dom";
 
 function App(props) {
+
   return (
       <BrowserRouter>
           <div className="main">
               <Header/>
               <Menu/>
-                  <Route path="/profile" render={() => <Profile posts={props.posts}/>}/>
+                  <Route path="/profile" render={() =>
+                      <Profile
+                          posts={props.state.profilePage.posts}
+                          newPostText={props.state.profilePage.newPostText}
+                          addPost={props.addPost}
+                          updatePostText={props.updatePostText}
+                      />
+                  }/>
                   <Route path='/dialogs' render={() =>
                       <Dialogs
-                          dialogsName={props.dialogsName}
-                          messages={props.messages}
+                          dialogsName={props.state.dialogsPage.dialogsName}
+                          messages={props.state.dialogsPage.messages}
                       />}
                   />
                   <Route path='/news' component={Developing}/>

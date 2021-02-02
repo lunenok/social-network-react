@@ -1,5 +1,4 @@
 import React from 'react';
-import {NavLink} from "react-router-dom";
 import {Message} from "./message";
 import {Dialog} from "./dialog";
 

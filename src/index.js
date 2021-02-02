@@ -1,29 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
+import {subscribe, state, addPost, updatePostText} from "./redux/state";
+import ReactDOM from "react-dom";
+import React from "react";
+import App from "./App";
 
-const dialogsName = [
-    {id: 1, name: 'Anya'},
-    {id: 2, name: 'Tanya'},
-    {id: 3, name: 'Elena'},
-    {id: 4, name: 'Masha'},
-    {id: 5, name: 'Liza'}
-];
+export const renderEntireTree = (state) => {
+    ReactDOM.render(
+        <React.StrictMode>
+            <App state={state} addPost={addPost} updatePostText={updatePostText}/>
+        </React.StrictMode>,
+        document.getElementById('root')
+    );
+};
 
-const messages = [
-    {id: 1, message: 'Hi'},
-    {id: 2, message: 'How are you?'},
-    {id: 3, message: 'Are you here?'}
-]
+renderEntireTree(state);
 
-const posts = [
-    'Hey, why nobody love me?',
-    'It\'s our new program!'
-]
-
-ReactDOM.render(
-  <React.StrictMode>
-    <App dialogsName={dialogsName} messages={messages} posts={posts}/>
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+subscribe(renderEntireTree);

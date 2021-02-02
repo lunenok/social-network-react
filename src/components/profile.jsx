@@ -2,6 +2,13 @@ import React from 'react';
 import {Posts} from "./post";
 
 export const Profile = (props) => {
+    const postText = React.createRef();
+
+    const onUpdatePostText = () => {
+        props.updatePostText(postText.current.value);
+    };
+
+
     const {posts} = props;
     return (
         <div className="content">
@@ -33,8 +40,18 @@ export const Profile = (props) => {
                     My posts
                 </h2>
                 <div className="posts__new">
-                    <input type="text" className="posts__input" placeholder="Your new post..."/>
-                    <button className="posts__button">Send</button>
+                    <textarea
+                        ref={postText}
+                        value={props.newPostText}
+                        onChange={onUpdatePostText}
+                        type="text"
+                        className="posts__input"
+                        placeholder="Your new post..."
+                    />
+                    <button
+                        onClick={props.addPost}
+                        className="posts__button"
+                    >Send</button>
                 </div>
                 <ul className="posts__list">
                     {posts.map((message, index) => {
