@@ -1,7 +1,7 @@
 import {dialogsReducer} from "./dialogs-reducer";
 import {profileReducer} from "./profile-reducer";
 
-export const store = {
+const store = {
     _state: {
         dialogsPage: {
             dialogsName: [
