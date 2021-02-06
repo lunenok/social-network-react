@@ -1,19 +1,17 @@
 import React from 'react';
 import {Message} from "./message";
 import {Dialog} from "./dialog";
-import {updateMessageTextCreator, sendMessageCreator} from './../redux/dialogs-reducer';
-
 
 export const Dialogs = (props) => {
-    const {dialogsName, messages, newMessageText} = props;
+    const {dialogsName, messages, newMessageText, onMessageUpdate, onMessageSendButtonClick} = props;
 
-    const onMessageUpdate = (evt) => {
+    const onTextChange = (evt) => {
         const text = evt.target.value;
-        props.dispatch(updateMessageTextCreator(text));
+        onMessageUpdate(text);
     }
 
-    const onMessageSendButtonClick = () => {
-        props.dispatch(sendMessageCreator());
+    const onSendButtonClick = () => {
+        onMessageSendButtonClick()
     }
 
     return (
@@ -34,12 +32,12 @@ export const Dialogs = (props) => {
                         className="messages__input"
                         placeholder="Write your message"
                         value={newMessageText}
-                        onChange={onMessageUpdate}
+                        onChange={onTextChange}
                     >
                     </textarea>
                     <button
                         className="messages__send-button"
-                        onClick={onMessageSendButtonClick}
+                        onClick={onSendButtonClick}
                     >
                         Send new message
                     </button>

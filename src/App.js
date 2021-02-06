@@ -1,9 +1,9 @@
 import React from 'react';
 import {Header} from './components/header';
-import  {Menu} from './components/menu';
-import {Profile} from "./components/profile";
+import {Menu} from './components/menu';
+import {ProfileContainer} from "./components/profile-container";
 import {Footer} from "./components/footer";
-import {Dialogs} from "./components/dialogs";
+import {DialogsContainer} from "./components/dialogs-container";
 import {Developing} from "./components/developing"
 import {BrowserRouter, Route} from "react-router-dom";
 
@@ -15,17 +15,11 @@ function App(props) {
               <Header/>
               <Menu/>
                   <Route path="/profile" render={() =>
-                      <Profile
-                          posts={props.state.profilePage.posts}
-                          newPostText={props.state.profilePage.newPostText}
-                          dispatch={props.dispatch}
-                      />
+                      <ProfileContainer store={props.store} dispatch={props.dispatch}/>
                   }/>
                   <Route path='/dialogs' render={() =>
-                      <Dialogs
-                          dialogsName={props.state.dialogsPage.dialogsName}
-                          messages={props.state.dialogsPage.messages}
-                          newMessageText={props.state.dialogsPage.newMessageText}
+                      <DialogsContainer
+                          store={props.store}
                           dispatch={props.dispatch}
                       />}
                   />
