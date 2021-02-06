@@ -31,7 +31,7 @@ export const store = {
         }
     },
 
-    _notify() {
+    _notifySubscribers() {
         console.log('no subscriber');
     },
 
@@ -40,23 +40,22 @@ export const store = {
     },
 
     subscribe(observer) {
-        this._notify = observer;
+        this._notifySubscribers = observer;
     },
 
-    updatePostText(text) {
-        this._state.profilePage.newPostText = text;
-        this._state.profilePage.newPostText = text;
-        this._notify(this._state);
-    },
-
-    addPost(){
-        const newPost = {
-            id: 3,
-            text: this._state.profilePage.newPostText,
-            likes: 0
-        };
-        this._state.profilePage.posts.push(newPost);
-        this._state.profilePage.newPostText = '';
-        this._notify(this._state);
+    dispatch(action) {
+        if (action.type === 'ADD-POST') {
+            const newPost = {
+                id: 3,
+                text: this._state.profilePage.newPostText,
+                likes: 0
+            };
+            this._state.profilePage.posts.push(newPost);
+            this._state.profilePage.newPostText = '';
+            this._notifySubscribers(this._state);
+        } else if (action.type === 'UPDATE-POST-TEXT') {
+            this._state.profilePage.newPostText = action.newText;
+            this._notifySubscribers(this._state);
+        }
     }
 };

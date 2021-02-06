@@ -5,9 +5,13 @@ export const Profile = (props) => {
     const postText = React.createRef();
 
     const onUpdatePostText = () => {
-        props.updatePostText(postText.current.value);
+        const text = postText.current.value;
+        props.dispatch({type: 'UPDATE-POST-TEXT', newText: text})
     };
 
+    const addPost = () => {
+        props.dispatch({type: 'ADD-POST'});
+    }
 
     const {posts} = props;
     return (
@@ -49,7 +53,7 @@ export const Profile = (props) => {
                         placeholder="Your new post..."
                     />
                     <button
-                        onClick={props.addPost}
+                        onClick={addPost}
                         className="posts__button"
                     >Send</button>
                 </div>
