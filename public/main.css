@@ -197,3 +197,28 @@ ul {
 .message {
     margin-bottom: 5px;
 }
+
+.messages__container {
+    margin-bottom: 15px;
+}
+
+.messages__new-container {
+    display: grid;
+    grid-template-rows: minmax(50px, auto) 35px;
+    margin-bottom: 15px;
+}
+
+.messages__input {
+    margin-bottom: 15px;
+    font-family: inherit;
+}
+
+.messages__send-button {
+    display: block;
+    width: 200px;
+    justify-self: end;
+    background-color: orange;
+    font-family: inherit;
+    border-radius: 3px;
+    border: none;
+}

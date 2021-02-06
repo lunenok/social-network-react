@@ -25,6 +25,8 @@ function App(props) {
                       <Dialogs
                           dialogsName={props.state.dialogsPage.dialogsName}
                           messages={props.state.dialogsPage.messages}
+                          newMessageText={props.state.dialogsPage.newMessageText}
+                          dispatch={props.dispatch}
                       />}
                   />
                   <Route path='/news' component={Developing}/>
