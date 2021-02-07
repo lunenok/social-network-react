@@ -15,13 +15,10 @@ function App(props) {
               <Header/>
               <Menu/>
                   <Route path="/profile" render={() =>
-                      <ProfileContainer store={props.store} dispatch={props.dispatch}/>
+                      <ProfileContainer/>
                   }/>
                   <Route path='/dialogs' render={() =>
-                      <DialogsContainer
-                          store={props.store}
-                          dispatch={props.dispatch}
-                      />}
+                      <DialogsContainer/>}
                   />
                   <Route path='/news' component={Developing}/>
                   <Route path='/music' component={Developing}/>
