@@ -222,3 +222,53 @@ ul {
     border-radius: 3px;
     border: none;
 }
+
+.users {
+    background-color: white;
+    padding: 15px;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.users__list {
+    display: grid;
+    gap: 15px;
+}
+
+.users__item {
+    display: grid;
+    grid-template-areas:
+        "avatar info"
+        "button info";
+    grid-template-columns: 20% auto;
+    gap: 3px;
+    padding: 3px;
+    border: 2px solid rgba(46, 49, 49, 0.1);
+    border-radius: 5px;
+}
+
+.users__avatar-container {
+    grid-area: avatar;
+    margin: 0 auto;
+    width: 100px;
+    height: 100px;
+}
+
+.users__avatar {
+    border-radius: 50%;
+}
+
+.users__follow-button {
+    grid-area: button;
+    margin: 0 auto;
+    height: 20px;
+    width: 80px;
+    border: none;
+    background-color: orange;
+    border-radius: 5px;
+}
+
+.users__information-container {
+    display: grid;
+    grid-area: info;
+}

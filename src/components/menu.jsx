@@ -10,6 +10,11 @@ export const Menu = () => {
                 </NavLink>
             </li>
             <li className="main__menu-item">
+                <NavLink to="/users">
+                    Users
+                </NavLink>
+            </li>
+            <li className="main__menu-item">
                 <NavLink to="/dialogs">
                     Messages
                 </NavLink>
