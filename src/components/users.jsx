@@ -1,55 +1,51 @@
 import React from 'react';
+import * as axios from "axios";
 
-const USERS = [
-    {id: 1, name: 'Liza', follow: true, status: 'Hey!', country: 'Russia', city: 'Yekaterinburg'},
-    {id: 2, name: 'Katya', follow: false, status: 'GN', country: 'Russia', city: 'Yekaterinburg'},
-    {id: 3, name: 'Anya', follow: true, status: 'No status', country: 'Russia', city: 'Yekaterinburg'},
-];
+export class Users extends React.Component {
 
-export const Users = (props) => {
+    componentDidMount() {
+        axios.get('https://social-network.samuraijs.com/api/1.0/users')
+            .then((response) => {
+                this.props.setUsers(response.data.items);
+            });
 
-    if (props.users.length === 0) {
-        props.setUsers(USERS);
+        console.log(this.props);
     }
 
-    const {users} = props;
+    render() {
+        return (
+            <div className="users">
+                <ul className="users__list">
+                    {this.props.users.map((user) => {
+                        return (
+                            <li key={user.id} className="users__item">
+                                <div className="users__avatar-container">
+                                    <img src="https://avatarfiles.alphacoders.com/196/196805.jpg" alt="Avatar" width="100" height="100" className="users__avatar"/>
+                                </div>
+                                {user.followed ?
+                                    <button onClick={()=>this.props.onUserUnfollow(user.id)} className="users__follow-button">unfollow</button> :
+                                    <button onClick={()=>this.props.onUserFollow(user.id)} className="users__follow-button">follow</button>
 
-    const button = (user) => {
-            if (user.follow) {
-                return (<button onClick={()=>props.onUserUnfollow(user.id)} className="users__follow-button">follow</button>)
-            } else {
-                return (<button onClick={()=>props.onUserFollow(user.id)} className="users__follow-button">unfollow</button>)
-            }
-    };
-
-    return (
-        <div className="users">
-            <ul className="users__list">
-                {users.map((user) => {
-                    return (
-                        <li key={user.id} className="users__item">
-                            <div className="users__avatar-container">
-                                <img src="https://avatarfiles.alphacoders.com/196/196805.jpg" alt="Avatar" width="100" height="100" className="users__avatar"/>
-                            </div>
-                            {button(user)}
-                            <div className="users__information-container">
+                                }
+                                <div className="users__information-container">
                         <span className="users__name">
                             {user.name}
                         </span>
-                                <span className="users__status">
-                                    {user.status}
+                                    <span className="users__status">
+                                    Status
                         </span>
-                                <span className="users__country">
-                            {user.country}
+                                    <span className="users__country">
+                            Country
                         </span>
-                                <span className="users__city">
-                            {user.city}
+                                    <span className="users__city">
+                            City
                         </span>
-                            </div>
-                        </li>
-                    )
-                })}
-            </ul>
-        </div>
-    )
+                                </div>
+                            </li>
+                        )
+                    })}
+                </ul>
+            </div>
+            )
+    }
 }

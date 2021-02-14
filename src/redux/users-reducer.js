@@ -3,11 +3,6 @@ const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
 
 const initialState = {
-    // users: [
-    //     {id: 1, name: 'Liza', follow: true, status: 'Hey!', country: 'Russia', city: 'Yekaterinburg'},
-    //     {id: 2, name: 'Katya', follow: false, status: 'GN', country: 'Russia', city: 'Yekaterinburg'},
-    //     {id: 3, name: 'Anya', follow: true, status: 'No status', country: 'Russia', city: 'Yekaterinburg'},
-    // ]
     users: [],
 };
 
@@ -18,7 +13,7 @@ export const usersReducer = (state = initialState, action) => {
                 ...state,
                 users: state.users.map((user) => {
                     if (user.id === action.userId) {
-                        return {...user, follow: true}
+                        return {...user, followed: true}
                     }
                     return user
                 })
@@ -28,7 +23,7 @@ export const usersReducer = (state = initialState, action) => {
                 ...state,
                 users: state.users.map((user) => {
                     if (user.id === action.userId) {
-                        return {...user, follow: false}
+                        return {...user, followed: false}
                     }
                     return user
                 })
