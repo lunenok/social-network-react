@@ -3,11 +3,12 @@ const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
 
 const initialState = {
-    users: [
-        {id: 1, name: 'Liza', follow: true, status: 'Hey!', country: 'Russia', city: 'Yekaterinburg'},
-        {id: 2, name: 'Katya', follow: false, status: 'GN', country: 'Russia', city: 'Yekaterinburg'},
-        {id: 3, name: 'Anya', follow: true, status: 'No status', country: 'Russia', city: 'Yekaterinburg'},
-    ]
+    // users: [
+    //     {id: 1, name: 'Liza', follow: true, status: 'Hey!', country: 'Russia', city: 'Yekaterinburg'},
+    //     {id: 2, name: 'Katya', follow: false, status: 'GN', country: 'Russia', city: 'Yekaterinburg'},
+    //     {id: 3, name: 'Anya', follow: true, status: 'No status', country: 'Russia', city: 'Yekaterinburg'},
+    // ]
+    users: [],
 };
 
 export const usersReducer = (state = initialState, action) => {
@@ -33,23 +34,26 @@ export const usersReducer = (state = initialState, action) => {
                 })
             }
         case SET_USERS:
-
+            return {
+                ...state,
+                users: [...action.users]
+            }
         default:
             return state
     }
 }
 
-export const followCreator = (userId) => ({
+export const followUserCreator = (userId) => ({
     type: FOLLOW,
     userId: userId
 });
 
-export const unfollowCreator = (userId) => ({
+export const unfollowUserCreator = (userId) => ({
     type: UNFOLLOW,
     userId: userId
 });
 
-export const setUserCreator = (users) => ({
-    type: FOLLOW,
+export const setUsersCreator = (users) => ({
+    type: SET_USERS,
     users: users
 });

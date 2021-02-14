@@ -6,7 +6,7 @@ import {Footer} from "./components/footer";
 import {DialogsContainer} from "./components/dialogs-container";
 import {Developing} from "./components/developing"
 import {BrowserRouter, Route} from "react-router-dom";
-import {Users} from "./components/users";
+import {UsersContainer} from "./components/users-container";
 
 function App(props) {
 
@@ -19,7 +19,7 @@ function App(props) {
                       <ProfileContainer/>
                   }/>
                   <Route path="/users" render={() =>
-                      <Users/>
+                      <UsersContainer/>
                   }/>
                   <Route path='/dialogs' render={() =>
                       <DialogsContainer/>}
