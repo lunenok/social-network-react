@@ -272,3 +272,15 @@ ul {
     display: grid;
     grid-area: info;
 }
+
+.users__pages {
+    margin-bottom: 20px;
+}
+
+.users__page {
+    margin-right: 10px;
+}
+
+.users__page--active {
+    color: orange;
+}
