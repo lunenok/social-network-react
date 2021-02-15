@@ -1,13 +1,14 @@
 import React from 'react';
+import {Loader} from './loader/loader';
 
-export const Users = (props) => {
+const UsersList = ({props}) => {
     let pagesCount = Math.ceil(props.usersCount / props.usersToShow);
     let pages = [];
     if (pagesCount >=20) {pagesCount = 20}
     for (let i = 1; i <= pagesCount; i++) {pages.push(i);}
 
     return (
-        <div className="users">
+        <React.Fragment>
             <div className="users__pages">
                 {pages.map((item) => {
                     return (
@@ -19,8 +20,8 @@ export const Users = (props) => {
                             }}
                             className={`users__page ${parseInt(props.currentPage) === parseInt(item) ? 'users__page--active' : ''}`}
                         >
-                            {item}
-                        </span>
+                        {item}
+                    </span>
                     )
                 },)
                 }
@@ -38,23 +39,31 @@ export const Users = (props) => {
 
                             }
                             <div className="users__information-container">
-                    <span className="users__name">
-                        {user.name}
-                    </span>
+                <span className="users__name">
+                    {user.name}
+                </span>
                                 <span className="users__status">
-                                Status
-                    </span>
+                            Status
+                </span>
                                 <span className="users__country">
-                        Country
-                    </span>
+                    Country
+                </span>
                                 <span className="users__city">
-                        City
-                    </span>
+                    City
+                </span>
                             </div>
                         </li>
                     )
                 })}
             </ul>
+        </React.Fragment>
+    )
+}
+
+export const Users = (props) => {
+    return (
+        <div className="users">
+            {props.isLoading ? <Loader/> : <UsersList props={props}/>}
         </div>
     )
 }

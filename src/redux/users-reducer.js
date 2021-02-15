@@ -3,12 +3,14 @@ const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_USERS_COUNT = 'SET_USERS_COUNT';
+const SET_LOAD_STATE = 'SET_LOAD_STATE';
 
 const initialState = {
     users: [],
     currentPage: 1,
     usersCount: 0,
     usersToShow: 5,
+    isLoading: true,
 };
 
 export const usersReducer = (state = initialState, action) => {
@@ -48,6 +50,11 @@ export const usersReducer = (state = initialState, action) => {
                 ...state,
                 usersCount: action.usersCount
             }
+        case SET_LOAD_STATE:
+            return {
+                ...state,
+                isLoading: action.isLoading
+            }
         default:
             return state
     }
@@ -76,4 +83,9 @@ export const setCurrentPageCreator = (page) => ({
 export const setUsersCountCreator = (count) => ({
     type: SET_USERS_COUNT,
     usersCount: count
+});
+
+export const setLoaderStateCreator = (isLoading) => ({
+    type: SET_LOAD_STATE,
+    isLoading: isLoading
 });

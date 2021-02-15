@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import React from "react";
 import {Users} from './users';
-import {followUserCreator, unfollowUserCreator, setUsersCreator, setCurrentPageCreator, setUsersCountCreator} from './../redux/users-reducer';
+import {followUserCreator, unfollowUserCreator, setUsersCreator, setCurrentPageCreator, setUsersCountCreator, setLoaderStateCreator} from '../redux/users-reducer';
 import * as axios from "axios";
 
 class UsersComponent extends React.Component {
@@ -11,19 +11,23 @@ class UsersComponent extends React.Component {
     }
 
     componentDidMount() {
+        this.props.setLoaderState(true);
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.usersToShow}`)
             .then((response) => {
                 this.props.setUsers(response.data.items);
                 this.props.setUsersCount(response.data.totalCount);
+                this.props.setLoaderState(false);
             });
     };
 
     _onPageClick(page) {
         this.props.setCurrentPage(page);
+        this.props.setLoaderState(true);
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.usersToShow}`)
             .then((response) => {
                 this.props.setUsers(response.data.items);
                 this.props.setUsersCount(response.data.totalCount);
+                this.props.setLoaderState(false);
             });
     };
 
@@ -34,6 +38,7 @@ class UsersComponent extends React.Component {
                 currentPage={this.props.currentPage}
                 usersCount={this.props.usersCount}
                 usersToShow={this.props.usersToShow}
+                isLoading={this.props.isLoading}
                 onPageClick={this._onPageClick}
             />
             )
@@ -48,6 +53,7 @@ const mapPropsToState = (state) => {
         currentPage: state.userPage.currentPage,
         usersCount: state.userPage.usersCount,
         usersToShow: state.userPage.usersToShow,
+        isLoading: state.userPage.isLoading
     }
 };
 
@@ -67,7 +73,10 @@ const mapDispatchToProps = (dispatch) => {
         },
         setUsersCount: (count) => {
             dispatch(setUsersCountCreator(count));
-        }
+        },
+        setLoaderState: (isLoading) => {
+            dispatch(setLoaderStateCreator(isLoading));
+        },
     }
 }
 
