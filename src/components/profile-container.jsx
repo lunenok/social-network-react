@@ -12,8 +12,9 @@ import {withRouter} from "react-router";
 
 class ProfileComponent extends React.Component {
     componentDidMount() {
+        const userId = this.props.match.params.userId
         this.props.setProfileLoadingState(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/12700`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
             .then((response) => {
                 this.props.setCurrentProfile(response.data);
                 this.props.setProfileLoadingState(false);
@@ -62,6 +63,6 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-// const withRouterProfileContainer = withRouter(ProfileComponent);
+const withRouterProfileContainer = withRouter(ProfileComponent);
 
-export const ProfileContainer = connect(mapStateToProps, mapDispatchToProps)(ProfileComponent);
+export const ProfileContainer = connect(mapStateToProps, mapDispatchToProps)(withRouterProfileContainer);

@@ -15,7 +15,7 @@ function App(props) {
           <div className="main">
               <Header/>
               <Menu/>
-                  <Route path="/profile" render={() =>
+                  <Route path="/profile/:userId" render={() =>
                       <ProfileContainer/>
                   }/>
                   <Route path="/users" render={() =>

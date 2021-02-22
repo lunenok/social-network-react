@@ -31,7 +31,7 @@ const UsersList = ({props}) => {
                 {props.users.map((user) => {
                     return (
                         <li key={user.id} className="users__item">
-                            <NavLink to="profile/12700">
+                            <NavLink to={'profile/' + user.id}>
                                 <div className="users__avatar-container">
                                     <img
                                         src={user.photos.large ? user.photos.large : "https://avatarfiles.alphacoders.com/196/196805.jpg"}
@@ -66,7 +66,7 @@ const UsersList = ({props}) => {
                 })}
             </ul>
         </React.Fragment>
-    )
+    );
 }
 
 export const Users = (props) => {
