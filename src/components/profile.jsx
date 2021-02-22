@@ -1,8 +1,43 @@
 import React from 'react';
 import {Posts} from "./post";
+import {Loader} from './loader/loader';
+
+const ProfileInformation = ({currentProfile}) => {
+
+    return (
+        <div className="profile">
+            <div className="profile__pic ">
+                <img
+                    src={currentProfile.photos.large ? currentProfile.photos.large : "https://freesvg.org/img/Linux-Avatar.png"}
+                    alt="avatar"
+                    width="{150}"
+                    height="{150}"
+                    className="profile__img"
+                />
+            </div>
+            <div className="profile__info">
+                <div className="profile__name">
+                    {currentProfile.fullName}
+                </div>
+                <div className="profile__description">
+                    Date of birth: 10 january
+                </div>
+                <div className="profile__description">
+                    City: Yekaterinburg
+                </div>
+                <div className="profile__description">
+                    URFU'15
+                </div>
+                <div className="profile__description">
+                    Web-site: none
+                </div>
+            </div>
+        </div>
+    )
+}
 
 export const Profile = (props) => {
-    const {posts, newPostText, onUpdatePostText, addPost} = props;
+    const {posts, newPostText, onUpdatePostText, addPost, currentProfile, isProfileLoading} = props;
 
     const onTextChange = (evt) => {
         const text = evt.target.value;
@@ -11,33 +46,11 @@ export const Profile = (props) => {
 
     const onSendButtonClick = () => {
         addPost();
-    }
+    };
 
     return (
         <div className="content">
-            <div className="profile">
-                <div className="profile__pic ">
-                    <img src="https://freesvg.org/img/Linux-Avatar.png" alt="avatar" width="{150}" height="{150}"
-                         className="profile__img"/>
-                </div>
-                <div className="profile__info">
-                    <div className="profile__name">
-                        Maksim D.
-                    </div>
-                    <div className="profile__description">
-                        Date of birth: 10 january
-                    </div>
-                    <div className="profile__description">
-                        City: Yekaterinburg
-                    </div>
-                    <div className="profile__description">
-                        URFU'15
-                    </div>
-                    <div className="profile__description">
-                        Web-site: none
-                    </div>
-                </div>
-            </div>
+            {isProfileLoading ? <Loader/> :<ProfileInformation currentProfile={currentProfile}/>}
             <div className="posts">
                 <h2 className="posts__title">
                     My posts

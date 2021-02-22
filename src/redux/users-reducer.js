@@ -60,32 +60,32 @@ export const usersReducer = (state = initialState, action) => {
     }
 }
 
-export const followUserCreator = (userId) => ({
+export const followUser = (userId) => ({
     type: FOLLOW,
     userId: userId
 });
 
-export const unfollowUserCreator = (userId) => ({
+export const unfollowUser = (userId) => ({
     type: UNFOLLOW,
     userId: userId
 });
 
-export const setUsersCreator = (users) => ({
+export const setUsers = (users) => ({
     type: SET_USERS,
     users: users
 });
 
-export const setCurrentPageCreator = (page) => ({
+export const setCurrentPage = (page) => ({
     type: SET_CURRENT_PAGE,
     currentPage: page,
 });
 
-export const setUsersCountCreator = (count) => ({
+export const setUsersCount = (count) => ({
     type: SET_USERS_COUNT,
     usersCount: count
 });
 
-export const setLoaderStateCreator = (isLoading) => ({
+export const setLoaderState = (isLoading) => ({
     type: SET_LOAD_STATE,
     isLoading: isLoading
 });

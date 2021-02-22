@@ -126,6 +126,7 @@ ul {
 .posts__input {
     margin-bottom: 15px;
     font-family: inherit;
+    resize: vertical;
 }
 
 .posts__button {

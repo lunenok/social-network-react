@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import React from "react";
 import {Users} from './users';
-import {followUserCreator, unfollowUserCreator, setUsersCreator, setCurrentPageCreator, setUsersCountCreator, setLoaderStateCreator} from '../redux/users-reducer';
+import {followUser, unfollowUser, setUsers, setCurrentPage, setUsersCount, setLoaderState} from '../redux/users-reducer';
 import * as axios from "axios";
 
 class UsersComponent extends React.Component {
@@ -40,6 +40,8 @@ class UsersComponent extends React.Component {
                 usersToShow={this.props.usersToShow}
                 isLoading={this.props.isLoading}
                 onPageClick={this._onPageClick}
+                onUserFollow={this.props.followUser}
+                onUserUnfollow={this.props.unfollowUser}
             />
             )
     }
@@ -57,27 +59,31 @@ const mapPropsToState = (state) => {
     }
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onUserFollow: (userId) => {
-            dispatch(followUserCreator(userId));
-        },
-        onUserUnfollow: (userId) => {
-            dispatch(unfollowUserCreator(userId));
-        },
-        setUsers: (users) => {
-            dispatch(setUsersCreator(users));
-        },
-        setCurrentPage: (page) => {
-            dispatch(setCurrentPageCreator(page));
-        },
-        setUsersCount: (count) => {
-            dispatch(setUsersCountCreator(count));
-        },
-        setLoaderState: (isLoading) => {
-            dispatch(setLoaderStateCreator(isLoading));
-        },
-    }
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         onUserFollow: (userId) => {
+//             dispatch(followUserCreator(userId));
+//         },
+//         onUserUnfollow: (userId) => {
+//             dispatch(unfollowUserCreator(userId));
+//         },
+//         setUsers: (users) => {
+//             dispatch(setUsersCreator(users));
+//         },
+//         setCurrentPage: (page) => {
+//             dispatch(setCurrentPageCreator(page));
+//         },
+//         setUsersCount: (count) => {
+//             dispatch(setUsersCountCreator(count));
+//         },
+//         setLoaderState: (isLoading) => {
+//             dispatch(setLoaderStateCreator(isLoading));
+//         },
+//     }
+// }
+
+const mapDispatchToProps = {
+    followUser, unfollowUser, setUsers, setCurrentPage, setUsersCount, setLoaderState
 }
 
 export const UsersContainer = connect(mapPropsToState, mapDispatchToProps)(UsersComponent);

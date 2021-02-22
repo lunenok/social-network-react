@@ -1,5 +1,6 @@
 import React from 'react';
 import {Loader} from './loader/loader';
+import {NavLink} from "react-router-dom";
 
 const UsersList = ({props}) => {
     let pagesCount = Math.ceil(props.usersCount / props.usersToShow);
@@ -30,9 +31,17 @@ const UsersList = ({props}) => {
                 {props.users.map((user) => {
                     return (
                         <li key={user.id} className="users__item">
-                            <div className="users__avatar-container">
-                                <img src="https://avatarfiles.alphacoders.com/196/196805.jpg" alt="Avatar" width="100" height="100" className="users__avatar"/>
-                            </div>
+                            <NavLink to="profile/12700">
+                                <div className="users__avatar-container">
+                                    <img
+                                        src={user.photos.large ? user.photos.large : "https://avatarfiles.alphacoders.com/196/196805.jpg"}
+                                        alt="Avatar"
+                                        width="100"
+                                        height="100"
+                                        className="users__avatar"
+                                    />
+                                </div>
+                            </NavLink>
                             {user.followed ?
                                 <button onClick={()=>props.onUserUnfollow(user.id)} className="users__follow-button">unfollow</button> :
                                 <button onClick={()=>props.onUserFollow(user.id)} className="users__follow-button">follow</button>

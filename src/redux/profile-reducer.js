@@ -1,7 +1,11 @@
 const ADD_POST = 'ADD-POST';
 const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT';
+const SET_CURRENT_PROFILE = 'SET_CURRENT_PROFILE';
+const SET_PROFILE_LOADING_STATE = 'SET_PROFILE_LOADING_STATE';
 
 const initialState =  {
+    currentProfile: {},
+    isProfileLoading: true,
     posts: [
         {
             id: 1,
@@ -30,6 +34,16 @@ export const profileReducer = (state = initialState, action) => {
                 ...state,
                 newPostText: action.newText
             }
+        case SET_CURRENT_PROFILE:
+            return {
+                ...state,
+                currentProfile: action.currentProfile
+            }
+        case SET_PROFILE_LOADING_STATE:
+            return {
+                ...state,
+                isProfileLoading: action.isProfileLoading
+            }
         default:
             return state
     }
@@ -42,4 +56,14 @@ export const updatePostActionCreator = (text) => ({
 
 export const addPostActionCreator = () => ({
     type: ADD_POST
+});
+
+export const setCurrentProfileCreator = (profile) => ({
+    type: SET_CURRENT_PROFILE,
+    currentProfile: profile
+});
+
+export const setProfileLoadingStateCreator = (isLoading) => ({
+   type: SET_PROFILE_LOADING_STATE,
+   isProfileLoading: isLoading
 });
