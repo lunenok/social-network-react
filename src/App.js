@@ -7,13 +7,14 @@ import {DialogsContainer} from "./components/dialogs-container";
 import {Developing} from "./components/developing"
 import {BrowserRouter, Route} from "react-router-dom";
 import {UsersContainer} from "./components/users-container";
+import {HeaderContainer} from "./components/header-container";
 
 function App(props) {
 
   return (
       <BrowserRouter>
           <div className="main">
-              <Header/>
+              <HeaderContainer/>
               <Menu/>
                   <Route path="/profile/:userId" render={() =>
                       <ProfileContainer/>
