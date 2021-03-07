@@ -3,6 +3,7 @@ import React from "react";
 import {Users} from './users';
 import {followUser, unfollowUser, setUsers, setCurrentPage, setUsersCount, setLoaderState} from '../redux/users-reducer';
 import * as axios from "axios";
+import {getUsers} from './../api/api';
 
 class UsersComponent extends React.Component {
     constructor(props) {
@@ -12,10 +13,10 @@ class UsersComponent extends React.Component {
 
     componentDidMount() {
         this.props.setLoaderState(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.usersToShow}`)
-            .then((response) => {
-                this.props.setUsers(response.data.items);
-                this.props.setUsersCount(response.data.totalCount);
+        getUsers(this.props.currentPage, this.props.usersToShow)
+            .then((data) => {
+                this.props.setUsers(data.items);
+                this.props.setUsersCount(data.totalCount);
                 this.props.setLoaderState(false);
             });
     };
@@ -23,10 +24,10 @@ class UsersComponent extends React.Component {
     _onPageClick(page) {
         this.props.setCurrentPage(page);
         this.props.setLoaderState(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.usersToShow}`)
-            .then((response) => {
-                this.props.setUsers(response.data.items);
-                this.props.setUsersCount(response.data.totalCount);
+        getUsers(page, this.props.usersToShow)
+            .then((data) => {
+                this.props.setUsers(data.items);
+                this.props.setUsersCount(data.totalCount);
                 this.props.setLoaderState(false);
             });
     };

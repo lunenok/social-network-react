@@ -1,6 +1,8 @@
 import React from 'react';
 import {Loader} from './loader/loader';
-import {NavLink} from "react-router-dom";
+import {NavLink} from 'react-router-dom';
+import * as axios from 'axios';
+import {followUser, unfollowUser} from './../api/api';
 
 const UsersList = ({props}) => {
     let pagesCount = Math.ceil(props.usersCount / props.usersToShow);
@@ -43,8 +45,33 @@ const UsersList = ({props}) => {
                                 </div>
                             </NavLink>
                             {user.followed ?
-                                <button onClick={()=>props.onUserUnfollow(user.id)} className="users__follow-button">unfollow</button> :
-                                <button onClick={()=>props.onUserFollow(user.id)} className="users__follow-button">follow</button>
+                                <button 
+                                  onClick={()=>{
+                                    unfollowUser(user.id)
+                                    .then((response) => {
+                                      if (response.data.resultCode === 0) {
+                                        props.onUserUnfollow(user.id);
+                                      }                                  
+                                    })
+                                    
+                                  }} 
+                                  className="users__follow-button"
+                                >
+                                  unfollow
+                                </button> :
+                                <button 
+                                  onClick={()=>{
+                                    followUser(user.id)
+                                    .then((response) => {
+                                      if (response.data.resultCode === 0) {
+                                        props.onUserFollow(user.id);
+                                      }
+                                    });
+                                  }} 
+                                  className="users__follow-button"
+                                >
+                                  follow
+                                </button>
 
                             }
                             <div className="users__information-container">
