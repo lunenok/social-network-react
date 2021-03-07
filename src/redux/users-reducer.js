@@ -1,3 +1,5 @@
+import {getUsers} from './../api/api';
+
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
@@ -104,3 +106,15 @@ export const setSubscribingState = (isSubscriging ,userId) => ({
     isSubscriging: isSubscriging,
     userId: userId
 })
+
+export const getUserThunkCreator = (currentPage, usersToShow) => {
+    return (dispatch) => {
+    dispatch(setLoaderState(true));
+    getUsers(currentPage, usersToShow)
+        .then((data) => {
+            dispatch(setUsers(data.items));
+            dispatch(setUsersCount(data.totalCount));
+            dispatch(setLoaderState(false));
+        });
+    }
+}

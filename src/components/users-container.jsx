@@ -1,8 +1,7 @@
 import {connect} from 'react-redux';
 import React from "react";
 import {Users} from './users';
-import {followUser, unfollowUser, setUsers, setCurrentPage, setUsersCount, setLoaderState, setSubscribingState} from '../redux/users-reducer';
-import {getUsers} from './../api/api';
+import {followUser, unfollowUser, setUsers, setCurrentPage, setUsersCount, setLoaderState, setSubscribingState, getUserThunkCreator} from '../redux/users-reducer';
 
 class UsersComponent extends React.Component {
     constructor(props) {
@@ -11,24 +10,12 @@ class UsersComponent extends React.Component {
     }
 
     componentDidMount() {
-        this.props.setLoaderState(true);
-        getUsers(this.props.currentPage, this.props.usersToShow)
-            .then((data) => {
-                this.props.setUsers(data.items);
-                this.props.setUsersCount(data.totalCount);
-                this.props.setLoaderState(false);
-            });
+        this.props.getUserThunkCreator(this.props.currentPage, this.props.usersToShow);
     };
 
     _onPageClick(page) {
+        this.props.getUserThunkCreator(page, this.props.usersToShow);
         this.props.setCurrentPage(page);
-        this.props.setLoaderState(true);
-        getUsers(page, this.props.usersToShow)
-            .then((data) => {
-                this.props.setUsers(data.items);
-                this.props.setUsersCount(data.totalCount);
-                this.props.setLoaderState(false);
-            });
     };
 
     render() {
@@ -62,31 +49,15 @@ const mapPropsToState = (state) => {
     }
 };
 
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         onUserFollow: (userId) => {
-//             dispatch(followUserCreator(userId));
-//         },
-//         onUserUnfollow: (userId) => {
-//             dispatch(unfollowUserCreator(userId));
-//         },
-//         setUsers: (users) => {
-//             dispatch(setUsersCreator(users));
-//         },
-//         setCurrentPage: (page) => {
-//             dispatch(setCurrentPageCreator(page));
-//         },
-//         setUsersCount: (count) => {
-//             dispatch(setUsersCountCreator(count));
-//         },
-//         setLoaderState: (isLoading) => {
-//             dispatch(setLoaderStateCreator(isLoading));
-//         },
-//     }
-// }
-
 const mapDispatchToProps = {
-    followUser, unfollowUser, setUsers, setCurrentPage, setUsersCount, setLoaderState, setSubscribingState
-}
+    followUser, 
+    unfollowUser, 
+    setUsers, 
+    setCurrentPage, 
+    setUsersCount, 
+    setLoaderState, 
+    setSubscribingState, 
+    getUserThunkCreator
+};
 
 export const UsersContainer = connect(mapPropsToState, mapDispatchToProps)(UsersComponent);

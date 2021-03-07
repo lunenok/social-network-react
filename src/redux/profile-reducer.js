@@ -1,3 +1,5 @@
+import {setProfile} from './../api/api';
+
 const ADD_POST = 'ADD-POST';
 const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT';
 const SET_CURRENT_PROFILE = 'SET_CURRENT_PROFILE';
@@ -67,3 +69,14 @@ export const setProfileLoadingStateCreator = (isLoading) => ({
    type: SET_PROFILE_LOADING_STATE,
    isProfileLoading: isLoading
 });
+
+export const setProfileThunkCreator = (userId) => {
+    return (dispatch) => {
+    dispatch(setProfileLoadingStateCreator(true));
+    setProfile(userId)
+        .then((response) => {
+            dispatch(setCurrentProfileCreator(response.data));
+            dispatch(setProfileLoadingStateCreator(false));
+        });
+    }
+};

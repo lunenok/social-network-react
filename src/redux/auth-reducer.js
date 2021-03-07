@@ -1,3 +1,5 @@
+import {getAuthInfo} from './../api/api';
+
 const SET_LOGIN_DATA = 'SET_LOGIN_DATA'
 
 const initialState = {
@@ -24,3 +26,13 @@ export const setLoginDataCreator = ({email, id, login}) => ({
     type: SET_LOGIN_DATA,
     loginData: {email, id, login}
 });
+
+export const setLoginDataThunkCreator = () => {
+    return (dispatch) => {
+        getAuthInfo()
+        .then((response) => {
+            const {email, id, login} = response.data.data;
+            dispatch(setLoginDataCreator({email, id, login}));
+        });
+    }
+}

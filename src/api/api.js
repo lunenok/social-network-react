@@ -23,3 +23,11 @@ export const followUser = (userId) => {
 export const unfollowUser = (userId) => {
   return instance.delete(`follow/${userId}`);
 };
+
+export const setProfile = (userId) => {
+    return instance.get(`profile/${userId}`);
+};
+
+export const getAuthInfo = () => {
+    return instance.get(`auth/me`);
+};

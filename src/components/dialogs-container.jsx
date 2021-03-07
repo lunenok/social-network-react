@@ -2,29 +2,6 @@ import {updateMessageTextCreator, sendMessageCreator} from './../redux/dialogs-r
 import {Dialogs} from "./dialogs";
 import {connect} from 'react-redux';
 
-// export const DialogsContainer = (props) => {
-//     const {dialogsName, messages, newMessageText} = props.store.dialogsPage;
-//
-//     const onMessageUpdate = (text) => {
-//         props.dispatch(updateMessageTextCreator(text));
-//     }
-//
-//     const onMessageSendButtonClick = () => {
-//         props.dispatch(sendMessageCreator());
-//     }
-//
-//     return (
-//         <Dialogs
-//             dialogsName={dialogsName}
-//             messages={messages}
-//             newMessageText={newMessageText}
-//             onMessageUpdate={onMessageUpdate}
-//             onMessageSendButtonClick={onMessageSendButtonClick}
-//         />
-//     );
-// };
-
-
 const mapStateToProps = (state) => {
     return {
         dialogsName:state.dialogsPage.dialogsName,

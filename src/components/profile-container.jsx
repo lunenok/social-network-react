@@ -2,23 +2,18 @@ import {
     addPostActionCreator,
     setCurrentProfileCreator,
     setProfileLoadingStateCreator,
-    updatePostActionCreator
+    updatePostActionCreator,
+    setProfileThunkCreator
 } from "../redux/profile-reducer";
 import {Profile} from "./profile";
 import {connect} from 'react-redux';
-import * as axios from "axios";
 import * as React from "react";
 import {withRouter} from "react-router";
 
 class ProfileComponent extends React.Component {
     componentDidMount() {
         const userId = this.props.match.params.userId
-        this.props.setProfileLoadingState(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
-            .then((response) => {
-                this.props.setCurrentProfile(response.data);
-                this.props.setProfileLoadingState(false);
-            });
+        this.props.setCurrentProfile(userId);
     }
 
     render() {
@@ -55,11 +50,8 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(addPostActionCreator())
         },
         setCurrentProfile: (profile) => {
-            dispatch(setCurrentProfileCreator(profile))
+            dispatch(setProfileThunkCreator(profile))
         },
-        setProfileLoadingState: (isLoading) => {
-            dispatch(setProfileLoadingStateCreator(isLoading))
-        }
     };
 };
 
