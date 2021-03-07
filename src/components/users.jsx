@@ -1,7 +1,6 @@
 import React from 'react';
 import {Loader} from './loader/loader';
 import {NavLink} from 'react-router-dom';
-import * as axios from 'axios';
 import {followUser, unfollowUser} from './../api/api';
 
 const UsersList = ({props}) => {
@@ -46,29 +45,34 @@ const UsersList = ({props}) => {
                             </NavLink>
                             {user.followed ?
                                 <button 
-                                  onClick={()=>{
-                                    unfollowUser(user.id)
-                                    .then((response) => {
-                                      if (response.data.resultCode === 0) {
-                                        props.onUserUnfollow(user.id);
-                                      }                                  
-                                    })
-                                    
-                                  }} 
-                                  className="users__follow-button"
+                                    disabled={props.subscribingInProgress.some(id => id === user.id)}
+                                    onClick={()=>{
+                                        props.setSubscribingState(true, user.id);
+                                        unfollowUser(user.id)
+                                        .then((response) => {
+                                          if (response.data.resultCode === 0) {
+                                            props.onUserUnfollow(user.id);
+                                          }
+                                          props.setSubscribingState(false, user.id);                                  
+                                        })
+                                    }} 
+                                    className="users__follow-button"
                                 >
                                   unfollow
                                 </button> :
-                                <button 
-                                  onClick={()=>{
-                                    followUser(user.id)
-                                    .then((response) => {
-                                      if (response.data.resultCode === 0) {
-                                        props.onUserFollow(user.id);
-                                      }
+                                <button
+                                    disabled={props.subscribingInProgress.some(id => id === user.id)}
+                                    onClick={()=>{
+                                        props.setSubscribingState(true, user.id);
+                                        followUser(user.id)
+                                        .then((response) => {
+                                            if (response.data.resultCode === 0) {
+                                                props.onUserFollow(user.id);
+                                            }
+                                            props.setSubscribingState(false, user.id); 
                                     });
-                                  }} 
-                                  className="users__follow-button"
+                                    }} 
+                                    className="users__follow-button"
                                 >
                                   follow
                                 </button>

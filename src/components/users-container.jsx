@@ -1,8 +1,7 @@
 import {connect} from 'react-redux';
 import React from "react";
 import {Users} from './users';
-import {followUser, unfollowUser, setUsers, setCurrentPage, setUsersCount, setLoaderState} from '../redux/users-reducer';
-import * as axios from "axios";
+import {followUser, unfollowUser, setUsers, setCurrentPage, setUsersCount, setLoaderState, setSubscribingState} from '../redux/users-reducer';
 import {getUsers} from './../api/api';
 
 class UsersComponent extends React.Component {
@@ -43,6 +42,8 @@ class UsersComponent extends React.Component {
                 onPageClick={this._onPageClick}
                 onUserFollow={this.props.followUser}
                 onUserUnfollow={this.props.unfollowUser}
+                subscribingInProgress={this.props.subscribingInProgress}
+                setSubscribingState={this.props.setSubscribingState}
             />
             )
     }
@@ -56,7 +57,8 @@ const mapPropsToState = (state) => {
         currentPage: state.userPage.currentPage,
         usersCount: state.userPage.usersCount,
         usersToShow: state.userPage.usersToShow,
-        isLoading: state.userPage.isLoading
+        isLoading: state.userPage.isLoading,
+        subscribingInProgress: state.userPage.subscribingInProgress
     }
 };
 
@@ -84,7 +86,7 @@ const mapPropsToState = (state) => {
 // }
 
 const mapDispatchToProps = {
-    followUser, unfollowUser, setUsers, setCurrentPage, setUsersCount, setLoaderState
+    followUser, unfollowUser, setUsers, setCurrentPage, setUsersCount, setLoaderState, setSubscribingState
 }
 
 export const UsersContainer = connect(mapPropsToState, mapDispatchToProps)(UsersComponent);

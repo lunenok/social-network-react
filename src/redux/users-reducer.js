@@ -4,6 +4,7 @@ const SET_USERS = 'SET_USERS';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_USERS_COUNT = 'SET_USERS_COUNT';
 const SET_LOAD_STATE = 'SET_LOAD_STATE';
+const SET_SUBSCRIBING_STATE = 'SET_SUBSCRIBING_STATE';
 
 const initialState = {
     users: [],
@@ -11,6 +12,7 @@ const initialState = {
     usersCount: 0,
     usersToShow: 5,
     isLoading: true,
+    subscribingInProgress: []
 };
 
 export const usersReducer = (state = initialState, action) => {
@@ -55,6 +57,13 @@ export const usersReducer = (state = initialState, action) => {
                 ...state,
                 isLoading: action.isLoading
             }
+        case SET_SUBSCRIBING_STATE:
+            return {
+                ...state,
+                subscribingInProgress: action.isSubscriging
+                    ? [...state.subscribingInProgress, action.userId]
+                    : state.subscribingInProgress.filter(id => id != action.userId)
+            }
         default:
             return state
     }
@@ -89,3 +98,9 @@ export const setLoaderState = (isLoading) => ({
     type: SET_LOAD_STATE,
     isLoading: isLoading
 });
+
+export const setSubscribingState = (isSubscriging ,userId) => ({
+    type: SET_SUBSCRIBING_STATE,
+    isSubscriging: isSubscriging,
+    userId: userId
+})
