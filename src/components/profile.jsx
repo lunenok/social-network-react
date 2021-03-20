@@ -1,4 +1,5 @@
 import React from 'react'; 
+import {ProfileStatus} from './profile-status';
 import {Posts} from "./post";
 import {Loader} from './loader/loader';
 
@@ -19,6 +20,7 @@ const ProfileInformation = ({currentProfile}) => {
                 <div className="profile__name">
                     {currentProfile.fullName}
                 </div>
+                <ProfileStatus/>
                 <div className="profile__description">
                     Date of birth: 10 january
                 </div>
