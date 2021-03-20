@@ -32,7 +32,9 @@ export const setLoginDataThunkCreator = () => {
         getAuthInfo()
         .then((response) => {
             const {email, id, login} = response.data.data;
-            dispatch(setLoginDataCreator({email, id, login}));
+            if (response.data.resultCode === 0) {
+                dispatch(setLoginDataCreator({email, id, login}));
+            }
         });
     }
 }

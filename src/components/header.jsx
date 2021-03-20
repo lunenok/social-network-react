@@ -3,8 +3,6 @@ import {NavLink} from "react-router-dom";
 
 export const Header = (props) => {
 
-    console.log(props.loginData.isAuth);
-
     const renderLoginButton = () => {
         if (props.loginData.isAuth) {
             return (

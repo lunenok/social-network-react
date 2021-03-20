@@ -1,13 +1,13 @@
 import React from 'react';
-import {Header} from './components/header';
 import {Menu} from './components/menu';
-import {ProfileContainer} from "./components/profile-container";
-import {Footer} from "./components/footer";
-import {DialogsContainer} from "./components/dialogs-container";
-import {Developing} from "./components/developing"
-import {BrowserRouter, Route} from "react-router-dom";
-import {UsersContainer} from "./components/users-container";
-import {HeaderContainer} from "./components/header-container";
+import {ProfileContainer} from './components/profile-container';
+import {Footer} from './components/footer';
+import {DialogsContainer} from './components/dialogs-container';
+import {Developing} from './components/developing';
+import {BrowserRouter, Route} from 'react-router-dom';
+import {UsersContainer} from './components/users-container';
+import {HeaderContainer} from './components/header-container';
+import {Login} from './components/login';
 
 function App(props) {
 
@@ -28,6 +28,7 @@ function App(props) {
                   <Route path='/news' component={Developing}/>
                   <Route path='/music' component={Developing}/>
                   <Route path='/settings' component={Developing}/>
+                  <Route path='/login' component={Login}/>
               <Footer/>
           </div>
       </BrowserRouter>

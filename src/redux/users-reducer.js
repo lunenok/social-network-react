@@ -64,7 +64,7 @@ export const usersReducer = (state = initialState, action) => {
                 ...state,
                 subscribingInProgress: action.isSubscriging
                     ? [...state.subscribingInProgress, action.userId]
-                    : state.subscribingInProgress.filter(id => id != action.userId)
+                    : state.subscribingInProgress.filter(id => id !== action.userId)
             }
         default:
             return state

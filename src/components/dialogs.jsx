@@ -1,6 +1,7 @@
 import React from 'react';
 import {Message} from "./message";
 import {Dialog} from "./dialog";
+import { Redirect } from 'react-router';
 
 export const Dialogs = (props) => {
     const {dialogsName, messages, newMessageText, onMessageUpdate, onMessageSendButtonClick} = props;
@@ -13,6 +14,8 @@ export const Dialogs = (props) => {
     const onSendButtonClick = () => {
         onMessageSendButtonClick()
     }
+
+    if (!props.isAuth) return <Redirect to='/login'/>
 
     return (
         <div className="dialogs__wrapper">

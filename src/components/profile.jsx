@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'; 
 import {Posts} from "./post";
 import {Loader} from './loader/loader';
 

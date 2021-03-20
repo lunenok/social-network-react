@@ -45,7 +45,7 @@ const mapPropsToState = (state) => {
         usersCount: state.userPage.usersCount,
         usersToShow: state.userPage.usersToShow,
         isLoading: state.userPage.isLoading,
-        subscribingInProgress: state.userPage.subscribingInProgress
+        subscribingInProgress: state.userPage.subscribingInProgress,
     }
 };
 

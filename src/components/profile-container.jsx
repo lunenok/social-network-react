@@ -1,7 +1,5 @@
 import {
     addPostActionCreator,
-    setCurrentProfileCreator,
-    setProfileLoadingStateCreator,
     updatePostActionCreator,
     setProfileThunkCreator
 } from "../redux/profile-reducer";
@@ -37,7 +35,7 @@ const mapStateToProps = (state) => {
         currentProfile: state.profilePage.currentProfile,
         isProfileLoading: state.profilePage.isProfileLoading,
         posts: state.profilePage.posts,
-        newPostText: state.profilePage.newPostText
+        newPostText: state.profilePage.newPostText,
     };
 };
 
