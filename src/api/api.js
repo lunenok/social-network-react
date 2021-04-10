@@ -31,3 +31,11 @@ export const setProfile = (userId) => {
 export const getAuthInfo = () => {
     return instance.get(`auth/me`);
 };
+
+export const getUserStatus = (userId) => {
+    return instance.get(`profile/status/${userId}`);
+};
+
+export const updateStatus = (status) => {
+    return instance.put('profile/status', {status: status});
+};

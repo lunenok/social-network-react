@@ -3,7 +3,7 @@ import {ProfileStatus} from './profile-status';
 import {Posts} from "./post";
 import {Loader} from './loader/loader';
 
-const ProfileInformation = ({currentProfile}) => {
+const ProfileInformation = ({currentProfile, status, updateProfileStatus}) => {
 
     return (
         <div className="profile">
@@ -20,7 +20,7 @@ const ProfileInformation = ({currentProfile}) => {
                 <div className="profile__name">
                     {currentProfile.fullName}
                 </div>
-                <ProfileStatus/>
+                <ProfileStatus status={status} updateProfileStatus={updateProfileStatus}/>
                 <div className="profile__description">
                     Date of birth: 10 january
                 </div>
@@ -39,7 +39,7 @@ const ProfileInformation = ({currentProfile}) => {
 }
 
 export const Profile = (props) => {
-    const {posts, newPostText, onUpdatePostText, addPost, currentProfile, isProfileLoading} = props;
+    const {posts, newPostText, onUpdatePostText, addPost, currentProfile, isProfileLoading, status, updateProfileStatus} = props;
 
     const onTextChange = (evt) => {
         const text = evt.target.value;
@@ -52,7 +52,7 @@ export const Profile = (props) => {
 
     return (
         <div className="content">
-            {isProfileLoading ? <Loader/> :<ProfileInformation currentProfile={currentProfile}/>}
+            {isProfileLoading ? <Loader/> :<ProfileInformation currentProfile={currentProfile} status={status} updateProfileStatus={updateProfileStatus}/>}
             <div className="posts">
                 <h2 className="posts__title">
                     My posts

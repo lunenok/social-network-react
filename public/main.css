@@ -304,3 +304,13 @@ ul {
 .users__page--active {
     color: orange;
 }
+
+.login__wrapper {
+    background-color: white;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.login__title {
+    font-size: 20px;
+}
