@@ -2,18 +2,18 @@ import React from 'react';
 import {Message} from "./message";
 import {Dialog} from "./dialog";
 import { Redirect } from 'react-router';
+import { Formik, Field, Form } from 'formik';
 
 export const Dialogs = (props) => {
-    const {dialogsName, messages, newMessageText, onMessageUpdate, onMessageSendButtonClick} = props;
+    const {dialogsName, messages, onMessageSendButtonClick} = props;
 
-    const onTextChange = (evt) => {
-        const text = evt.target.value;
-        onMessageUpdate(text);
+    const onSendButtonClick = (values) => {
+        onMessageSendButtonClick(values.message);
     }
 
-    const onSendButtonClick = () => {
-        onMessageSendButtonClick()
-    }
+    const initialValues = {
+        message: ''
+    };
 
     if (!props.isAuth) return <Redirect to='/login'/>
 
@@ -31,21 +31,25 @@ export const Dialogs = (props) => {
                     )}
                 </div>
                 <div className="messages__new-container">
-                    <textarea
-                        className="messages__input"
-                        placeholder="Write your message"
-                        value={newMessageText}
-                        onChange={onTextChange}
-                    >
-                    </textarea>
-                    <button
-                        className="messages__send-button"
-                        onClick={onSendButtonClick}
-                    >
-                        Send new message
-                    </button>
+                    <Formik initialValues={initialValues} onSubmit={onSendButtonClick}>
+                        <Form>
+                            <Field
+                                className='messages__input'
+                                placeholder='Write your message'
+                                name='message'
+                                // value={newMessageText}
+                                // onChange={onTextChange}
+                            >
+                            </Field>
+                            <button
+                                className="messages__send-button"
+                                // onClick={onSendButtonClick}
+                            >
+                                Send new message
+                            </button>
+                        </Form>
+                    </Formik>
                 </div>
-
             </div>
 
         </div>
