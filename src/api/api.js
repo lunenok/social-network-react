@@ -32,6 +32,14 @@ export const getAuthInfo = () => {
     return instance.get(`auth/me`);
 };
 
+export const login = (email, password, rememberMe) => {
+    return instance.post(`/auth/login`, {email, password, rememberMe})
+};
+
+export const logout = () => {
+    return instance.delete(`/auth/login`)
+};
+
 export const getUserStatus = (userId) => {
     return instance.get(`profile/status/${userId}`);
 };

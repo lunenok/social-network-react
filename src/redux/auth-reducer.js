@@ -1,6 +1,6 @@
-import {getAuthInfo} from './../api/api';
+import {getAuthInfo, login, logout} from './../api/api';
 
-const SET_LOGIN_DATA = 'SET_LOGIN_DATA'
+const SET_LOGIN_DATA = 'SET_LOGIN_DATA';
 
 const initialState = {
     email: null,
@@ -15,16 +15,15 @@ export const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 ...action.loginData,
-                isAuth: true
             }
         default:
             return state
     }
 }
 
-export const setLoginDataCreator = ({email, id, login}) => ({
+export const setLoginDataCreator = ({email, id, login, isAuth = true}) => ({
     type: SET_LOGIN_DATA,
-    loginData: {email, id, login}
+    loginData: {email, id, login, isAuth}
 });
 
 export const setLoginDataThunkCreator = () => {
@@ -38,3 +37,28 @@ export const setLoginDataThunkCreator = () => {
         });
     }
 }
+
+export const setLoginThunkCreator = ({email, password, rememberMe, setStatus}) => {
+    return (dispatch) => {
+        login(email, password, rememberMe)
+        .then((response) => {
+            if (response.data.resultCode === 0) {
+                dispatch(setLoginDataThunkCreator())
+            } else {
+                setStatus(response.data.messages[0]);
+                console.log(response.data.messages[0]);
+            }
+        })
+    }
+};
+
+export const setLogoutThunkCreator = () => {
+    return (dispatch) => {
+        logout()
+        .then((response) => {
+            if (response.data.resultCode === 0) {
+                dispatch(setLoginDataCreator({email: null, id: null, login: null, isAuth: false}));
+            }
+        })
+    }
+};

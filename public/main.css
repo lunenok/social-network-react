@@ -50,7 +50,19 @@ ul {
 }
 
 .header__login-info {
+    display: flex;
     margin: auto;
+}
+
+.header__logout-button {
+    margin-left: 20px;
+    width: 80px;
+    min-height: 20px;
+    justify-self: end;
+    background-color: orange;
+    font-family: inherit;
+    border-radius: 3px;
+    border: none;
 }
 
 .main__menu {

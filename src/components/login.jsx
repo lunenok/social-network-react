@@ -1,7 +1,10 @@
 import React from 'react';
 import { Formik, Field, Form } from 'formik';
+import {setLoginThunkCreator} from './../redux/auth-reducer';
+import {connect} from 'react-redux';
+import { Redirect } from 'react-router';
 
-export const Login = (props) => {
+export const LoginComponent = (props) => {
     const initialValues = {
         login: '',
         password: '',
@@ -27,15 +30,19 @@ export const Login = (props) => {
         return error;
     };
 
-    const onFormSubmit = (values) => {
-        console.log(values);
+    const onFormSubmit = (values, {setStatus}) => {
+        props.setLoginThunkCreator({email: values.login, password: values.password, rememberMe: values.rememberMe, setStatus});
     };
+
+    console.log(props.isAuth);
+
+    if (props.isAuth) return <Redirect to={`/profile/${props.userId}`}/> 
 
     return (
         <div className='login__wrapper'>
             <h1 className='login__title'>Login</h1>
             <Formik initialValues={initialValues} onSubmit={onFormSubmit}>
-                {({errors, touched, isValidating}) => (
+                {({errors, touched, isValidating, status}) => (
                     <Form className='login__input-wrapper'>
                         <div className="login__input-container">
                             <label className='login__label' htmlFor='login'>Login</label>
@@ -51,6 +58,7 @@ export const Login = (props) => {
                             <label className='login__label login__label--remember' htmlFor='rememberMe'>Remember me</label>
                             <Field className='login__input--remember' id='rememberMe' name='rememberMe' type='checkbox' />
                         </div>
+                        {status && <span className='login__error'>{status}</span>}
                         <button className='login__button'>Submit</button>
                     </Form>
                 )}
@@ -59,3 +67,12 @@ export const Login = (props) => {
         </div>
     );
 };
+
+const mapStateToProps = (state) => {
+    return {
+        isAuth: state.authData.isAuth,
+        userId: state.authData.id
+    }
+};
+
+export const Login = connect(mapStateToProps, {setLoginThunkCreator})(LoginComponent);

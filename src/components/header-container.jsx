@@ -1,4 +1,4 @@
-import {setLoginDataThunkCreator} from "../redux/auth-reducer";
+import {setLoginDataThunkCreator, setLogoutThunkCreator} from "../redux/auth-reducer";
 import {Header} from "./header";
 import {connect} from 'react-redux';
 import * as React from "react";
@@ -13,6 +13,7 @@ class HeaderComponent extends React.Component {
             <Header
                 loginData={this.props.loginData}
                 setLoginData={this.props.setLoginData}
+                setLogoutThunkCreator={this.props.setLogoutThunkCreator}
             />
         )
     }
@@ -30,6 +31,9 @@ const mapDispatchToProps = (dispatch) => {
         setLoginData: (data) => {
             dispatch(setLoginDataThunkCreator(data))
         },
+        setLogoutThunkCreator: () => {
+            dispatch(setLogoutThunkCreator())
+        }
     };
 };
 
