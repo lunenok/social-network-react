@@ -3,12 +3,10 @@ import {NavLink} from "react-router-dom";
 
 export const Header = (props) => {
 
-    // console.log(props.setLogoutThunkCreator);
-
     const renderLoginButton = () => {
         if (props.loginData.isAuth) {
             return (
-                <React.Fragment className=''>
+                <React.Fragment>
                     <span>{props.loginData.login}</span>
                 </React.Fragment>
             )

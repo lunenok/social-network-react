@@ -34,8 +34,6 @@ export const LoginComponent = (props) => {
         props.setLoginThunkCreator({email: values.login, password: values.password, rememberMe: values.rememberMe, setStatus});
     };
 
-    console.log(props.isAuth);
-
     if (props.isAuth) return <Redirect to={`/profile/${props.userId}`}/> 
 
     return (

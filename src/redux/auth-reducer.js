@@ -26,19 +26,30 @@ export const setLoginDataCreator = ({email, id, login, isAuth = true}) => ({
     loginData: {email, id, login, isAuth}
 });
 
-export const setLoginDataThunkCreator = () => {
-    return (dispatch) => {
-        getAuthInfo()
+// export const setLoginDataThunkCreator = () => {
+//     return (dispatch) => {
+//         getAuthInfo()
+//         .then((response) => {
+//             const {email, id, login} = response.data.data;
+//             if (response.data.resultCode === 0) {
+//                 dispatch(setLoginDataCreator({email, id, login}));
+//             }
+//         });
+//     }
+// }
+
+// Для того чтобы заработала инициализация пришлось переписать так:
+export const setLoginDataThunkCreator = () => (dispatch) => {
+    return getAuthInfo()
         .then((response) => {
             const {email, id, login} = response.data.data;
             if (response.data.resultCode === 0) {
                 dispatch(setLoginDataCreator({email, id, login}));
             }
         });
-    }
-}
+};
 
-export const setLoginThunkCreator = ({email, password, rememberMe, setStatus}) => {
+export const setLoginThunkCreator = ({email, password, rememberMe,setStatus}) => {
     return (dispatch) => {
         login(email, password, rememberMe)
         .then((response) => {
