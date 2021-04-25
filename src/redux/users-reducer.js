@@ -7,6 +7,7 @@ const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_USERS_COUNT = 'SET_USERS_COUNT';
 const SET_LOAD_STATE = 'SET_LOAD_STATE';
 const SET_SUBSCRIBING_STATE = 'SET_SUBSCRIBING_STATE';
+const FAKE = 'FAKE';
 
 const initialState = {
     users: [],
@@ -14,11 +15,14 @@ const initialState = {
     usersCount: 0,
     usersToShow: 5,
     isLoading: true,
-    subscribingInProgress: []
+    subscribingInProgress: [],
+    fake: 10,
 };
 
 export const usersReducer = (state = initialState, action) => {
     switch (action.type) {
+        case FAKE :
+            return {...state, fake: state.fake + 1}
         case FOLLOW:
             return {
                 ...state,

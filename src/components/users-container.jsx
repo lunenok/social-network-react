@@ -2,6 +2,7 @@ import {connect} from 'react-redux';
 import React from "react";
 import {Users} from './users';
 import {followUser, unfollowUser, setUsers, setCurrentPage, setUsersCount, setLoaderState, setSubscribingState, getUserThunkCreator} from '../redux/users-reducer';
+import {getUsers, getCurrentPage, getUsersCount, getUsersToShow, getIsLoading, getSubscribingInProgress, getUsersSuperSelector} from '../redux/users-selectors';
 
 class UsersComponent extends React.Component {
     constructor(props) {
@@ -38,14 +39,14 @@ class UsersComponent extends React.Component {
 }
 
 const mapPropsToState = (state) => {
-
+    console.log('mapStateToProps USERS');
     return {
-        users: state.userPage.users,
-        currentPage: state.userPage.currentPage,
-        usersCount: state.userPage.usersCount,
-        usersToShow: state.userPage.usersToShow,
-        isLoading: state.userPage.isLoading,
-        subscribingInProgress: state.userPage.subscribingInProgress,
+        users: getUsersSuperSelector(state),
+        currentPage: getCurrentPage(state),
+        usersCount: getUsersCount(state),
+        usersToShow: getUsersToShow(state),
+        isLoading: getIsLoading(state),
+        subscribingInProgress: getSubscribingInProgress(state),
     }
 };
 
