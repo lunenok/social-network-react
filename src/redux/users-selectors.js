@@ -4,9 +4,10 @@ export const getUsers = (state) => {
     return state.userPage.users;
 };
 
-export const getUsersSuperSelector = createSelector(getUsers, (users) => {
-    return users.filter(u => true);
-});
+// Тренировки ради
+// export const getUsersSuperSelector = createSelector(getUsers, (users) => {
+//     return users.filter(u => true);
+// });
 
 export const getCurrentPage = (state) => {
     return state.userPage.currentPage;

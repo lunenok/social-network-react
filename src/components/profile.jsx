@@ -1,5 +1,6 @@
 import React from 'react'; 
 import {ProfileStatus} from './profile-status';
+import {ProfileStatusWithHook} from './profile-status-hooks';
 import {Posts} from "./post";
 import {Loader} from './loader/loader';
 
@@ -20,7 +21,7 @@ const ProfileInformation = ({currentProfile, status, updateProfileStatus}) => {
                 <div className="profile__name">
                     {currentProfile.fullName}
                 </div>
-                <ProfileStatus status={status} updateProfileStatus={updateProfileStatus}/>
+                <ProfileStatusWithHook status={status} updateProfileStatus={updateProfileStatus}/>
                 <div className="profile__description">
                     Date of birth: 10 january
                 </div>

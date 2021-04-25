@@ -16,13 +16,13 @@ const initialState = {
     usersToShow: 5,
     isLoading: true,
     subscribingInProgress: [],
-    fake: 10,
+    // fake: 10,
 };
 
 export const usersReducer = (state = initialState, action) => {
     switch (action.type) {
-        case FAKE :
-            return {...state, fake: state.fake + 1}
+        // case FAKE :
+        //     return {...state, fake: state.fake + 1}
         case FOLLOW:
             return {
                 ...state,

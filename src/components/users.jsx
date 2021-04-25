@@ -9,7 +9,7 @@ const UsersList = ({props}) => {
     if (pagesCount >=20) {pagesCount = 20}
     for (let i = 1; i <= pagesCount; i++) {pages.push(i);}
 
-    console.log('USERS RENDER');
+    // console.log('USERS RENDER');
 
     return (
         <React.Fragment>
