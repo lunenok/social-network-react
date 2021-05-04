@@ -4,7 +4,7 @@ export const getUsers = (state) => {
     return state.userPage.users;
 };
 
-// Тренировки ради
+// Тренировки ради reselect
 // export const getUsersSuperSelector = createSelector(getUsers, (users) => {
 //     return users.filter(u => true);
 // });

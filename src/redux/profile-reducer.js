@@ -56,7 +56,7 @@ export const profileReducer = (state = initialState, action) => {
         default:
             return state
     }
-}
+};
 
 export const updatePostActionCreator = (text) => ({
     type: UPDATE_POST_TEXT,
@@ -77,38 +77,32 @@ const setProfileLoadingStateCreator = (isLoading) => ({
    isProfileLoading: isLoading
 });
 
-export const setProfileThunkCreator = (userId) => {
-    return (dispatch) => {
-        dispatch(setProfileLoadingStateCreator(true));
-        setProfile(userId)
-            .then((response) => {
-                dispatch(setCurrentProfileCreator(response.data));
-                dispatch(setProfileLoadingStateCreator(false));
-            });
-    }
-};
-
 const setProfileStatus = (status) => ({
     type: SET_PROFILE_STATUS,
     status: status
-})
+});
+
+export const setProfileThunkCreator = (userId) => {
+    return async (dispatch) => {
+        dispatch(setProfileLoadingStateCreator(true));
+        const response = await setProfile(userId);
+        dispatch(setCurrentProfileCreator(response.data));
+        dispatch(setProfileLoadingStateCreator(false));
+    }
+};
 
 export const setProfileStatusThunkCreator = (userId) => {
-    return (dispatch) => {
-        getUserStatus(userId)
-            .then((response) => {
-                dispatch(setProfileStatus(response.data));
-            });
+    return async (dispatch) => {
+        const response = await getUserStatus(userId);
+        dispatch(setProfileStatus(response.data));
     }
 };
 
 export const updateProfileStatusThunkCreator = (status) => {
-    return (dispatch) => {
-        updateStatus(status)
-            .then((response) => {
-                if (response.data.resultCode === 0) {
-                    dispatch(setProfileStatus(status));
-                };
-            });
+    return async (dispatch) => {
+        const response = await updateStatus(status);
+        if (response.data.resultCode === 0) {
+            dispatch(setProfileStatus(status));
+        };
     }
 };

@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import React from "react";
 import {Users} from './users';
-import {followUser, unfollowUser, setUsers, setCurrentPage, setUsersCount, setLoaderState, setSubscribingState, getUserThunkCreator} from '../redux/users-reducer';
+import {setUsers, setCurrentPage, setUsersCount, setLoaderState, setSubscribingState, getUserThunkCreator, followUserThunkCreator, unFollowUserThunkCreator} from '../redux/users-reducer';
 import {getUsers, getCurrentPage, getUsersCount, getUsersToShow, getIsLoading, getSubscribingInProgress} from '../redux/users-selectors';
 
 class UsersComponent extends React.Component {
@@ -28,10 +28,10 @@ class UsersComponent extends React.Component {
                 usersToShow={this.props.usersToShow}
                 isLoading={this.props.isLoading}
                 onPageClick={this._onPageClick}
-                onUserFollow={this.props.followUser}
-                onUserUnfollow={this.props.unfollowUser}
                 subscribingInProgress={this.props.subscribingInProgress}
                 setSubscribingState={this.props.setSubscribingState}
+                followUserThunkCreator={this.props.followUserThunkCreator}
+                unFollowUserThunkCreator={this.props.unFollowUserThunkCreator}
             />
             )
     }
@@ -50,14 +50,14 @@ const mapPropsToState = (state) => {
 };
 
 const mapDispatchToProps = {
-    followUser, 
-    unfollowUser, 
     setUsers, 
     setCurrentPage, 
     setUsersCount, 
     setLoaderState, 
     setSubscribingState, 
-    getUserThunkCreator
+    getUserThunkCreator,
+    followUserThunkCreator,
+    unFollowUserThunkCreator
 };
 
 export const UsersContainer = connect(mapPropsToState, mapDispatchToProps)(UsersComponent);

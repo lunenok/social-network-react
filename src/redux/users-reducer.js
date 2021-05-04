@@ -1,4 +1,4 @@
-import {getUsers} from './../api/api';
+import {getUsers, followUser as folloUserRequest, unfollowUser as unfollowUserRequest} from './../api/api';
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -7,7 +7,6 @@ const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_USERS_COUNT = 'SET_USERS_COUNT';
 const SET_LOAD_STATE = 'SET_LOAD_STATE';
 const SET_SUBSCRIBING_STATE = 'SET_SUBSCRIBING_STATE';
-const FAKE = 'FAKE';
 
 const initialState = {
     users: [],
@@ -16,13 +15,10 @@ const initialState = {
     usersToShow: 5,
     isLoading: true,
     subscribingInProgress: [],
-    // fake: 10,
 };
 
 export const usersReducer = (state = initialState, action) => {
     switch (action.type) {
-        // case FAKE :
-        //     return {...state, fake: state.fake + 1}
         case FOLLOW:
             return {
                 ...state,
@@ -109,16 +105,32 @@ export const setSubscribingState = (isSubscriging ,userId) => ({
     type: SET_SUBSCRIBING_STATE,
     isSubscriging: isSubscriging,
     userId: userId
-})
+});
+
+export const followUserThunkCreator = (userId) => async (dispatch) =>{
+    dispatch(setSubscribingState(true, userId));
+    const response = await folloUserRequest(userId);
+    if (response.data.resultCode === 0) {
+        dispatch(followUser(userId));
+    };
+    dispatch(setSubscribingState(false, userId)); 
+};
+
+export const unFollowUserThunkCreator = (userId) => async (dispatch) =>{
+    dispatch(setSubscribingState(true, userId));
+    const response = await unfollowUserRequest(userId);
+    if (response.data.resultCode === 0) {
+        dispatch(unfollowUser(userId));
+    };
+    dispatch(setSubscribingState(false, userId)); 
+};
 
 export const getUserThunkCreator = (currentPage, usersToShow) => {
-    return (dispatch) => {
-    dispatch(setLoaderState(true));
-    getUsers(currentPage, usersToShow)
-        .then((data) => {
-            dispatch(setUsers(data.items));
-            dispatch(setUsersCount(data.totalCount));
-            dispatch(setLoaderState(false));
-        });
+    return async (dispatch) => {
+        dispatch(setLoaderState(true));
+        const data = await getUsers(currentPage, usersToShow)
+        dispatch(setUsers(data.items));
+        dispatch(setUsersCount(data.totalCount));
+        dispatch(setLoaderState(false));
     }
-}
+};

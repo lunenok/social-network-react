@@ -49,14 +49,7 @@ const UsersList = ({props}) => {
                                 <button 
                                     disabled={props.subscribingInProgress.some(id => id === user.id)}
                                     onClick={()=>{
-                                        props.setSubscribingState(true, user.id);
-                                        unfollowUser(user.id)
-                                        .then((response) => {
-                                          if (response.data.resultCode === 0) {
-                                            props.onUserUnfollow(user.id);
-                                          }
-                                          props.setSubscribingState(false, user.id);                                  
-                                        })
+                                        props.unFollowUserThunkCreator(user.id);
                                     }} 
                                     className="users__follow-button"
                                 >
@@ -65,14 +58,7 @@ const UsersList = ({props}) => {
                                 <button
                                     disabled={props.subscribingInProgress.some(id => id === user.id)}
                                     onClick={()=>{
-                                        props.setSubscribingState(true, user.id);
-                                        followUser(user.id)
-                                        .then((response) => {
-                                            if (response.data.resultCode === 0) {
-                                                props.onUserFollow(user.id);
-                                            }
-                                            props.setSubscribingState(false, user.id); 
-                                    });
+                                        props.followUserThunkCreator(user.id);
                                     }} 
                                     className="users__follow-button"
                                 >

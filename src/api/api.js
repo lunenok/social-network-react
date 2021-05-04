@@ -6,22 +6,19 @@ const instance = axios.create({
   headers: {
     'API-KEY': '59869aef-c5ae-45e9-94f6-2f4f302f6db0'
   }
-})
+});
 
-export const getUsers = (currentPage, usersToShow) => {
-  return instance.get(`users?page=${currentPage}&count=${usersToShow}`,)
-    .then(response => {
-      return response.data;
-    }
-  )
+export const getUsers = async (currentPage, usersToShow) => {
+    const response = await instance.get(`users?page=${currentPage}&count=${usersToShow}`,)
+    return response.data;
 };
 
 export const followUser = (userId) => {
-  return instance.post(`follow/${userId}`);
+    return instance.post(`follow/${userId}`);
 };
 
 export const unfollowUser = (userId) => {
-  return instance.delete(`follow/${userId}`);
+    return instance.delete(`follow/${userId}`);
 };
 
 export const setProfile = (userId) => {
