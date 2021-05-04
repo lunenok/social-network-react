@@ -57,7 +57,7 @@ export const LoginComponent = (props) => {
                             <Field className='login__input--remember' id='rememberMe' name='rememberMe' type='checkbox' />
                         </div>
                         {status && <span className='login__error'>{status}</span>}
-                        <button className='login__button'>Submit</button>
+                        <button className='login__button' type='submit'>Submit</button>
                     </Form>
                 )}
             </Formik>

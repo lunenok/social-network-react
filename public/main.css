@@ -306,6 +306,7 @@ ul {
 }
 
 .users__pages {
+    display: flex;
     margin-bottom: 20px;
 }
 
@@ -315,6 +316,19 @@ ul {
 
 .users__page--active {
     color: orange;
+}
+
+.users__page-button {
+    margin: 0;
+    height: 20px;
+    width: 20px;
+    border: none;
+    background-color: orange;
+    border-radius: 5px;
+}
+
+.users__page-button--left {
+    margin-right: 10px;
 }
 
 .login__wrapper {

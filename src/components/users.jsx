@@ -1,32 +1,11 @@
 import React from 'react';
 import {Loader} from './loader/loader';
 import {NavLink} from 'react-router-dom';
+import {Paginator} from './paginator';
 
 const UsersList = ({props}) => {
-    let pagesCount = Math.ceil(props.usersCount / props.usersToShow);
-    let pages = [];
-    if (pagesCount >=20) {pagesCount = 20}
-    for (let i = 1; i <= pagesCount; i++) {pages.push(i);}
-
     return (
         <React.Fragment>
-            <div className="users__pages">
-                {pages.map((item) => {
-                    return (
-                        <span
-                            key={item}
-                            id={item}
-                            onClick={(evt) => {
-                                props.onPageClick(evt.target.id)
-                            }}
-                            className={`users__page ${parseInt(props.currentPage) === parseInt(item) ? 'users__page--active' : ''}`}
-                        >
-                        {item}
-                    </span>
-                    )
-                },)
-                }
-            </div>
             <ul className="users__list">
                 {props.users.map((user) => {
                     return (
@@ -64,18 +43,18 @@ const UsersList = ({props}) => {
 
                             }
                             <div className="users__information-container">
-                <span className="users__name">
-                    {user.name}
-                </span>
+                                <span className="users__name">
+                                    {user.name}
+                                </span>
                                 <span className="users__status">
-                            Status
-                </span>
+                                    Status
+                                </span>
                                 <span className="users__country">
-                    Country
-                </span>
+                                    Country
+                                </span>
                                 <span className="users__city">
-                    City
-                </span>
+                                    City
+                                </span>
                             </div>
                         </li>
                     )
@@ -88,6 +67,7 @@ const UsersList = ({props}) => {
 export const Users = (props) => {
     return (
         <div className="users">
+            <Paginator itemsCount={props.usersCount} itemsToShow={props.usersToShow} currentPage={props.currentPage} onPageClick={props.onPageClick}/>
             {props.isLoading ? <Loader/> : <UsersList props={props}/>}
         </div>
     )
