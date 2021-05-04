@@ -44,7 +44,7 @@ export const LoginComponent = (props) => {
                     <Form className='login__input-wrapper'>
                         <div className="login__input-container">
                             <label className='login__label' htmlFor='login'>Login</label>
-                            <Field className='login__input' id='login' name='login' type='text' validate={validateLogin} placeholder='login' validate={validateLogin} />
+                            <Field className='login__input' id='login' name='login' type='text' validate={validateLogin} placeholder='login' />
                             {errors.login && touched.login && <div className='login__error'>{errors.login}</div>}
                         </div>
                         <div className="login__input-container">

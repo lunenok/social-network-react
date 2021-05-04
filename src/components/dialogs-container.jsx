@@ -19,9 +19,6 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-// Заменено на compose
-// export const DialogsContainer = withAuthComponent(connect(mapStateToProps, mapDispatchToProps)(Dialogs));
-
 export const DialogsContainer = compose(
     withAuthComponent, 
     connect(mapStateToProps, mapDispatchToProps)

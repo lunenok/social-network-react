@@ -37,13 +37,11 @@ export const Dialogs = (props) => {
                                 className='messages__input'
                                 placeholder='Write your message'
                                 name='message'
-                                // value={newMessageText}
-                                // onChange={onTextChange}
                             >
                             </Field>
                             <button
-                                className="messages__send-button"
-                                // onClick={onSendButtonClick}
+                                className='messages__send-button'
+                                type='submit'
                             >
                                 Send new message
                             </button>

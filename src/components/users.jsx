@@ -1,15 +1,12 @@
 import React from 'react';
 import {Loader} from './loader/loader';
 import {NavLink} from 'react-router-dom';
-import {followUser, unfollowUser} from './../api/api';
 
 const UsersList = ({props}) => {
     let pagesCount = Math.ceil(props.usersCount / props.usersToShow);
     let pages = [];
     if (pagesCount >=20) {pagesCount = 20}
     for (let i = 1; i <= pagesCount; i++) {pages.push(i);}
-
-    // console.log('USERS RENDER');
 
     return (
         <React.Fragment>
