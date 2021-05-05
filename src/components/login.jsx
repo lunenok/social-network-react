@@ -9,6 +9,7 @@ export const LoginComponent = (props) => {
         login: '',
         password: '',
         rememberMe: false,
+        captcha: null
     };
 
     const validateLogin = (value) => {
@@ -31,7 +32,7 @@ export const LoginComponent = (props) => {
     };
 
     const onFormSubmit = (values, {setStatus}) => {
-        props.setLoginThunkCreator({email: values.login, password: values.password, rememberMe: values.rememberMe, setStatus});
+        props.setLoginThunkCreator({email: values.login, password: values.password, rememberMe: values.rememberMe, captcha: values.captcha, setStatus});
     };
 
     if (props.isAuth) return <Redirect to={`/profile/`}/> 
@@ -56,8 +57,20 @@ export const LoginComponent = (props) => {
                             <label className='login__label login__label--remember' htmlFor='rememberMe'>Remember me</label>
                             <Field className='login__input--remember' id='rememberMe' name='rememberMe' type='checkbox' />
                         </div>
+
+                        {props.captcha && 
+                            <div>
+                                <img src={props.captcha} alt='captcha'></img>
+                                <div className="login__input-container">
+                                    <label className='login__label' htmlFor='captcha'>Captcha</label>
+                                    <Field className='login__input' id='captcha' name='captcha' type='text' />
+                                </div>
+                            </div>
+                        }
+
                         {status && <span className='login__error'>{status}</span>}
                         <button className='login__button' type='submit'>Submit</button>
+
                     </Form>
                 )}
             </Formik>
@@ -69,7 +82,8 @@ export const LoginComponent = (props) => {
 const mapStateToProps = (state) => {
     return {
         isAuth: state.authData.isAuth,
-        userId: state.authData.id
+        userId: state.authData.id,
+        captcha: state.authData.captchaUrl
     }
 };
 

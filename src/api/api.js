@@ -29,8 +29,8 @@ export const getAuthInfo = () => {
     return instance.get(`auth/me`);
 };
 
-export const login = (email, password, rememberMe) => {
-    return instance.post(`/auth/login`, {email, password, rememberMe})
+export const login = (email, password, rememberMe, captcha) => {
+    return instance.post(`/auth/login`, {email, password, rememberMe, captcha})
 };
 
 export const logout = () => {
@@ -58,4 +58,8 @@ export const uploadPhoto = (photo) => {
 
 export const uploadProfileData = (profileData) => {
     return instance.put('profile', profileData);
+};
+
+export const getCaptchaUrl = () => {
+    return instance.get('security/get-captcha-url');
 };
