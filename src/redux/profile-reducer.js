@@ -1,10 +1,11 @@
-import {setProfile, getUserStatus, updateStatus} from './../api/api';
+import {setProfile, getUserStatus, updateStatus, uploadPhoto} from './../api/api';
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT';
 const SET_CURRENT_PROFILE = 'SET_CURRENT_PROFILE';
 const SET_PROFILE_LOADING_STATE = 'SET_PROFILE_LOADING_STATE';
 const SET_PROFILE_STATUS = 'SET_PROFILE_STATUS';
+const UPLOAD_PHOTO = 'UPLOAD_PHOTO';
 
 const initialState =  {
     currentProfile: {},
@@ -53,6 +54,11 @@ export const profileReducer = (state = initialState, action) => {
                 ...state,
                 status: action.status
             }
+        case UPLOAD_PHOTO: 
+            return {
+                ...state,
+                currentProfile: {...state.currentProfile, photos: action.photos}
+            }
         default:
             return state
     }
@@ -82,20 +88,25 @@ const setProfileStatus = (status) => ({
     status: status
 });
 
+const uploadPhotoCreator = (photos) => ({
+    type: UPLOAD_PHOTO,
+    photos: photos
+});
+
 export const setProfileThunkCreator = (userId) => {
     return async (dispatch) => {
         dispatch(setProfileLoadingStateCreator(true));
         const response = await setProfile(userId);
         dispatch(setCurrentProfileCreator(response.data));
         dispatch(setProfileLoadingStateCreator(false));
-    }
+    };
 };
 
 export const setProfileStatusThunkCreator = (userId) => {
     return async (dispatch) => {
         const response = await getUserStatus(userId);
         dispatch(setProfileStatus(response.data));
-    }
+    };
 };
 
 export const updateProfileStatusThunkCreator = (status) => {
@@ -104,5 +115,14 @@ export const updateProfileStatusThunkCreator = (status) => {
         if (response.data.resultCode === 0) {
             dispatch(setProfileStatus(status));
         };
-    }
+    };
+};
+
+export const updatePhotoThunkCreator = (photo) => {
+    return async (dispatch) => {
+        const response = await uploadPhoto(photo);
+        if (response.data.resultCode === 0) {
+            dispatch(uploadPhotoCreator(response.data.data.photos));
+        };
+    };
 };

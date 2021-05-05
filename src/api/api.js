@@ -44,3 +44,14 @@ export const getUserStatus = (userId) => {
 export const updateStatus = (status) => {
     return instance.put('profile/status', {status: status});
 };
+
+export const uploadPhoto = (photo) => {
+    const formData = new FormData();
+    const imagefile = photo;
+    formData.append("image", imagefile);
+    return instance.put('profile/photo', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+    });
+};

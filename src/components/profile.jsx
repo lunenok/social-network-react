@@ -3,7 +3,23 @@ import {ProfileStatus} from './profile-status';
 import {Posts} from "./post";
 import {Loader} from './loader/loader';
 
-const ProfileInformation = ({currentProfile, status, updateProfileStatus}) => {
+const ProfileInformation = ({currentProfile, status, updateProfileStatus, updatePhoto, isOwner}) => {
+
+    const onPhotoUpdate = (evt) => {
+        const newPhoto = evt.target.files[0];
+        updatePhoto(newPhoto);
+    };
+
+    const renderUploadButton = () => {
+        if (isOwner) {
+            return (
+                <div>
+                    <label className='profile__img-label' htmlFor='upload'>Загрузить аватар</label>
+                    <input className='profile__img-button visually-hidden' onChange={onPhotoUpdate} type='file' id='upload'></input>        
+                </div>
+            )
+        };
+    };
 
     return (
         <div className="profile">
@@ -15,6 +31,7 @@ const ProfileInformation = ({currentProfile, status, updateProfileStatus}) => {
                     height="{150}"
                     className="profile__img"
                 />
+                {renderUploadButton()}
             </div>
             <div className="profile__info">
                 <div className="profile__name">
@@ -39,8 +56,8 @@ const ProfileInformation = ({currentProfile, status, updateProfileStatus}) => {
 }
 
 export const Profile = (props) => {
-    const {posts, newPostText, onUpdatePostText, addPost, currentProfile, isProfileLoading, status, updateProfileStatus} = props;
-
+    const {posts, newPostText, onUpdatePostText, addPost, currentProfile, isProfileLoading, status, updateProfileStatus, updatePhoto, isOwner} = props;
+    
     const onTextChange = (evt) => {
         const text = evt.target.value;
         onUpdatePostText(text);
@@ -52,7 +69,7 @@ export const Profile = (props) => {
 
     return (
         <div className="content">
-            {isProfileLoading ? <Loader/> :<ProfileInformation currentProfile={currentProfile} status={status} updateProfileStatus={updateProfileStatus}/>}
+            {isProfileLoading ? <Loader/> :<ProfileInformation currentProfile={currentProfile} status={status} updateProfileStatus={updateProfileStatus} updatePhoto={updatePhoto} isOwner={isOwner}/>}
             <div className="posts">
                 <h2 className="posts__title">
                     My posts
