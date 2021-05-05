@@ -34,7 +34,7 @@ export const LoginComponent = (props) => {
         props.setLoginThunkCreator({email: values.login, password: values.password, rememberMe: values.rememberMe, setStatus});
     };
 
-    if (props.isAuth) return <Redirect to={`/profile/${props.userId}`}/> 
+    if (props.isAuth) return <Redirect to={`/profile/`}/> 
 
     return (
         <div className='login__wrapper'>

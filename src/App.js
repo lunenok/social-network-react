@@ -26,7 +26,7 @@ class AppComponent extends React.Component {
                 <div className="main">
                     <HeaderContainer/>
                     <Menu/>
-                        <Route path="/profile/:userId" render={() =>
+                        <Route path="/profile/:userId?" render={() =>
                             <ProfileContainer/>
                         }/>
                         <Route path="/users" render={() =>

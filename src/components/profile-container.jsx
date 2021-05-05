@@ -11,11 +11,27 @@ import * as React from "react";
 import {withRouter} from "react-router";
 
 class ProfileComponent extends React.Component {
-    componentDidMount() {
-        const userId = this.props.match.params.userId
+    _refreshProfile() {
+        let userId = this.props.match.params.userId
+        if (!userId) {
+            userId = this.props.authorizedUserId;
+            if (!userId) {
+                this.props.history.push('/login');
+            };
+        };
         this.props.setCurrentProfile(userId);
         this.props.setProfileStatus(userId);
-    }
+    };
+
+    componentDidMount() {
+        this._refreshProfile();
+    };
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.match.params.userId !== this.props.match.params.userId) {
+            this._refreshProfile();
+        };
+    };
 
     render() {
         return (
@@ -42,7 +58,8 @@ const mapStateToProps = (state) => {
         isProfileLoading: state.profilePage.isProfileLoading,
         posts: state.profilePage.posts,
         newPostText: state.profilePage.newPostText,
-        status: state.profilePage.status
+        status: state.profilePage.status,
+        authorizedUserId: state.authData.id
     };
 };
 
