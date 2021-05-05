@@ -57,7 +57,7 @@ const mapDispatchToProps = {
     setSubscribingState, 
     getUserThunkCreator,
     followUserThunkCreator,
-    unFollowUserThunkCreator
+    unFollowUserThunkCreator,
 };
 
 export const UsersContainer = connect(mapPropsToState, mapDispatchToProps)(UsersComponent);

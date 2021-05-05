@@ -1,4 +1,4 @@
-import {setProfile, getUserStatus, updateStatus, uploadPhoto} from './../api/api';
+import {setProfile, getUserStatus, updateStatus, uploadPhoto, uploadProfileData} from './../api/api';
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT';
@@ -6,10 +6,12 @@ const SET_CURRENT_PROFILE = 'SET_CURRENT_PROFILE';
 const SET_PROFILE_LOADING_STATE = 'SET_PROFILE_LOADING_STATE';
 const SET_PROFILE_STATUS = 'SET_PROFILE_STATUS';
 const UPLOAD_PHOTO = 'UPLOAD_PHOTO';
+const UPLOAD_PROFILE_INFO = 'UPLOAD_PROFILE_INFO';
 
 const initialState =  {
     currentProfile: {},
     isProfileLoading: true,
+    isProfileDataUploadSucces: false,
     status: '',
     posts: [
         {
@@ -59,6 +61,11 @@ export const profileReducer = (state = initialState, action) => {
                 ...state,
                 currentProfile: {...state.currentProfile, photos: action.photos}
             }
+        case UPLOAD_PROFILE_INFO:
+            return {
+                ...state,
+                isProfileDataUploadSucces: action.isProfileDataUploadSucces
+            }
         default:
             return state
     }
@@ -93,6 +100,11 @@ const uploadPhotoCreator = (photos) => ({
     photos: photos
 });
 
+const uploadPrfileDataCreator = (status) => ({
+    type: UPLOAD_PROFILE_INFO,
+    isProfileDataUploadSucces: status
+});
+
 export const setProfileThunkCreator = (userId) => {
     return async (dispatch) => {
         dispatch(setProfileLoadingStateCreator(true));
@@ -125,4 +137,18 @@ export const updatePhotoThunkCreator = (photo) => {
             dispatch(uploadPhotoCreator(response.data.data.photos));
         };
     };
+};
+
+export const updateProfileInfoThunkCreator = (profileData, setStatus) => {
+    return async (dispatch, getState) => {
+        dispatch(uploadPrfileDataCreator(false));
+        const userId = getState().authData.id;
+        const response = await uploadProfileData(profileData);
+        if (response.data.resultCode === 0) {
+            dispatch(setProfileThunkCreator(userId));
+            dispatch(uploadPrfileDataCreator(true));
+        } else {
+            setStatus(response.data.messages);
+        };
+    }
 };

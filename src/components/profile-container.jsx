@@ -4,7 +4,8 @@ import {
     setProfileThunkCreator,
     setProfileStatusThunkCreator,
     updateProfileStatusThunkCreator,
-    updatePhotoThunkCreator
+    updatePhotoThunkCreator,
+    updateProfileInfoThunkCreator
 } from "../redux/profile-reducer";
 import {Profile} from "./profile";
 import {connect} from 'react-redux';
@@ -49,6 +50,8 @@ class ProfileComponent extends React.Component {
                 updateProfileStatus={this.props.updateProfileStatus}
                 updatePhoto={this.props.updatePhoto}
                 isOwner={!this.props.match.params.userId}
+                updateProfileInfoThunkCreator={this.props.updateProfileInfoThunkCreator}
+                isProfileDataUploadSucces={this.props.isProfileDataUploadSucces}
             />
         )
     }
@@ -62,7 +65,8 @@ const mapStateToProps = (state) => {
         posts: state.profilePage.posts,
         newPostText: state.profilePage.newPostText,
         status: state.profilePage.status,
-        authorizedUserId: state.authData.id
+        authorizedUserId: state.authData.id,
+        isProfileDataUploadSucces: state.profilePage.isProfileDataUploadSucces
     };
 };
 
@@ -86,6 +90,9 @@ const mapDispatchToProps = (dispatch) => {
         updatePhoto: (photo) => {
             dispatch(updatePhotoThunkCreator(photo))
         },
+        updateProfileInfoThunkCreator: (profileData, setStatus) => {
+            dispatch(updateProfileInfoThunkCreator(profileData, setStatus))
+        }
     }; 
 };
 

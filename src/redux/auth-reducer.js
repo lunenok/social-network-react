@@ -34,14 +34,13 @@ export const setLoginDataThunkCreator = () => async (dispatch) => {
     };
 };
 
-export const setLoginThunkCreator = ({email, password, rememberMe,setStatus}) => {
+export const setLoginThunkCreator = ({email, password, rememberMe, setStatus}) => {
     return async (dispatch) => {
         const response = await login(email, password, rememberMe);
         if (response.data.resultCode === 0) {
             dispatch(setLoginDataThunkCreator())
         } else {
             setStatus(response.data.messages[0]);
-            console.log(response.data.messages[0]);
         };
     };
 };

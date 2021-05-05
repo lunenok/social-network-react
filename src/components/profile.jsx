@@ -1,9 +1,13 @@
-import React from 'react'; 
+import React, {useState} from 'react'; 
 import {ProfileStatus} from './profile-status';
 import {Posts} from "./post";
 import {Loader} from './loader/loader';
+import {ProfileDescription} from './profile-description';
+import {ProfileEdit} from './profile-edit';
 
-const ProfileInformation = ({currentProfile, status, updateProfileStatus, updatePhoto, isOwner}) => {
+const ProfileInformation = ({currentProfile, status, updateProfileStatus, updatePhoto, isOwner, updateProfileInfoThunkCreator, isProfileDataUploadSucces}) => {
+
+    const [editMode, setEditMode] = useState(false);
 
     const onPhotoUpdate = (evt) => {
         const newPhoto = evt.target.files[0];
@@ -32,31 +36,21 @@ const ProfileInformation = ({currentProfile, status, updateProfileStatus, update
                     className="profile__img"
                 />
                 {renderUploadButton()}
+                {isOwner && <button onClick={()=>{setEditMode(true)}} className='profile__edit-button'>Редактировать профиль</button>}
             </div>
             <div className="profile__info">
                 <div className="profile__name">
                     {currentProfile.fullName}
                 </div>
                 <ProfileStatus status={status} updateProfileStatus={updateProfileStatus}/>
-                <div className="profile__description">
-                    Date of birth: 10 january
-                </div>
-                <div className="profile__description">
-                    City: Yekaterinburg
-                </div>
-                <div className="profile__description">
-                    URFU'15
-                </div>
-                <div className="profile__description">
-                    Web-site: none
-                </div>
+                {editMode ? <ProfileEdit currentProfile={currentProfile} updateProfileInfoThunkCreator={updateProfileInfoThunkCreator} setEditMode={setEditMode} isProfileDataUploadSucces={isProfileDataUploadSucces}/> : <ProfileDescription currentProfile={currentProfile}/>}
             </div>
         </div>
     )
 }
 
 export const Profile = (props) => {
-    const {posts, newPostText, onUpdatePostText, addPost, currentProfile, isProfileLoading, status, updateProfileStatus, updatePhoto, isOwner} = props;
+    const {posts, newPostText, onUpdatePostText, addPost, currentProfile, isProfileLoading, status, updateProfileStatus, updatePhoto, isOwner, updateProfileInfoThunkCreator, isProfileDataUploadSucces} = props;
     
     const onTextChange = (evt) => {
         const text = evt.target.value;
@@ -69,7 +63,7 @@ export const Profile = (props) => {
 
     return (
         <div className="content">
-            {isProfileLoading ? <Loader/> :<ProfileInformation currentProfile={currentProfile} status={status} updateProfileStatus={updateProfileStatus} updatePhoto={updatePhoto} isOwner={isOwner}/>}
+            {isProfileLoading ? <Loader/> : <ProfileInformation currentProfile={currentProfile} status={status} updateProfileStatus={updateProfileStatus} updatePhoto={updatePhoto} isOwner={isOwner} updateProfileInfoThunkCreator={updateProfileInfoThunkCreator} isProfileDataUploadSucces={isProfileDataUploadSucces}/>}
             <div className="posts">
                 <h2 className="posts__title">
                     My posts

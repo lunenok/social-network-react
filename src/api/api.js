@@ -55,3 +55,7 @@ export const uploadPhoto = (photo) => {
           }
     });
 };
+
+export const uploadProfileData = (profileData) => {
+    return instance.put('profile', profileData);
+};
