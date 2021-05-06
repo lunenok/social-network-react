@@ -20,9 +20,10 @@ class ProfileComponent extends React.Component {
             if (!userId) {
                 this.props.history.push('/login');
             };
+        } else {
+            this.props.setCurrentProfile(userId);
+            this.props.setProfileStatus(userId);
         };
-        this.props.setCurrentProfile(userId);
-        this.props.setProfileStatus(userId);
     };
 
     componentDidMount() {
