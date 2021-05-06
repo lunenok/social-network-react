@@ -1,4 +1,5 @@
-import {getUsers, followUser as folloUserRequest, unfollowUser as unfollowUserRequest} from './../api/api';
+import {getUsers, followUser as folloUserRequest, unfollowUser as unfollowUserRequest} from '../api/api';
+import { UserType } from '../types/types';
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -9,15 +10,17 @@ const SET_LOAD_STATE = 'SET_LOAD_STATE';
 const SET_SUBSCRIBING_STATE = 'SET_SUBSCRIBING_STATE';
 
 const initialState = {
-    users: [],
+    users: [] as Array<UserType>,
     currentPage: 1,
     usersCount: 0,
     usersToShow: 5,
     isLoading: true,
-    subscribingInProgress: [],
+    subscribingInProgress: [] as Array<number>,
 };
 
-export const usersReducer = (state = initialState, action) => {
+type InitialState = typeof initialState;
+
+export const usersReducer = (state = initialState, action: any): InitialState => {
     switch (action.type) {
         case FOLLOW:
             return {
@@ -71,43 +74,79 @@ export const usersReducer = (state = initialState, action) => {
     }
 }
 
-export const followUser = (userId) => ({
+type FollowUserActionType = {
+    type: typeof FOLLOW,
+    userId: number
+};
+
+export const followUser = (userId: number): FollowUserActionType => ({
     type: FOLLOW,
     userId: userId
 });
 
-export const unfollowUser = (userId) => ({
+type UnfollowUserActionType = {
+    type: typeof UNFOLLOW,
+    userId: number
+};
+
+export const unfollowUser = (userId: number): UnfollowUserActionType => ({
     type: UNFOLLOW,
     userId: userId
 });
 
-export const setUsers = (users) => ({
+type SetUserActionType = {
+    type: typeof SET_USERS,
+    users: Array<UserType>
+};
+
+export const setUsers = (users: Array<UserType>): SetUserActionType => ({
     type: SET_USERS,
     users: users
 });
 
-export const setCurrentPage = (page) => ({
+type SetCurrentPageActionType = {
+    type: typeof SET_CURRENT_PAGE,
+    currentPage: number
+};
+
+export const setCurrentPage = (page: number): SetCurrentPageActionType => ({
     type: SET_CURRENT_PAGE,
     currentPage: page,
 });
 
-export const setUsersCount = (count) => ({
+type SetUsersCountActionType = {
+    type: typeof SET_USERS_COUNT,
+    usersCount: number
+};
+
+export const setUsersCount = (count: number): SetUsersCountActionType => ({
     type: SET_USERS_COUNT,
     usersCount: count
 });
 
-export const setLoaderState = (isLoading) => ({
+type SetLoaderStateActionType = {
+    type: typeof SET_LOAD_STATE,
+    isLoading: boolean
+};
+
+export const setLoaderState = (isLoading: boolean): SetLoaderStateActionType => ({
     type: SET_LOAD_STATE,
     isLoading: isLoading
 });
 
-export const setSubscribingState = (isSubscriging ,userId) => ({
+type SetSubscribingStateActionType = {
+    type: typeof SET_SUBSCRIBING_STATE,
+    isSubscriging: boolean,
+    userId: number
+};
+
+export const setSubscribingState = (isSubscriging: boolean ,userId: number): SetSubscribingStateActionType => ({
     type: SET_SUBSCRIBING_STATE,
     isSubscriging: isSubscriging,
     userId: userId
 });
 
-export const followUserThunkCreator = (userId) => async (dispatch) =>{
+export const followUserThunkCreator = (userId: number) => async (dispatch: any) =>{
     dispatch(setSubscribingState(true, userId));
     const response = await folloUserRequest(userId);
     if (response.data.resultCode === 0) {
@@ -116,7 +155,7 @@ export const followUserThunkCreator = (userId) => async (dispatch) =>{
     dispatch(setSubscribingState(false, userId)); 
 };
 
-export const unFollowUserThunkCreator = (userId) => async (dispatch) =>{
+export const unFollowUserThunkCreator = (userId: number) => async (dispatch: any) =>{
     dispatch(setSubscribingState(true, userId));
     const response = await unfollowUserRequest(userId);
     if (response.data.resultCode === 0) {
@@ -125,8 +164,8 @@ export const unFollowUserThunkCreator = (userId) => async (dispatch) =>{
     dispatch(setSubscribingState(false, userId)); 
 };
 
-export const getUserThunkCreator = (currentPage, usersToShow) => {
-    return async (dispatch) => {
+export const getUserThunkCreator = (currentPage: number, usersToShow: number) => {
+    return async (dispatch: any) => {
         dispatch(setLoaderState(true));
         const data = await getUsers(currentPage, usersToShow)
         dispatch(setUsers(data.items));

@@ -1,4 +1,5 @@
-import {setProfile, getUserStatus, updateStatus, uploadPhoto, uploadProfileData} from './../api/api';
+import {setProfile, getUserStatus, updateStatus, uploadPhoto, uploadProfileData} from '../api/api';
+import { PostType, ProfileType } from '../types/types';
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT';
@@ -8,8 +9,10 @@ const SET_PROFILE_STATUS = 'SET_PROFILE_STATUS';
 const UPLOAD_PHOTO = 'UPLOAD_PHOTO';
 const UPLOAD_PROFILE_INFO = 'UPLOAD_PROFILE_INFO';
 
+
+
 const initialState =  {
-    currentProfile: {},
+    currentProfile: {} as ProfileType,
     isProfileLoading: true,
     isProfileDataUploadSucces: false,
     status: '',
@@ -24,11 +27,13 @@ const initialState =  {
             text: 'It\'s our new program!',
             likes: 2
         }
-    ],
+    ] as Array<PostType>,
         newPostText: ''
 };
 
-export const profileReducer = (state = initialState, action) => {
+type InitialState = typeof initialState;
+
+export const profileReducer = (state = initialState, action: any): InitialState => {
     switch (action.type) {
         case ADD_POST:
             return {
@@ -71,7 +76,12 @@ export const profileReducer = (state = initialState, action) => {
     }
 };
 
-export const updatePostActionCreator = (text) => ({
+type UpdatePostActionType = {
+    type: typeof UPDATE_POST_TEXT,
+    newText: string
+}
+
+export const updatePostActionCreator = (text: string): UpdatePostActionType => ({
     type: UPDATE_POST_TEXT,
     newText: text
 });
@@ -80,33 +90,58 @@ export const addPostActionCreator = () => ({
     type: ADD_POST
 });
 
-const setCurrentProfileCreator = (profile) => ({
+type SetCurrentProfileActionType = {
+    type: typeof SET_CURRENT_PROFILE,
+    currentProfile: ProfileType
+};
+
+const setCurrentProfileCreator = (profile: ProfileType): SetCurrentProfileActionType => ({
     type: SET_CURRENT_PROFILE,
     currentProfile: profile
 });
 
-const setProfileLoadingStateCreator = (isLoading) => ({
+type SetProfileLoadingStateActionType = {
+    type: typeof SET_PROFILE_LOADING_STATE,
+    isProfileLoading: boolean
+};
+
+const setProfileLoadingStateCreator = (isLoading: boolean): SetProfileLoadingStateActionType => ({
    type: SET_PROFILE_LOADING_STATE,
    isProfileLoading: isLoading
 });
 
-const setProfileStatus = (status) => ({
+type SetProfileStatusActionType = {
+    type: typeof SET_PROFILE_STATUS,
+    status: string
+};
+
+const setProfileStatus = (status: string): SetProfileStatusActionType => ({
     type: SET_PROFILE_STATUS,
     status: status
 });
 
-const uploadPhotoCreator = (photos) => ({
+type UploadPhotoActionType = {
+    type: typeof UPLOAD_PHOTO,
+    photos: any
+};
+
+const uploadPhotoCreator = (photos: any): UploadPhotoActionType => ({
     type: UPLOAD_PHOTO,
     photos: photos
 });
 
-const uploadPrfileDataCreator = (status) => ({
+type UploadProfileDataActionType = {
+    type: typeof UPLOAD_PROFILE_INFO,
+    isProfileDataUploadSucces: boolean
+}
+
+const uploadProfileDataCreator = (uploadStatus: boolean): UploadProfileDataActionType => ({
     type: UPLOAD_PROFILE_INFO,
-    isProfileDataUploadSucces: status
+    isProfileDataUploadSucces: uploadStatus
 });
 
-export const setProfileThunkCreator = (userId) => {
-    return async (dispatch) => {
+export const setProfileThunkCreator = (userId: number) => {
+    return async (dispatch: any) => {
         dispatch(setProfileLoadingStateCreator(true));
         const response = await setProfile(userId);
         dispatch(setCurrentProfileCreator(response.data));
@@ -114,15 +149,15 @@ export const setProfileThunkCreator = (userId) => {
     };
 };
 
-export const setProfileStatusThunkCreator = (userId) => {
-    return async (dispatch) => {
+export const setProfileStatusThunkCreator = (userId: number) => {
+    return async (dispatch: any) => {
         const response = await getUserStatus(userId);
         dispatch(setProfileStatus(response.data));
     };
 };
 
-export const updateProfileStatusThunkCreator = (status) => {
-    return async (dispatch) => {
+export const updateProfileStatusThunkCreator = (status: string) => {
+    return async (dispatch: any) => {
         const response = await updateStatus(status);
         if (response.data.resultCode === 0) {
             dispatch(setProfileStatus(status));
@@ -130,8 +165,8 @@ export const updateProfileStatusThunkCreator = (status) => {
     };
 };
 
-export const updatePhotoThunkCreator = (photo) => {
-    return async (dispatch) => {
+export const updatePhotoThunkCreator = (photo: any) => {
+    return async (dispatch: any) => {
         const response = await uploadPhoto(photo);
         if (response.data.resultCode === 0) {
             dispatch(uploadPhotoCreator(response.data.data.photos));
@@ -139,14 +174,14 @@ export const updatePhotoThunkCreator = (photo) => {
     };
 };
 
-export const updateProfileInfoThunkCreator = (profileData, setStatus) => {
-    return async (dispatch, getState) => {
-        dispatch(uploadPrfileDataCreator(false));
+export const updateProfileInfoThunkCreator = (profileData: ProfileType, setStatus: any) => {
+    return async (dispatch: any, getState: any) => {
+        dispatch(uploadProfileDataCreator(false));
         const userId = getState().authData.id;
         const response = await uploadProfileData(profileData);
         if (response.data.resultCode === 0) {
             dispatch(setProfileThunkCreator(userId));
-            dispatch(uploadPrfileDataCreator(true));
+            dispatch(uploadProfileDataCreator(true));
         } else {
             setStatus(response.data.messages);
         };

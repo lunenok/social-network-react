@@ -32,7 +32,7 @@ export const LoginComponent = (props) => {
     };
 
     const onFormSubmit = (values, {setStatus}) => {
-        props.setLoginThunkCreator({email: values.login, password: values.password, rememberMe: values.rememberMe, captcha: values.captcha, setStatus});
+        props.setLoginThunkCreator(values.login, values.password, values.rememberMe, values.captcha, setStatus);
     };
 
     if (props.isAuth) return <Redirect to={`/profile/`}/> 
