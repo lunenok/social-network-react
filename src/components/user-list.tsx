@@ -1,13 +1,19 @@
 import React from 'react';
-import {Loader} from './loader/loader';
 import {NavLink} from 'react-router-dom';
-import {Paginator} from './paginator';
+import { UserType } from '../types/types';
 
-const UsersList = ({props}) => {
+type PropsType = {
+    users: Array<UserType>,
+    subscribingInProgress: Array<number>,
+    followUserThunkCreator: (userId: number) => void,
+    unFollowUserThunkCreator: (userId: number) => void
+};
+
+export const UsersList: React.FC<PropsType> = ({users, subscribingInProgress, followUserThunkCreator, unFollowUserThunkCreator}) => {
     return (
         <React.Fragment>
             <ul className="users__list">
-                {props.users.map((user) => {
+                {users.map((user) => {
                     return (
                         <li key={user.id} className="users__item">
                             <NavLink to={'profile/' + user.id}>
@@ -23,18 +29,18 @@ const UsersList = ({props}) => {
                             </NavLink>
                             {user.followed ?
                                 <button 
-                                    disabled={props.subscribingInProgress.some(id => id === user.id)}
+                                    disabled={subscribingInProgress.some(id => id === user.id)}
                                     onClick={()=>{
-                                        props.unFollowUserThunkCreator(user.id);
+                                        unFollowUserThunkCreator(user.id);
                                     }} 
                                     className="users__follow-button"
                                 >
                                   unfollow
                                 </button> :
                                 <button
-                                    disabled={props.subscribingInProgress.some(id => id === user.id)}
+                                    disabled={subscribingInProgress.some(id => id === user.id)}
                                     onClick={()=>{
-                                        props.followUserThunkCreator(user.id);
+                                        followUserThunkCreator(user.id);
                                     }} 
                                     className="users__follow-button"
                                 >
@@ -62,13 +68,4 @@ const UsersList = ({props}) => {
             </ul>
         </React.Fragment>
     );
-}
-
-export const Users = (props) => {
-    return (
-        <div className="users">
-            <Paginator itemsCount={props.usersCount} itemsToShow={props.usersToShow} currentPage={props.currentPage} onPageClick={props.onPageClick}/>
-            {props.isLoading ? <Loader/> : <UsersList props={props}/>}
-        </div>
-    )
 }

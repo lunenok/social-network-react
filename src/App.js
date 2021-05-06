@@ -10,7 +10,7 @@ import {UsersContainer} from './components/users-container';
 import {HeaderContainer} from './components/header-container';
 import {Login} from './components/login';
 import {setInitializeDataThunkCreator} from './redux/app-reducer';
-import { Loader } from './components/loader/loader';
+import { Loader } from './components/loader';
 class AppComponent extends React.Component {
     componentDidMount() {
         this.props.setInitializeDataThunkCreator();

@@ -3,16 +3,14 @@ import {Header} from "./header";
 import {connect} from 'react-redux';
 import * as React from "react";
 
-class HeaderComponent extends React.Component {
-    render() {
-        return (
-            <Header
-                loginData={this.props.loginData}
-                setLogoutThunkCreator={this.props.setLogoutThunkCreator}
-            />
-        )
-    }
-}
+const HeaderComponent = ({loginData, setLogoutThunkCreator}) => {
+    return (
+        <Header
+            loginData={loginData}
+            setLogoutThunkCreator={setLogoutThunkCreator}
+        />
+    )
+};
 
 const mapStateToProps = (state) => {
     return {

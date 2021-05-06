@@ -1,4 +1,6 @@
-export const getUsers = (state) => {
+import { AppStateType } from "./store";
+
+export const getUsers = (state: AppStateType) => {
     return state.userPage.users;
 };
 
@@ -8,22 +10,22 @@ export const getUsers = (state) => {
 //     return users.filter(u => true);
 // });
 
-export const getCurrentPage = (state) => {
+export const getCurrentPage = (state: AppStateType) => {
     return state.userPage.currentPage;
 };
 
-export const getUsersCount = (state) => {
+export const getUsersCount = (state: AppStateType) => {
     return state.userPage.usersCount;
 };
 
-export const getUsersToShow = (state) => {
+export const getUsersToShow = (state: AppStateType) => {
     return state.userPage.usersToShow;
 };
 
-export const getIsLoading = (state) => {
+export const getIsLoading = (state: AppStateType) => {
     return state.userPage.isLoading;
 };
 
-export const getSubscribingInProgress = (state) => {
+export const getSubscribingInProgress = (state: AppStateType) => {
     return state.userPage.subscribingInProgress;
 };

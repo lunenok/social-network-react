@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const Developing = (props) => {
+export const Developing = () => {
     return (
         <div className="content">
             <div className="developing__wrapper">

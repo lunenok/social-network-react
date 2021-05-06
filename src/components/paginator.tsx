@@ -1,8 +1,16 @@
 import React, {useState} from 'react';
 
-export const Paginator = ({itemsCount, itemsToShow, currentPage = 1, onPageClick, portionSize = 10}) => {
+type PropTypes = {
+    itemsCount: number,
+    itemsToShow: number,
+    currentPage?: number,
+    onPageClick: (page: number) => void,
+    portionSize?: number
+};
+
+export const Paginator: React.FC<PropTypes> = ({itemsCount, itemsToShow, currentPage = 1, onPageClick, portionSize = 10}) => {
     let pagesCount = Math.ceil(itemsCount / itemsToShow);
-    let pages = [];
+    let pages: Array<number> = [];
     for (let i = 1; i <= pagesCount; i++) {pages.push(i);}
 
     const [currentPortion, setCurrentPortion] = useState(1);
@@ -19,11 +27,10 @@ export const Paginator = ({itemsCount, itemsToShow, currentPage = 1, onPageClick
                     return (
                         <span
                             key={item}
-                            id={item}
                             onClick={(evt) => {
-                                onPageClick(evt.target.id)
+                                onPageClick(item)
                             }}
-                            className={`users__page ${parseInt(currentPage) === parseInt(item) ? 'users__page--active' : ''}`}
+                            className={`users__page ${currentPage === item ? 'users__page--active' : ''}`}
                         >
                             {item}
                         </span>

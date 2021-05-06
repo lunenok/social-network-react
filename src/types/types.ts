@@ -36,3 +36,13 @@ export type UserType = {
     followed: boolean,
     photos: PhotosType
 };
+
+export type DialogNameType = {
+    id: number,
+    name: string
+};
+
+export type MessageType = {
+    id: number,
+    message: string;
+};

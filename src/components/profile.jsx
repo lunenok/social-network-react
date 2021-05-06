@@ -1,7 +1,7 @@
 import React, {useState} from 'react'; 
 import {ProfileStatus} from './profile-status';
 import {Posts} from "./post";
-import {Loader} from './loader/loader';
+import {Loader} from './loader';
 import {ProfileDescription} from './profile-description';
 import {ProfileEdit} from './profile-edit';
 
