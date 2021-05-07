@@ -1,5 +1,7 @@
+import { ThunkAction } from 'redux-thunk';
 import {getUsers, followUser as folloUserRequest, unfollowUser as unfollowUserRequest} from '../api/api';
 import { UserType } from '../types/types';
+import { AppStateType } from './store';
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -20,7 +22,11 @@ const initialState = {
 
 type InitialState = typeof initialState;
 
-export const usersReducer = (state = initialState, action: any): InitialState => {
+type ActionsType = FollowUserActionType | UnfollowUserActionType | SetUserActionType | 
+    SetCurrentPageActionType | SetUsersCountActionType | SetLoaderStateActionType |
+    SetSubscribingStateActionType;
+
+export const usersReducer = (state = initialState, action: ActionsType): InitialState => {
     switch (action.type) {
         case FOLLOW:
             return {
@@ -146,7 +152,7 @@ export const setSubscribingState = (isSubscriging: boolean ,userId: number): Set
     userId: userId
 });
 
-export const followUserThunkCreator = (userId: number) => async (dispatch: any) =>{
+export const followUserThunkCreator = (userId: number): ThunkAction<void, AppStateType, unknown, ActionsType> => async (dispatch) =>{
     dispatch(setSubscribingState(true, userId));
     const response = await folloUserRequest(userId);
     if (response.data.resultCode === 0) {
@@ -155,7 +161,7 @@ export const followUserThunkCreator = (userId: number) => async (dispatch: any) 
     dispatch(setSubscribingState(false, userId)); 
 };
 
-export const unFollowUserThunkCreator = (userId: number) => async (dispatch: any) =>{
+export const unFollowUserThunkCreator = (userId: number): ThunkAction<void, AppStateType, unknown, ActionsType> => async (dispatch) =>{
     dispatch(setSubscribingState(true, userId));
     const response = await unfollowUserRequest(userId);
     if (response.data.resultCode === 0) {
@@ -164,8 +170,8 @@ export const unFollowUserThunkCreator = (userId: number) => async (dispatch: any
     dispatch(setSubscribingState(false, userId)); 
 };
 
-export const getUserThunkCreator = (currentPage: number, usersToShow: number) => {
-    return async (dispatch: any) => {
+export const getUserThunkCreator = (currentPage: number, usersToShow: number): ThunkAction<void, AppStateType, unknown, ActionsType> => {
+    return async (dispatch) => {
         dispatch(setLoaderState(true));
         const data = await getUsers(currentPage, usersToShow)
         dispatch(setUsers(data.items));

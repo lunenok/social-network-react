@@ -1,20 +1,20 @@
+import { ThunkAction } from 'redux-thunk';
 import {setLoginDataThunkCreator} from './auth-reducer';
+import { AppStateType } from './store';
 
-const INITIALIZE: string = 'INITIALIZE';
+const INITIALIZE = 'INITIALIZE';
 
-interface State {
-    initialized: boolean,
-}; 
-
-interface Action {
+type InitializeActionType = {
     type: typeof INITIALIZE,
 };
 
-const initialState: State = {
+const initialState = {
     initialized: false
 };
 
-export const appReducer = (state = initialState, action: Action): State => {
+type InitialState = typeof initialState;
+
+export const appReducer = (state = initialState, action: InitializeActionType): InitialState => {
     switch (action.type) {
         case INITIALIZE:
             return {
@@ -26,11 +26,11 @@ export const appReducer = (state = initialState, action: Action): State => {
     }
 }
 
-const initializeCreator = (): Action => ({
+const initializeCreator = (): InitializeActionType => ({
     type: INITIALIZE,
 });
 
-export const setInitializeDataThunkCreator = () => async (dispatch: Function) => {
+export const setInitializeDataThunkCreator = (): ThunkAction<void, AppStateType, unknown, InitializeActionType> => async (dispatch) => {
     await dispatch(setLoginDataThunkCreator());
     await dispatch(initializeCreator());
 };

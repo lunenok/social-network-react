@@ -18,7 +18,7 @@ const initialState = {
 
 type InitialState = typeof initialState;
 
-export const dialogsReducer = (state = initialState, action: any): InitialState => {
+export const dialogsReducer = (state = initialState, action: SendMessageActionType): InitialState => {
     switch (action.type) {
         case SEND_MESSAGE:
             const nextId = state.messages.length + 1;

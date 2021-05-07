@@ -1,5 +1,7 @@
+import { ThunkAction } from 'redux-thunk';
 import {setProfile, getUserStatus, updateStatus, uploadPhoto, uploadProfileData} from '../api/api';
 import { PostType, ProfileType } from '../types/types';
+import { AppStateType } from './store';
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT';
@@ -32,8 +34,10 @@ const initialState =  {
 };
 
 type InitialState = typeof initialState;
+type ActionsType = UpdatePostActionType | SetCurrentProfileActionType | SetProfileLoadingStateActionType |
+    SetProfileStatusActionType | UploadPhotoActionType | UploadProfileDataActionType | AddPostActionType
 
-export const profileReducer = (state = initialState, action: any): InitialState => {
+export const profileReducer = (state = initialState, action: ActionsType): InitialState => {
     switch (action.type) {
         case ADD_POST:
             return {
@@ -86,7 +90,11 @@ export const updatePostActionCreator = (text: string): UpdatePostActionType => (
     newText: text
 });
 
-export const addPostActionCreator = () => ({
+type AddPostActionType = {
+    type: typeof ADD_POST
+};
+
+export const addPostActionCreator = (): AddPostActionType => ({
     type: ADD_POST
 });
 
@@ -140,8 +148,8 @@ const uploadProfileDataCreator = (uploadStatus: boolean): UploadProfileDataActio
     isProfileDataUploadSucces: uploadStatus
 });
 
-export const setProfileThunkCreator = (userId: number) => {
-    return async (dispatch: any) => {
+export const setProfileThunkCreator = (userId: number | null): ThunkAction<void, AppStateType, unknown, ActionsType> => { // Тут надо пофиксить, null быть не может, будет падать
+    return async (dispatch) => {
         dispatch(setProfileLoadingStateCreator(true));
         const response = await setProfile(userId);
         dispatch(setCurrentProfileCreator(response.data));
@@ -149,15 +157,15 @@ export const setProfileThunkCreator = (userId: number) => {
     };
 };
 
-export const setProfileStatusThunkCreator = (userId: number) => {
-    return async (dispatch: any) => {
+export const setProfileStatusThunkCreator = (userId: number): ThunkAction<void, AppStateType, unknown, ActionsType> => {
+    return async (dispatch) => {
         const response = await getUserStatus(userId);
         dispatch(setProfileStatus(response.data));
     };
 };
 
-export const updateProfileStatusThunkCreator = (status: string) => {
-    return async (dispatch: any) => {
+export const updateProfileStatusThunkCreator = (status: string): ThunkAction<void, AppStateType, unknown, ActionsType> => {
+    return async (dispatch) => {
         const response = await updateStatus(status);
         if (response.data.resultCode === 0) {
             dispatch(setProfileStatus(status));
@@ -165,8 +173,8 @@ export const updateProfileStatusThunkCreator = (status: string) => {
     };
 };
 
-export const updatePhotoThunkCreator = (photo: any) => {
-    return async (dispatch: any) => {
+export const updatePhotoThunkCreator = (photo: any): ThunkAction<void, AppStateType, unknown, ActionsType> => {
+    return async (dispatch) => {
         const response = await uploadPhoto(photo);
         if (response.data.resultCode === 0) {
             dispatch(uploadPhotoCreator(response.data.data.photos));
@@ -174,8 +182,8 @@ export const updatePhotoThunkCreator = (photo: any) => {
     };
 };
 
-export const updateProfileInfoThunkCreator = (profileData: ProfileType, setStatus: any) => {
-    return async (dispatch: any, getState: any) => {
+export const updateProfileInfoThunkCreator = (profileData: ProfileType, setStatus: any): ThunkAction<void, AppStateType, unknown, ActionsType> => {
+    return async (dispatch, getState) => {
         dispatch(uploadProfileDataCreator(false));
         const userId = getState().authData.id;
         const response = await uploadProfileData(profileData);

@@ -1,4 +1,6 @@
+import { ThunkAction } from 'redux-thunk';
 import {getAuthInfo, login, logout, getCaptchaUrl} from '../api/api';
+import { AppStateType } from './store';
 
 const SET_LOGIN_DATA = 'SET_LOGIN_DATA';
 const SET_CAPTCHA_URL = 'SET_CAPTCHA_URL';
@@ -12,8 +14,9 @@ const initialState = {
 };
 
 type InitialStateType = typeof initialState;
+type ActionsType = SetLoginDataActionType | SetCaptchaUrlActionType;
 
-export const authReducer = (state = initialState, action: any): InitialStateType => {
+export const authReducer = (state = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
         case SET_LOGIN_DATA:
             return {
@@ -54,7 +57,7 @@ const setCaptchaUrl = (url: string): SetCaptchaUrlActionType => ({
     captchaUrl: url
 });
 
-export const setLoginDataThunkCreator = () => async (dispatch: any) => {
+export const setLoginDataThunkCreator = (): ThunkAction<void, AppStateType, unknown, ActionsType> => async (dispatch) => {
     const response = await getAuthInfo()
     const {email, id, login} = response.data.data;
     if (response.data.resultCode === 0) {
@@ -62,8 +65,12 @@ export const setLoginDataThunkCreator = () => async (dispatch: any) => {
     };
 };
 
-export const setLoginThunkCreator = (email: string | null, password: string | null, rememberMe: boolean, captcha: string | null, setStatus: any) => {
-    return async (dispatch: any) => {
+export const setLoginThunkCreator = (email: string | null, 
+    password: string | null, 
+    rememberMe: boolean, 
+    captcha: string | null, 
+    setStatus: any): ThunkAction<void, AppStateType, unknown, ActionsType> => {
+    return async (dispatch) => {
         const response = await login(email, password, rememberMe, captcha);
         if (response.data.resultCode === 0) {
             dispatch(setLoginDataThunkCreator())
@@ -77,8 +84,8 @@ export const setLoginThunkCreator = (email: string | null, password: string | nu
     };
 };
 
-export const setLogoutThunkCreator = () => {
-    return async (dispatch: any) => {
+export const setLogoutThunkCreator = (): ThunkAction<void, AppStateType, unknown, ActionsType> => {
+    return async (dispatch) => {
         const response = await logout();
         if (response.data.resultCode === 0) {
             dispatch(setLoginDataCreator(null, null, null, false));
