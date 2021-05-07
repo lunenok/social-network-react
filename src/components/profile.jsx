@@ -50,7 +50,9 @@ const ProfileInformation = ({currentProfile, status, updateProfileStatus, update
 }
 
 export const Profile = (props) => {
-    const {posts, newPostText, onUpdatePostText, addPost, currentProfile, isProfileLoading, status, updateProfileStatus, updatePhoto, isOwner, updateProfileInfoThunkCreator, isProfileDataUploadSucces} = props;
+    const {posts, newPostText, onUpdatePostText, addPost, currentProfile, 
+        isProfileLoading, status, updateProfileStatus, updatePhoto, 
+        isOwner, updateProfileInfoThunkCreator, isProfileDataUploadSucces} = props;
     
     const onTextChange = (evt) => {
         const text = evt.target.value;

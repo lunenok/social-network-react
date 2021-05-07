@@ -3,11 +3,23 @@ import {Message} from "./message";
 import {Dialog} from "./dialog";
 import { Redirect } from 'react-router';
 import { Formik, Field, Form } from 'formik';
+import {DialogNameType, MessageType} from './../types/types';
 
-export const Dialogs = (props) => {
-    const {dialogsName, messages, onMessageSendButtonClick} = props;
+type PropsType = {
+    dialogsName: Array<DialogNameType>,
+    messages: Array<MessageType>,
+    isAuth: boolean,
+    onMessageSendButtonClick: (values: string) => void
+};
 
-    const onSendButtonClick = (values) => {
+export const Dialogs: React.FC<PropsType> = (props) => {
+    const {dialogsName, messages, isAuth, onMessageSendButtonClick} = props;
+
+    type ValueType = {
+        message: string
+    };
+
+    const onSendButtonClick = (values: ValueType) => {
         onMessageSendButtonClick(values.message);
     }
 
@@ -15,7 +27,7 @@ export const Dialogs = (props) => {
         message: ''
     };
 
-    if (!props.isAuth) return <Redirect to='/login'/>
+    if (!isAuth) return <Redirect to='/login'/>
 
     return (
         <div className="dialogs__wrapper">
@@ -27,7 +39,7 @@ export const Dialogs = (props) => {
             <div className="messages">
                 <div className="messages__container">
                     {messages.map((message) =>
-                        <Message key={message.id} message={message.message}/>
+                        <Message key={message.id} id={message.id} message={message.message}/>
                     )}
                 </div>
                 <div className="messages__new-container">

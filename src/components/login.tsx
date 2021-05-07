@@ -1,18 +1,27 @@
 import React from 'react';
 import { Formik, Field, Form } from 'formik';
-import {setLoginThunkCreator} from './../redux/auth-reducer';
+import {setLoginThunkCreator} from '../redux/auth-reducer';
 import {connect} from 'react-redux';
 import { Redirect } from 'react-router';
+import { AppStateType } from '../redux/store';
 
-export const LoginComponent = (props) => {
+type PropsType = {
+    setLoginThunkCreator: (login: string, password: string, rememberMe: boolean, captcha: string | null, setStatus: any) => void,
+    isAuth: boolean,
+    captcha: string | null
+};
+
+export const LoginComponent: React.FC<PropsType> = ({setLoginThunkCreator, isAuth, captcha}) => {
     const initialValues = {
         login: '',
         password: '',
         rememberMe: false,
-        captcha: null
+        captcha: null as string | null
     };
 
-    const validateLogin = (value) => {
+    type InitialValues = typeof initialValues;
+
+    const validateLogin = (value: string | null) => {
         let error;
         if (!value) {
             error = 'Required';
@@ -20,22 +29,21 @@ export const LoginComponent = (props) => {
         return error;
     };
 
-    const validatePassword = (value) => {
+    const validatePassword = (value: string | null) => {
         let error;
         if (!value) {
             error = 'Required'
-        };
-        if (value.length < 8 && value) {
+        } else if (value.length < 8) {
             error = 'Should be more than 8 characters'
         };
         return error;
     };
 
-    const onFormSubmit = (values, {setStatus}) => {
-        props.setLoginThunkCreator(values.login, values.password, values.rememberMe, values.captcha, setStatus);
+    const onFormSubmit = (values: InitialValues, {setStatus}: any) => {
+        setLoginThunkCreator(values.login, values.password, values.rememberMe, values.captcha, setStatus);
     };
 
-    if (props.isAuth) return <Redirect to={`/profile/`}/> 
+    if (isAuth) return <Redirect to={`/profile/`}/> 
 
     return (
         <div className='login__wrapper'>
@@ -58,9 +66,9 @@ export const LoginComponent = (props) => {
                             <Field className='login__input--remember' id='rememberMe' name='rememberMe' type='checkbox' />
                         </div>
 
-                        {props.captcha && 
+                        {captcha && 
                             <div>
-                                <img src={props.captcha} alt='captcha'></img>
+                                <img src={captcha} alt='captcha'></img>
                                 <div className="login__input-container">
                                     <label className='login__label' htmlFor='captcha'>Captcha</label>
                                     <Field className='login__input' id='captcha' name='captcha' type='text' />
@@ -79,7 +87,7 @@ export const LoginComponent = (props) => {
     );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: AppStateType) => {
     return {
         isAuth: state.authData.isAuth,
         userId: state.authData.id,

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const Developing = () => {
+export const Developing: React.FC = () => {
     return (
         <div className="content">
             <div className="developing__wrapper">

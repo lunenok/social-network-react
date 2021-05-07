@@ -1,13 +1,19 @@
 import React from 'react';
 import {NavLink} from "react-router-dom";
+import { AppStateType } from '../redux/store';
 
-export const Header = (props) => {
+type PropsType = {
+    loginData: AppStateType['authData'],
+    setLogoutThunkCreator: () => void
+};
+
+export const Header: React.FC<PropsType> = ({loginData, setLogoutThunkCreator}) => {
 
     const renderLoginButton = () => {
-        if (props.loginData.isAuth) {
+        if (loginData.isAuth) {
             return (
                 <React.Fragment>
-                    <span>{props.loginData.login}</span>
+                    <span>{loginData.login}</span>
                 </React.Fragment>
             )
         } else {
@@ -24,7 +30,7 @@ export const Header = (props) => {
             <h1>My social media with React</h1>
             <span className="header__login-info">
                 {renderLoginButton()}
-                <button className='header__logout-button' onClick={props.setLogoutThunkCreator}>
+                <button className='header__logout-button' onClick={setLogoutThunkCreator}>
                         logout
                     </button>
             </span>

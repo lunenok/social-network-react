@@ -1,7 +1,7 @@
 import React from 'react';
 import {NavLink} from "react-router-dom";
 
-export const Menu = () => {
+export const Menu: React.FC = () => {
     return (
         <ul className="main__menu">
             <li className="main__menu-item">
