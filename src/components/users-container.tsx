@@ -20,11 +20,15 @@ type PropsType = {
     getUserThunkCreator: (currentPage: number, usersToShow: number) => void
 }
 
-const UsersComponent: React.FC<PropsType> = ({users, currentPage, usersCount, usersToShow, isLoading ,subscribingInProgress,  followUserThunkCreator, unFollowUserThunkCreator, setCurrentPage, getUserThunkCreator}) => {
+const UsersComponent: React.FC<PropsType> = (props) => {
+
+    const {users, currentPage, usersCount, usersToShow, isLoading, 
+        subscribingInProgress,  followUserThunkCreator, 
+        unFollowUserThunkCreator, setCurrentPage, getUserThunkCreator} = props;
     
     useEffect(() => {
         getUserThunkCreator(currentPage, usersToShow)
-    }, [currentPage]);
+    }, [currentPage, getUserThunkCreator, usersToShow]);
 
     const onPageClick = (page: number) => {
         getUserThunkCreator(page, usersToShow);

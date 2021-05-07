@@ -12,51 +12,48 @@ import {connect} from 'react-redux';
 import * as React from "react";
 import {withRouter} from "react-router";
 
-class ProfileComponent extends React.Component {
-    _refreshProfile() {
-        let userId = this.props.match.params.userId
-        if (!userId) {
-            userId = this.props.authorizedUserId;
+export const ProfileComponent = (props) => {
+
+    const  {isProfileLoading, currentProfile, posts, newPostText, 
+        onUpdatePostText, addPost, status, setCurrentProfile, 
+        setProfileStatus, updateProfileStatus, updatePhoto, 
+        updateProfileInfoThunkCreator, isProfileDataUploadSucces} = props;
+
+    React.useEffect(() => {
+        const refreshProfile =  () => {
+            let userId = props.match.params.userId
             if (!userId) {
-                this.props.history.push('/login');
+                userId = props.authorizedUserId;
+                if (!userId) {
+                    props.history.push('/login');
+                    return
+                };
             };
+            setCurrentProfile(userId);
+            setProfileStatus(userId);
         };
-        this.props.setCurrentProfile(userId);
-        this.props.setProfileStatus(userId);
-    };
+        refreshProfile();
+    }, [props.authorizedUserId, props.history, props.match.params.userId, setCurrentProfile, setProfileStatus]);
 
-    componentDidMount() {
-        this._refreshProfile();
-    };
-
-    componentDidUpdate(prevProps) {
-        if (prevProps.match.params.userId !== this.props.match.params.userId) {
-            this._refreshProfile();
-        };
-    };
-
-    render() {
-        return (
-            <Profile
-                isProfileLoading={this.props.isProfileLoading}
-                currentProfile={this.props.currentProfile}
-                posts={this.props.posts}
-                newPostText={this.props.newPostText}
-                onUpdatePostText={this.props.onUpdatePostText}
-                addPost={this.props.addPost}
-                status={this.props.status}
-                setCurrentProfile={this.props.setCurrentProfile}
-                setProfileStatus={this.props.setProfileStatus}
-                updateProfileStatus={this.props.updateProfileStatus}
-                updatePhoto={this.props.updatePhoto}
-                isOwner={!this.props.match.params.userId}
-                updateProfileInfoThunkCreator={this.props.updateProfileInfoThunkCreator}
-                isProfileDataUploadSucces={this.props.isProfileDataUploadSucces}
-            />
-        )
-    }
-}
-
+    return (
+        <Profile
+            isProfileLoading={isProfileLoading}
+            currentProfile={currentProfile}
+            posts={posts}
+            newPostText={newPostText}
+            onUpdatePostText={onUpdatePostText}
+            addPost={addPost}
+            status={status}
+            setCurrentProfile={setCurrentProfile}
+            setProfileStatus={setProfileStatus}
+            updateProfileStatus={updateProfileStatus}
+            updatePhoto={updatePhoto}
+            isOwner={!props.match.params.userId}
+            updateProfileInfoThunkCreator={updateProfileInfoThunkCreator}
+            isProfileDataUploadSucces={isProfileDataUploadSucces}
+        />
+    )
+};
 
 const mapStateToProps = (state) => {
     return {
