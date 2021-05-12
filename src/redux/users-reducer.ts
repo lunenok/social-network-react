@@ -155,7 +155,7 @@ export const setSubscribingState = (isSubscriging: boolean ,userId: number): Set
 export const followUserThunkCreator = (userId: number): ThunkAction<void, AppStateType, unknown, ActionsType> => async (dispatch) =>{
     dispatch(setSubscribingState(true, userId));
     const response = await folloUserRequest(userId);
-    if (response.data.resultCode === 0) {
+    if (response.resultCode === 0) {
         dispatch(followUser(userId));
     };
     dispatch(setSubscribingState(false, userId)); 
@@ -164,7 +164,7 @@ export const followUserThunkCreator = (userId: number): ThunkAction<void, AppSta
 export const unFollowUserThunkCreator = (userId: number): ThunkAction<void, AppStateType, unknown, ActionsType> => async (dispatch) =>{
     dispatch(setSubscribingState(true, userId));
     const response = await unfollowUserRequest(userId);
-    if (response.data.resultCode === 0) {
+    if (response.resultCode === 0) {
         dispatch(unfollowUser(userId));
     };
     dispatch(setSubscribingState(false, userId)); 

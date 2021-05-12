@@ -72,7 +72,7 @@ export const setLoginThunkCreator = (email: string | null,
     setStatus: any): ThunkAction<void, AppStateType, unknown, ActionsType> => {
     return async (dispatch) => {
         const response = await login(email, password, rememberMe, captcha);
-        if (response.data.resultCode === 0) {
+        if (response.resultCode === 0) {
             dispatch(setLoginDataThunkCreator())
         } else {
             if (response.data.resultCode === 10) {
@@ -87,7 +87,7 @@ export const setLoginThunkCreator = (email: string | null,
 export const setLogoutThunkCreator = (): ThunkAction<void, AppStateType, unknown, ActionsType> => {
     return async (dispatch) => {
         const response = await logout();
-        if (response.data.resultCode === 0) {
+        if (response.resultCode === 0) {
             dispatch(setLoginDataCreator(null, null, null, false));
         };
     };
