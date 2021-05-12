@@ -1,11 +1,19 @@
 import React from 'react';
 import { Formik, Field, Form } from 'formik';
-import {replaceNull} from './../utils';
+import {replaceNull} from '../utils';
+import { ProfileType } from '../types/types';
 
-export const ProfileEdit = ({currentProfile, updateProfileInfoThunkCreator, setEditMode, isProfileDataUploadSucces}) => {
+type PropsTypes = {
+    currentProfile: ProfileType,
+    updateProfileInfoThunkCreator: (profileData: any, setStatus: any) => void,
+    setEditMode: (editMode: boolean) => void,
+    isProfileDataUploadSucces: boolean
+}
+
+export const ProfileEdit: React.FC<PropsTypes> = ({currentProfile, updateProfileInfoThunkCreator, setEditMode, isProfileDataUploadSucces}) => {
     const initialValues = replaceNull(currentProfile);
 
-    const onFormSubmit = (values, {setStatus}) => {
+    const onFormSubmit = (values: ProfileType, {setStatus}: any) => {
         updateProfileInfoThunkCreator(values, setStatus);
         if (isProfileDataUploadSucces) {
             setEditMode(false);

@@ -1,6 +1,11 @@
 import React, {useState, useEffect} from 'react';
 
-export const ProfileStatus = (props) => {
+type PropsType = {
+    status: string,
+    updateProfileStatus: (status: string) => void
+}
+
+export const ProfileStatus: React.FC<PropsType> = (props) => {
 
     const [editMode, setEditMode] = useState(false);
     const [status, setStatus] = useState(props.status);
@@ -14,7 +19,7 @@ export const ProfileStatus = (props) => {
         setEditMode(false);
         props.updateProfileStatus(status);
     };
-    const _onStatusChange = (evt) => {
+    const _onStatusChange = (evt: any) => {
         setStatus(evt.currentTarget.value);
     };
 

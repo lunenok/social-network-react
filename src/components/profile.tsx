@@ -8,7 +8,7 @@ import { PostType, ProfileType } from '../types/types';
 
 type ProfileInformationPropsType = {
     currentProfile: ProfileType,
-    status: string | null,
+    status: string,
     updateProfileStatus: (status: string) => void,
     updatePhoto: (newPhoto: any) => void
     isOwner: boolean,
@@ -62,7 +62,7 @@ const ProfileInformation: React.FC<ProfileInformationPropsType> = ({currentProfi
 
 type ProfilePropsType = {
     currentProfile: ProfileType,
-    status: string | null,
+    status: string,
     updateProfileStatus: (status: string) => void,
     updatePhoto: (newPhoto: any) => void
     isOwner: boolean,
