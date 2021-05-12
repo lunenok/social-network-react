@@ -4,12 +4,23 @@ import {Posts} from "./post";
 import {Loader} from './loader';
 import {ProfileDescription} from './profile-description';
 import {ProfileEdit} from './profile-edit';
+import { PostType, ProfileType } from '../types/types';
 
-const ProfileInformation = ({currentProfile, status, updateProfileStatus, updatePhoto, isOwner, updateProfileInfoThunkCreator, isProfileDataUploadSucces}) => {
+type ProfileInformationPropsType = {
+    currentProfile: ProfileType,
+    status: string | null,
+    updateProfileStatus: (status: string) => void,
+    updatePhoto: (newPhoto: any) => void
+    isOwner: boolean,
+    updateProfileInfoThunkCreator: (profileData: any, setStatus: any) => void ,
+    isProfileDataUploadSucces: boolean
+}
+
+const ProfileInformation: React.FC<ProfileInformationPropsType> = ({currentProfile, status, updateProfileStatus, updatePhoto, isOwner, updateProfileInfoThunkCreator, isProfileDataUploadSucces}) => {
 
     const [editMode, setEditMode] = useState(false);
 
-    const onPhotoUpdate = (evt) => {
+    const onPhotoUpdate = (evt: any) => {
         const newPhoto = evt.target.files[0];
         updatePhoto(newPhoto);
     };
@@ -47,14 +58,29 @@ const ProfileInformation = ({currentProfile, status, updateProfileStatus, update
             </div>
         </div>
     )
-}
+};
 
-export const Profile = (props) => {
+type ProfilePropsType = {
+    currentProfile: ProfileType,
+    status: string | null,
+    updateProfileStatus: (status: string) => void,
+    updatePhoto: (newPhoto: any) => void
+    isOwner: boolean,
+    updateProfileInfoThunkCreator: (profileData: any, setStatus: any) => void ,
+    isProfileDataUploadSucces: boolean,
+    posts: Array<PostType>
+    newPostText: string,
+    onUpdatePostText: (text: string) => void,
+    addPost: () => void,
+    isProfileLoading: boolean
+};
+
+export const Profile: React.FC<ProfilePropsType> = (props) => {
     const {posts, newPostText, onUpdatePostText, addPost, currentProfile, 
         isProfileLoading, status, updateProfileStatus, updatePhoto, 
         isOwner, updateProfileInfoThunkCreator, isProfileDataUploadSucces} = props;
     
-    const onTextChange = (evt) => {
+    const onTextChange = (evt: any) => {
         const text = evt.target.value;
         onUpdatePostText(text);
     };
@@ -74,7 +100,6 @@ export const Profile = (props) => {
                     <textarea
                         value={newPostText}
                         onChange={onTextChange}
-                        type="text"
                         className="posts__input"
                         placeholder="Your new post..."
                     />

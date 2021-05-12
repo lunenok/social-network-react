@@ -10,9 +10,35 @@ import {
 import {Profile} from "./profile";
 import {connect} from 'react-redux';
 import * as React from "react";
-import {withRouter} from "react-router";
+import {withRouter, RouteComponentProps} from "react-router";
+import { AppStateType } from "../redux/store";
+import { PostType, ProfileType } from "../types/types";
 
-export const ProfileComponent = (props) => {
+type DispatchPropsType = {
+    onUpdatePostText: (text: string) => void,
+    addPost: () => void,
+    setCurrentProfile: (profile: number) => void,
+    setProfileStatus: (userId: number) => void,
+    updateProfileStatus: (status: string) => void,
+    updatePhoto: (photo: any) => void ,
+    updateProfileInfoThunkCreator: (profileData: any, setStatus: any) => void 
+};
+
+type StatePropsType = {
+    currentProfile: ProfileType,
+    isProfileLoading: boolean,
+    posts: Array<PostType>,
+    newPostText: string
+    status: string,
+    authorizedUserId: number | null,
+    isProfileDataUploadSucces: boolean
+};
+
+type PathParamsPropsType = {
+    userId: string
+};
+
+export const ProfileComponent: React.FC<StatePropsType & DispatchPropsType & RouteComponentProps<PathParamsPropsType>> = (props) => {
 
     const  {isProfileLoading, currentProfile, posts, newPostText, 
         onUpdatePostText, addPost, status, setCurrentProfile, 
@@ -21,7 +47,7 @@ export const ProfileComponent = (props) => {
 
     React.useEffect(() => {
         const refreshProfile =  () => {
-            let userId = props.match.params.userId
+            let userId: number | null = parseInt(props.match.params.userId);
             if (!userId) {
                 userId = props.authorizedUserId;
                 if (!userId) {
@@ -29,9 +55,16 @@ export const ProfileComponent = (props) => {
                     return
                 };
             };
-            setCurrentProfile(userId);
-            setProfileStatus(userId);
+
+
+            if (!userId) {
+                console.error("ID should exists in URI params or in state ('authorizedUserId')");
+            } else {
+                setCurrentProfile(userId);
+                setProfileStatus(userId);
+            };
         };
+
         refreshProfile();
     }, [props.authorizedUserId, props.history, props.match.params.userId, setCurrentProfile, setProfileStatus]);
 
@@ -44,8 +77,8 @@ export const ProfileComponent = (props) => {
             onUpdatePostText={onUpdatePostText}
             addPost={addPost}
             status={status}
-            setCurrentProfile={setCurrentProfile}
-            setProfileStatus={setProfileStatus}
+            // setCurrentProfile={setCurrentProfile}
+            // setProfileStatus={setProfileStatus}
             updateProfileStatus={updateProfileStatus}
             updatePhoto={updatePhoto}
             isOwner={!props.match.params.userId}
@@ -55,7 +88,7 @@ export const ProfileComponent = (props) => {
     )
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: AppStateType) => {
     return {
         currentProfile: state.profilePage.currentProfile,
         isProfileLoading: state.profilePage.isProfileLoading,
@@ -67,27 +100,27 @@ const mapStateToProps = (state) => {
     };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch: any): DispatchPropsType => {
     return {
-        onUpdatePostText: (text) => {
+        onUpdatePostText: (text: string) => {
             dispatch(updatePostActionCreator(text))
         },
         addPost: () => {
             dispatch(addPostActionCreator())
         },
-        setCurrentProfile: (profile) => {
+        setCurrentProfile: (profile: number) => {
             dispatch(setProfileThunkCreator(profile))
         },
-        setProfileStatus: (userId) => {
+        setProfileStatus: (userId: number) => {
             dispatch(setProfileStatusThunkCreator(userId))
         },
-        updateProfileStatus: (status) => {
+        updateProfileStatus: (status: string) => {
             dispatch(updateProfileStatusThunkCreator(status))
         },
-        updatePhoto: (photo) => {
+        updatePhoto: (photo: any) => {
             dispatch(updatePhotoThunkCreator(photo))
         },
-        updateProfileInfoThunkCreator: (profileData, setStatus) => {
+        updateProfileInfoThunkCreator: (profileData: ProfileType, setStatus: any) => {
             dispatch(updateProfileInfoThunkCreator(profileData, setStatus))
         }
     }; 

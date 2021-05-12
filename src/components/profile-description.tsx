@@ -1,6 +1,11 @@
 import React from 'react'; 
+import { ProfileType } from '../types/types';
 
-export const ProfileDescription = ({currentProfile}) => {
+type PropsType = {
+    currentProfile: ProfileType
+}
+
+export const ProfileDescription: React.FC<PropsType> = ({currentProfile}) => {
     return (
         <div>
             <div className="profile__description">
