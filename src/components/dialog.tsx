@@ -1,11 +1,6 @@
 import {NavLink} from "react-router-dom";
 import React from "react";
 
-type PropsType = {
-    id: number,
-    name: string
-};
-
 export const Dialog: React.FC<PropsType> = ({id, name}) => {
     const path = "/dialogs/" + id;
     return (
@@ -15,4 +10,9 @@ export const Dialog: React.FC<PropsType> = ({id, name}) => {
             </NavLink>
         </div>
     );
+};
+
+type PropsType = {
+    id: number;
+    name: string;
 };

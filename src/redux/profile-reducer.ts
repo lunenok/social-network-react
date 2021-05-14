@@ -1,5 +1,5 @@
 import { ThunkAction } from 'redux-thunk';
-import {setProfile, getUserStatus, updateStatus, uploadPhoto, uploadProfileData} from '../api/api';
+import {getProfile, getProfileStatus, updateStatus, uploadPhoto, uploadProfileData} from '../api/api';
 import { PostType, ProfileType } from '../types/types';
 import { AppStateType } from './store';
 
@@ -151,7 +151,7 @@ const uploadProfileDataCreator = (uploadStatus: boolean): UploadProfileDataActio
 export const setProfileThunkCreator = (userId: number | null): ThunkAction<void, AppStateType, unknown, ActionsType> => { // Тут надо пофиксить, null быть не может, будет падать
     return async (dispatch) => {
         dispatch(setProfileLoadingStateCreator(true));
-        const response = await setProfile(userId);
+        const response = await getProfile(userId);
         dispatch(setCurrentProfileCreator(response.data));
         dispatch(setProfileLoadingStateCreator(false));
     };
@@ -159,7 +159,7 @@ export const setProfileThunkCreator = (userId: number | null): ThunkAction<void,
 
 export const setProfileStatusThunkCreator = (userId: number): ThunkAction<void, AppStateType, unknown, ActionsType> => {
     return async (dispatch) => {
-        const response = await getUserStatus(userId);
+        const response = await getProfileStatus(userId);
         dispatch(setProfileStatus(response.data));
     };
 };

@@ -77,8 +77,6 @@ export const ProfileComponent: React.FC<StatePropsType & DispatchPropsType & Rou
             onUpdatePostText={onUpdatePostText}
             addPost={addPost}
             status={status}
-            // setCurrentProfile={setCurrentProfile}
-            // setProfileStatus={setProfileStatus}
             updateProfileStatus={updateProfileStatus}
             updatePhoto={updatePhoto}
             isOwner={!props.match.params.userId}

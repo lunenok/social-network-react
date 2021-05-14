@@ -75,11 +75,11 @@ export const setLoginThunkCreator = (email: string | null,
         if (response.resultCode === 0) {
             dispatch(setLoginDataThunkCreator())
         } else {
-            if (response.data.resultCode === 10) {
+            if (response.resultCode === 10) {
                const captchaUrl = await getCaptchaUrl();
                dispatch(setCaptchaUrl(captchaUrl.data.url));
             }
-            setStatus(response.data.messages[0]);
+            setStatus(response.messages[0]);
         };
     };
 };

@@ -1,6 +1,6 @@
 import { DialogNameType, MessageType } from '../types/types';
 import {dialogsReducer} from './dialogs-reducer';
-import {sendMessageCreator} from './dialogs-reducer';
+import {sendMessageAction} from './dialogs-reducer';
 
 const mockState = {
     messages: [
@@ -20,6 +20,6 @@ const mockState = {
 
 it('should message send correctly', () => {
     const action = 'How old are you?';
-    const newState = dialogsReducer(mockState, sendMessageCreator(action));
+    const newState = dialogsReducer(mockState, sendMessageAction(action));
     expect(newState.messages[3]).toEqual({id: 4, message: 'How old are you?'});
 });

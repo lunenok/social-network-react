@@ -3,8 +3,8 @@ import {NavLink} from "react-router-dom";
 import { AppStateType } from '../redux/store';
 
 type PropsType = {
-    loginData: AppStateType['authData'],
-    setLogoutThunkCreator: () => void
+    loginData: AppStateType['authData'];
+    setLogoutThunkCreator: () => void;
 };
 
 export const Header: React.FC<PropsType> = ({loginData, setLogoutThunkCreator}) => {

@@ -35,7 +35,7 @@ type SendMessageActionType = {
     type: typeof SEND_MESSAGE,
     message: string
 }
-export const sendMessageCreator = (message: string): SendMessageActionType => ({
+export const sendMessageAction = (message: string): SendMessageActionType => ({
     type: SEND_MESSAGE,
     message: message
 });

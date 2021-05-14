@@ -5,22 +5,15 @@ import { Redirect } from 'react-router';
 import { Formik, Field, Form } from 'formik';
 import {DialogNameType, MessageType} from './../types/types';
 
-type PropsType = {
-    dialogsName: Array<DialogNameType>,
-    messages: Array<MessageType>,
-    isAuth: boolean,
-    onMessageSendButtonClick: (values: string) => void
-};
-
 export const Dialogs: React.FC<PropsType> = (props) => {
-    const {dialogsName, messages, isAuth, onMessageSendButtonClick} = props;
-
+    const {dialogsName, messages, isAuth, sendMessageCreator} = props;
+    
     type ValueType = {
         message: string
     };
 
     const onSendButtonClick = (values: ValueType) => {
-        onMessageSendButtonClick(values.message);
+        sendMessageCreator(values.message);
     }
 
     const initialValues = {
@@ -64,4 +57,11 @@ export const Dialogs: React.FC<PropsType> = (props) => {
 
         </div>
     );
+};
+
+type PropsType = {
+    dialogsName: Array<DialogNameType>;
+    messages: Array<MessageType>;
+    isAuth: boolean;
+    sendMessageCreator: (values: string) => void;
 };

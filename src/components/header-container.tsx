@@ -4,11 +4,6 @@ import {connect} from 'react-redux';
 import * as React from "react";
 import { AppStateType } from "../redux/store";
 
-type PropsType = {
-    loginData: AppStateType['authData'],
-    setLogoutThunkCreator: () => void
-};
-
 const HeaderComponent: React.FC<PropsType> = ({loginData, setLogoutThunkCreator}) => {
     return (
         <Header
@@ -24,12 +19,17 @@ const mapStateToProps = (state: AppStateType) => {
     };
 };
 
-const mapDispatchToProps = (dispatch: any) => {
-    return {
-        setLogoutThunkCreator: () => {
-            dispatch(setLogoutThunkCreator())
-        }
-    };
-};
+// const mapDispatchToProps = (dispatch: any) => {
+//     return {
+//         setLogoutThunkCreator: () => {
+//             dispatch(setLogoutThunkCreator())
+//         }
+//     };
+// };
 
-export const HeaderContainer = connect(mapStateToProps, mapDispatchToProps)(HeaderComponent);
+export const HeaderContainer = connect(mapStateToProps, {setLogoutThunkCreator})(HeaderComponent);
+
+type PropsType = {
+    loginData: AppStateType['authData'];
+    setLogoutThunkCreator: () => void;
+};

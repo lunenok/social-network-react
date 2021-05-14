@@ -1,4 +1,4 @@
-import {sendMessageCreator} from '../redux/dialogs-reducer';
+import {sendMessageAction} from '../redux/dialogs-reducer';
 import {Dialogs} from "./dialogs";
 import {connect} from 'react-redux';
 import {withAuthComponent} from '../hocs/withAuthComponent';
@@ -12,16 +12,8 @@ const mapStateToProps = (state: AppStateType) => {
     };
 };
 
-const mapDispatchToProps = (dispatch: any) => {
-    return {
-        onMessageSendButtonClick: (message: string) => {
-            dispatch(sendMessageCreator(message))
-        }
-    };
-};
-
 export const DialogsContainer = compose(
     withAuthComponent, 
-    connect(mapStateToProps, mapDispatchToProps)
+    connect(mapStateToProps, {sendMessageCreator: sendMessageAction})
     )(Dialogs);
     

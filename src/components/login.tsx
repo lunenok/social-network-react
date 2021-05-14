@@ -5,12 +5,6 @@ import {connect} from 'react-redux';
 import { Redirect } from 'react-router';
 import { AppStateType } from '../redux/store';
 
-type PropsType = {
-    setLoginThunkCreator: (login: string, password: string, rememberMe: boolean, captcha: string | null, setStatus: any) => void,
-    isAuth: boolean,
-    captcha: string | null
-};
-
 export const LoginComponent: React.FC<PropsType> = ({setLoginThunkCreator, isAuth, captcha}) => {
     const initialValues = {
         login: '',
@@ -96,3 +90,9 @@ const mapStateToProps = (state: AppStateType) => {
 };
 
 export const Login = connect(mapStateToProps, {setLoginThunkCreator})(LoginComponent);
+
+type PropsType = {
+    setLoginThunkCreator: (login: string, password: string, rememberMe: boolean, captcha: string | null, setStatus: any) => void;
+    isAuth: boolean;
+    captcha: string | null;
+};

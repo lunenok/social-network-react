@@ -1,13 +1,5 @@
 import React, {useState} from 'react';
 
-type PropTypes = {
-    itemsCount: number,
-    itemsToShow: number,
-    currentPage?: number,
-    onPageClick: (page: number) => void,
-    portionSize?: number
-};
-
 export const Paginator: React.FC<PropTypes> = ({itemsCount, itemsToShow, currentPage = 1, onPageClick, portionSize = 10}) => {
     let pagesCount = Math.ceil(itemsCount / itemsToShow);
     let pages: Array<number> = [];
@@ -40,4 +32,12 @@ export const Paginator: React.FC<PropTypes> = ({itemsCount, itemsToShow, current
             {portionCount > currentPortion && <button className='users__page-button' onClick={()=>{setCurrentPortion(currentPortion + 1)}}>&gt;</button>}
         </div>
     );
+};
+
+type PropTypes = {
+    itemsCount: number;
+    itemsToShow: number;
+    currentPage?: number;
+    onPageClick: (page: number) => void;
+    portionSize?: number;
 };
