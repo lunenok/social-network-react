@@ -1,12 +1,11 @@
 import React from 'react';
 import {Message} from "./message";
 import {Dialog} from "./dialog";
-import { Redirect } from 'react-router';
 import { Formik, Field, Form } from 'formik';
 import {DialogNameType, MessageType} from './../types/types';
 
 export const Dialogs: React.FC<PropsType> = (props) => {
-    const {dialogsName, messages, isAuth, sendMessageCreator} = props;
+    const {dialogsName, messages, sendMessageCreator} = props;
     
     type ValueType = {
         message: string
@@ -19,8 +18,6 @@ export const Dialogs: React.FC<PropsType> = (props) => {
     const initialValues = {
         message: ''
     };
-
-    if (!isAuth) return <Redirect to='/login'/>
 
     return (
         <div className="dialogs__wrapper">
@@ -62,6 +59,5 @@ export const Dialogs: React.FC<PropsType> = (props) => {
 type PropsType = {
     dialogsName: Array<DialogNameType>;
     messages: Array<MessageType>;
-    isAuth: boolean;
     sendMessageCreator: (values: string) => void;
 };

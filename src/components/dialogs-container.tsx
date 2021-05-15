@@ -13,7 +13,7 @@ const mapStateToProps = (state: AppStateType) => {
 };
 
 export const DialogsContainer = compose(
-    withAuthComponent, 
-    connect(mapStateToProps, {sendMessageCreator: sendMessageAction})
-    )(Dialogs);
+    connect(mapStateToProps, {sendMessageCreator: sendMessageAction}),
+    withAuthComponent
+    )(Dialogs) as React.FC;
     

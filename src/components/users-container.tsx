@@ -66,7 +66,6 @@ type PropsType = {
     followUserThunkCreator: (userId: number) => void;
     unFollowUserThunkCreator: (userId: number) => void;
     isLoading: boolean;
-    onPageClick: (page: number) => void;
     setCurrentPage: (page: number) => void;
     getUserThunkCreator: (currentPage: number, usersToShow: number) => void;
 }
