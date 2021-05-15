@@ -2,13 +2,6 @@ import React from 'react';
 import {NavLink} from 'react-router-dom';
 import { UserType } from '../types/types';
 
-type PropsType = {
-    users: Array<UserType>,
-    subscribingInProgress: Array<number>,
-    followUserThunkCreator: (userId: number) => void,
-    unFollowUserThunkCreator: (userId: number) => void
-};
-
 export const UsersList: React.FC<PropsType> = ({users, subscribingInProgress, followUserThunkCreator, unFollowUserThunkCreator}) => {
     return (
         <React.Fragment>
@@ -68,4 +61,11 @@ export const UsersList: React.FC<PropsType> = ({users, subscribingInProgress, fo
             </ul>
         </React.Fragment>
     );
-}
+};
+
+type PropsType = {
+    users: Array<UserType>;
+    subscribingInProgress: Array<number>;
+    followUserThunkCreator: (userId: number) => void;
+    unFollowUserThunkCreator: (userId: number) => void;
+};

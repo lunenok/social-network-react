@@ -3,13 +3,6 @@ import { Formik, Field, Form } from 'formik';
 import {replaceNull} from '../utils';
 import { ProfileType } from '../types/types';
 
-type PropsTypes = {
-    currentProfile: ProfileType,
-    updateProfileInfoThunkCreator: (profileData: any, setStatus: any) => void,
-    setEditMode: (editMode: boolean) => void,
-    isProfileDataUploadSucces: boolean
-}
-
 export const ProfileEdit: React.FC<PropsTypes> = ({currentProfile, updateProfileInfoThunkCreator, setEditMode, isProfileDataUploadSucces}) => {
     const initialValues = replaceNull(currentProfile);
 
@@ -79,4 +72,11 @@ export const ProfileEdit: React.FC<PropsTypes> = ({currentProfile, updateProfile
         )}
     </Formik>
     )
-}
+};
+
+type PropsTypes = {
+    currentProfile: ProfileType,
+    updateProfileInfoThunkCreator: (profileData: ProfileType, setStatus: any) => void,
+    setEditMode: (editMode: boolean) => void,
+    isProfileDataUploadSucces: boolean
+};

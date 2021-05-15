@@ -1,10 +1,6 @@
 import React from 'react'; 
 import { ProfileType } from '../types/types';
 
-type PropsType = {
-    currentProfile: ProfileType
-}
-
 export const ProfileDescription: React.FC<PropsType> = ({currentProfile}) => {
     return (
         <div>
@@ -43,4 +39,8 @@ export const ProfileDescription: React.FC<PropsType> = ({currentProfile}) => {
                 </div>
         </div>
     )
+};
+
+type PropsType = {
+    currentProfile: ProfileType;
 }

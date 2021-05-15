@@ -1,10 +1,5 @@
 import React, {useState, useEffect} from 'react';
 
-type PropsType = {
-    status: string,
-    updateProfileStatus: (status: string) => void
-}
-
 export const ProfileStatus: React.FC<PropsType> = (props) => {
 
     const [editMode, setEditMode] = useState(false);
@@ -30,3 +25,8 @@ export const ProfileStatus: React.FC<PropsType> = (props) => {
         </div>
     )
 };
+
+type PropsType = {
+    status: string;
+    updateProfileStatus: (status: string) => void;
+}

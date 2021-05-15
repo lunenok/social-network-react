@@ -173,7 +173,7 @@ export const updateProfileStatusThunkCreator = (status: string): ThunkAction<voi
     };
 };
 
-export const updatePhotoThunkCreator = (photo: any): ThunkAction<void, AppStateType, unknown, ActionsType> => {
+export const updatePhotoThunkCreator = (photo: File): ThunkAction<void, AppStateType, unknown, ActionsType> => {
     return async (dispatch) => {
         const response = await uploadPhoto(photo);
         if (response.data.resultCode === 0) {

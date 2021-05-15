@@ -6,16 +6,6 @@ import {ProfileDescription} from './profile-description';
 import {ProfileEdit} from './profile-edit';
 import { PostType, ProfileType } from '../types/types';
 
-type ProfileInformationPropsType = {
-    currentProfile: ProfileType,
-    status: string,
-    updateProfileStatus: (status: string) => void,
-    updatePhoto: (newPhoto: any) => void
-    isOwner: boolean,
-    updateProfileInfoThunkCreator: (profileData: any, setStatus: any) => void ,
-    isProfileDataUploadSucces: boolean
-}
-
 const ProfileInformation: React.FC<ProfileInformationPropsType> = ({currentProfile, status, updateProfileStatus, updatePhoto, isOwner, updateProfileInfoThunkCreator, isProfileDataUploadSucces}) => {
 
     const [editMode, setEditMode] = useState(false);
@@ -117,4 +107,14 @@ export const Profile: React.FC<ProfilePropsType> = (props) => {
             </div>
         </div>
     );
+};
+
+type ProfileInformationPropsType = {
+    currentProfile: ProfileType;
+    status: string;
+    updateProfileStatus: (status: string) => void;
+    updatePhoto: (newPhoto: File) => void;
+    isOwner: boolean;
+    updateProfileInfoThunkCreator: (profileData: any, setStatus: any) => void;
+    isProfileDataUploadSucces: boolean;
 };

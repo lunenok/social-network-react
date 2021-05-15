@@ -58,15 +58,15 @@ const mapDispatchToProps = {
 export const UsersContainer = connect(mapPropsToState, mapDispatchToProps)(UsersComponent);
 
 type PropsType = {
-    usersCount: number,
-    usersToShow: number,
-    currentPage: number,
-    users: Array<UserType>,
-    subscribingInProgress: Array<number>,
-    followUserThunkCreator: (userId: number) => void,
-    unFollowUserThunkCreator: (userId: number) => void,
-    isLoading: boolean,
-    onPageClick: (page: number) => void,
-    setCurrentPage: (page: number) => void,
-    getUserThunkCreator: (currentPage: number, usersToShow: number) => void
+    usersCount: number;
+    usersToShow: number;
+    currentPage: number;
+    users: Array<UserType>;
+    subscribingInProgress: Array<number>;
+    followUserThunkCreator: (userId: number) => void;
+    unFollowUserThunkCreator: (userId: number) => void;
+    isLoading: boolean;
+    onPageClick: (page: number) => void;
+    setCurrentPage: (page: number) => void;
+    getUserThunkCreator: (currentPage: number, usersToShow: number) => void;
 }
