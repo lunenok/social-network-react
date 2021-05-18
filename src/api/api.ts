@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { FilterType } from '../redux/users-reducer';
 import { AuthInfoType, PhotosType, ProfileType, UserType } from '../types/types';
 
 const instance = axios.create({
@@ -9,8 +10,11 @@ const instance = axios.create({
   }
 });
 
-export const getUsers = async (currentPage: number, usersToShow: number) => {
-    const response = await instance.get<GetUsersType>(`users?page=${currentPage}&count=${usersToShow}`,)
+export const getUsers = async (currentPage: number, usersToShow: number, filter: FilterType) => {
+    const term = filter.value;
+    const followed = filter.followed;
+    // erm = '', followed = null as null | boolean
+    const response = await instance.get<GetUsersType>(`users?page=${currentPage}&count=${usersToShow}&term=${term}&friend=${followed}`,)
     return response.data;
 };
 

@@ -10,6 +10,7 @@ const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_USERS_COUNT = 'SET_USERS_COUNT';
 const SET_LOAD_STATE = 'SET_LOAD_STATE';
 const SET_SUBSCRIBING_STATE = 'SET_SUBSCRIBING_STATE';
+const SET_FILTER = 'SET_FILTER';
 
 const initialState = {
     users: [] as Array<UserType>,
@@ -18,13 +19,17 @@ const initialState = {
     usersToShow: 5,
     isLoading: true,
     subscribingInProgress: [] as Array<number>,
+    filter: {
+        value: '',
+        followed: null as null | boolean
+    },
 };
 
 type InitialState = typeof initialState;
 
 type ActionsType = FollowUserActionType | UnfollowUserActionType | SetUserActionType | 
     SetCurrentPageActionType | SetUsersCountActionType | SetLoaderStateActionType |
-    SetSubscribingStateActionType;
+    SetSubscribingStateActionType | SetFilterActionType;
 
 export const usersReducer = (state = initialState, action: ActionsType): InitialState => {
     switch (action.type) {
@@ -74,6 +79,11 @@ export const usersReducer = (state = initialState, action: ActionsType): Initial
                 subscribingInProgress: action.isSubscriging
                     ? [...state.subscribingInProgress, action.userId]
                     : state.subscribingInProgress.filter(id => id !== action.userId)
+            }
+        case SET_FILTER:
+            return {
+                ...state,
+                filter: action.filter
             }
         default:
             return state
@@ -149,7 +159,19 @@ type SetSubscribingStateActionType = {
 export const setSubscribingState = (isSubscriging: boolean ,userId: number): SetSubscribingStateActionType => ({
     type: SET_SUBSCRIBING_STATE,
     isSubscriging: isSubscriging,
-    userId: userId
+    userId: userId,
+});
+
+export type FilterType = typeof initialState.filter;
+
+type SetFilterActionType = {
+    type: typeof SET_FILTER
+    filter: FilterType
+}
+
+export const setFilter = (filter: FilterType): SetFilterActionType => ({
+    type: SET_FILTER,
+    filter: filter
 });
 
 export const followUserThunkCreator = (userId: number): ThunkAction<void, AppStateType, unknown, ActionsType> => async (dispatch) =>{
@@ -167,13 +189,14 @@ export const unFollowUserThunkCreator = (userId: number): ThunkAction<void, AppS
     if (response.resultCode === 0) {
         dispatch(unfollowUser(userId));
     };
-    dispatch(setSubscribingState(false, userId)); 
+    dispatch(setSubscribingState(false, userId));
 };
 
-export const getUserThunkCreator = (currentPage: number, usersToShow: number): ThunkAction<void, AppStateType, unknown, ActionsType> => {
-    return async (dispatch) => {
+export const getUserThunkCreator = (currentPage: number, usersToShow: number, filter: FilterType): ThunkAction<void, AppStateType, unknown, ActionsType> => {
+    return async (dispatch, getState) => {
         dispatch(setLoaderState(true));
-        const data = await getUsers(currentPage, usersToShow)
+        dispatch(setFilter(filter))
+        const data = await getUsers(currentPage, usersToShow, filter)
         dispatch(setUsers(data.items));
         dispatch(setUsersCount(data.totalCount));
         dispatch(setLoaderState(false));

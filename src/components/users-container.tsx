@@ -1,8 +1,8 @@
 import {connect} from 'react-redux';
 import React, {useEffect} from "react";
 import {Users} from './users';
-import {setCurrentPage, setSubscribingState, getUserThunkCreator, followUserThunkCreator, unFollowUserThunkCreator} from '../redux/users-reducer';
-import {getUsers, getCurrentPage, getUsersCount, getUsersToShow, getIsLoading, getSubscribingInProgress} from '../redux/users-selectors';
+import {setCurrentPage, setSubscribingState, getUserThunkCreator, followUserThunkCreator, unFollowUserThunkCreator, setFilter, FilterType} from '../redux/users-reducer';
+import {getUsers, getCurrentPage, getUsersCount, getUsersToShow, getIsLoading, getSubscribingInProgress, getCurrentFilter} from '../redux/users-selectors';
 import { UserType } from '../types/types';
 import { AppStateType } from '../redux/store';
 
@@ -10,14 +10,14 @@ const UsersComponent: React.FC<PropsType> = (props) => {
 
     const {users, currentPage, usersCount, usersToShow, isLoading, 
         subscribingInProgress,  followUserThunkCreator, 
-        unFollowUserThunkCreator, setCurrentPage, getUserThunkCreator} = props;
+        unFollowUserThunkCreator, setCurrentPage, getUserThunkCreator, currentFilter} = props;
     
     useEffect(() => {
-        getUserThunkCreator(currentPage, usersToShow)
-    }, [currentPage, getUserThunkCreator, usersToShow]);
+        getUserThunkCreator(currentPage, usersToShow, currentFilter)
+    }, [currentPage, getUserThunkCreator, usersToShow, currentFilter]);
 
-    const onPageClick = (page: number) => {
-        getUserThunkCreator(page, usersToShow);
+    const onPageClick = (page: number, usersToShow: number, filter: FilterType) => {
+        getUserThunkCreator(page, usersToShow, filter);
         setCurrentPage(page);
     };
 
@@ -32,6 +32,7 @@ const UsersComponent: React.FC<PropsType> = (props) => {
             onPageClick={onPageClick}
             followUserThunkCreator={followUserThunkCreator}
             unFollowUserThunkCreator={unFollowUserThunkCreator}
+            currentFilter={currentFilter}
         />
     )
 }
@@ -44,10 +45,12 @@ const mapPropsToState = (state: AppStateType) => {
         usersToShow: getUsersToShow(state),
         isLoading: getIsLoading(state),
         subscribingInProgress: getSubscribingInProgress(state),
+        currentFilter: getCurrentFilter(state),
     }
 };
 
 const mapDispatchToProps = {
+    setFilter,
     setSubscribingState, 
     followUserThunkCreator,
     unFollowUserThunkCreator,
@@ -61,11 +64,12 @@ type PropsType = {
     usersCount: number;
     usersToShow: number;
     currentPage: number;
+    currentFilter: FilterType,
     users: Array<UserType>;
     subscribingInProgress: Array<number>;
     followUserThunkCreator: (userId: number) => void;
     unFollowUserThunkCreator: (userId: number) => void;
     isLoading: boolean;
     setCurrentPage: (page: number) => void;
-    getUserThunkCreator: (currentPage: number, usersToShow: number) => void;
-}
+    getUserThunkCreator: (currentPage: number, usersToShow: number, filter: FilterType) => void;
+};

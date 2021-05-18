@@ -29,3 +29,7 @@ export const getIsLoading = (state: AppStateType) => {
 export const getSubscribingInProgress = (state: AppStateType) => {
     return state.userPage.subscribingInProgress;
 };
+
+export const getCurrentFilter = (state: AppStateType) => {
+    return state.userPage.filter;
+};

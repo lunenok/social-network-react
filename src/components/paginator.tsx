@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
+import { FilterType } from '../redux/users-reducer';
 
-export const Paginator: React.FC<PropTypes> = ({itemsCount, itemsToShow, currentPage = 1, onPageClick, portionSize = 10}) => {
-    let pagesCount = Math.ceil(itemsCount / itemsToShow);
+export const Paginator: React.FC<PropTypes> = ({itemsCount, usersToShow, currentPage = 1, onPageClick, portionSize = 10, currentFilter}) => {
+    let pagesCount = Math.ceil(itemsCount / usersToShow);
     let pages: Array<number> = [];
     for (let i = 1; i <= pagesCount; i++) {pages.push(i);}
 
@@ -20,7 +21,7 @@ export const Paginator: React.FC<PropTypes> = ({itemsCount, itemsToShow, current
                         <span
                             key={item}
                             onClick={(evt) => {
-                                onPageClick(item)
+                                onPageClick(item, usersToShow, currentFilter)
                             }}
                             className={`users__page ${currentPage === item ? 'users__page--active' : ''}`}
                         >
@@ -36,8 +37,9 @@ export const Paginator: React.FC<PropTypes> = ({itemsCount, itemsToShow, current
 
 type PropTypes = {
     itemsCount: number;
-    itemsToShow: number;
+    usersToShow: number;
     currentPage?: number;
-    onPageClick: (page: number) => void;
+    onPageClick: (page: number, usersToShow: number, filter: FilterType) => void;
     portionSize?: number;
+    currentFilter: FilterType;
 };
