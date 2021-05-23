@@ -19,14 +19,6 @@ const mapStateToProps = (state: AppStateType) => {
     };
 };
 
-// const mapDispatchToProps = (dispatch: any) => {
-//     return {
-//         setLogoutThunkCreator: () => {
-//             dispatch(setLogoutThunkCreator())
-//         }
-//     };
-// };
-
 export const HeaderContainer = connect(mapStateToProps, {setLogoutThunkCreator})(HeaderComponent);
 
 type PropsType = {

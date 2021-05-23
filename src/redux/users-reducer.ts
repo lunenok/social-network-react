@@ -125,7 +125,7 @@ type SetCurrentPageActionType = {
     currentPage: number
 };
 
-export const setCurrentPage = (page: number): SetCurrentPageActionType => ({
+export const setCurrentPageAction = (page: number): SetCurrentPageActionType => ({
     type: SET_CURRENT_PAGE,
     currentPage: page,
 });

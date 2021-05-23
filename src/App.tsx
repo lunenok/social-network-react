@@ -6,7 +6,7 @@ import {Footer} from './components/footer';
 import {DialogsContainer} from './components/dialogs-container';
 import {Developing} from './components/developing';
 import {BrowserRouter, Route} from 'react-router-dom';
-import {UsersContainer} from './components/users-container';
+import {Users} from './components/users';
 import {HeaderContainer} from './components/header-container';
 import {Login} from './components/login';
 import {setInitializeDataThunkCreator} from './redux/app-reducer';
@@ -33,7 +33,7 @@ const AppComponent: React.FC<AppPropsType> = ({setInitializeDataThunkCreator, is
                         <ProfileContainer/>
                     }/>
                     <Route path="/users" render={() =>
-                        <UsersContainer/>
+                        <Users/>
                     }/>
                     <Route path='/dialogs' render={() =>
                         <DialogsContainer/>
