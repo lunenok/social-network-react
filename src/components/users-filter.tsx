@@ -27,7 +27,7 @@ export const UsersFilter: React.FC<PropsType> = ({onPageClick, usersToShow, curr
 
     return (
         <React.Fragment>
-            <Formik initialValues={initialValues} onSubmit={onSubmit}>
+            <Formik initialValues={initialValues} onSubmit={onSubmit} enableReinitialize>
             {({errors, touched, isValidating, status}) => (
                     <Form className='filter__wrapper'>
                         <label className='filter__label' htmlFor='value'>Find: </label>

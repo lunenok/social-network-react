@@ -6,6 +6,8 @@ import { UsersFilter } from './users-filter';
 import { Paginator } from './paginator';
 import { Loader } from './loader';
 import { UsersList } from './user-list';
+import { useHistory } from 'react-router';
+import * as queryString from 'query-string';
 
 export const Users: React.FC = () => {
 
@@ -16,6 +18,7 @@ export const Users: React.FC = () => {
     const usersToShow = useSelector(getUsersToShow);
     const currentFilter = useSelector(getCurrentFilter);
     const subscribingInProgress = useSelector(getSubscribingInProgress);
+    const history = useHistory();
 
     const dispatch = useDispatch();
 
@@ -37,8 +40,44 @@ export const Users: React.FC = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        requestUsers(currentPage, usersToShow, currentFilter)
-    }, [currentPage, usersToShow, currentFilter, requestUsers]);
+        const parsed = queryString.parse(history.location.search);
+        
+        let actualPage = currentPage
+        let actualFilter = currentFilter
+
+        if (!!parsed.page) actualPage = Number(parsed.page)
+
+
+        if (!!parsed.term) actualFilter = {...actualFilter, value: parsed.term as string}
+
+        switch(parsed.friend) {
+            case "null":
+                actualFilter = {...actualFilter, followed: null}
+                break;
+            case "true":
+                actualFilter = {...actualFilter, followed: true}
+                break;
+            case "false":
+                actualFilter = {...actualFilter, followed: false}
+                break;
+        }
+
+        requestUsers(actualPage, usersToShow, actualFilter);
+
+    }, []);
+
+    useEffect(() => {
+        const path: PathType = {};
+
+        if (!!currentFilter.value) path.term = currentFilter.value;
+        if (!!currentFilter.followed) path.friend = String(currentFilter.followed);
+        if (currentPage !== 1) path.page = String(currentPage);
+
+        history.push({
+            pathname: '/users',
+            search: queryString.stringify(path),
+        })
+    }, [currentFilter, history, currentPage]);
 
     const onPageClick = (page: number, usersToShow: number, filter: FilterType) => {
         requestUsers(page, usersToShow, filter);
@@ -53,3 +92,5 @@ export const Users: React.FC = () => {
         </div>
     )
 };
+
+type PathType = {term?: string, friend?: string, page?: string};

@@ -1,69 +1,8 @@
-import React, {useState} from 'react'; 
-import {ProfileStatus} from './profile-status';
+import React from 'react'; 
 import {Posts} from "./post";
 import {Loader} from './loader';
-import {ProfileDescription} from './profile-description';
-import {ProfileEdit} from './profile-edit';
 import { PostType, ProfileType } from '../types/types';
-
-const ProfileInformation: React.FC<ProfileInformationPropsType> = ({currentProfile, status, updateProfileStatus, updatePhoto, isOwner, updateProfileInfoThunkCreator, isProfileDataUploadSucces}) => {
-
-    const [editMode, setEditMode] = useState(false);
-
-    const onPhotoUpdate = (evt: any) => {
-        const newPhoto = evt.target.files[0];
-        updatePhoto(newPhoto);
-    };
-
-    const renderUploadButton = () => {
-        if (isOwner) {
-            return (
-                <div>
-                    <label className='profile__img-label' htmlFor='upload'>Загрузить аватар</label>
-                    <input className='profile__img-button visually-hidden' onChange={onPhotoUpdate} type='file' id='upload'></input>        
-                </div>
-            )
-        };
-    };
-
-    return (
-        <div className="profile">
-            <div className="profile__pic ">
-                <img
-                    src={currentProfile.photos.large ? currentProfile.photos.large : "https://freesvg.org/img/Linux-Avatar.png"}
-                    alt="avatar"
-                    width="{150}"
-                    height="{150}"
-                    className="profile__img"
-                />
-                {renderUploadButton()}
-                {isOwner && <button onClick={()=>{setEditMode(true)}} className='profile__edit-button'>Редактировать профиль</button>}
-            </div>
-            <div className="profile__info">
-                <div className="profile__name">
-                    {currentProfile.fullName}
-                </div>
-                <ProfileStatus status={status} updateProfileStatus={updateProfileStatus}/>
-                {editMode ? <ProfileEdit currentProfile={currentProfile} updateProfileInfoThunkCreator={updateProfileInfoThunkCreator} setEditMode={setEditMode} isProfileDataUploadSucces={isProfileDataUploadSucces}/> : <ProfileDescription currentProfile={currentProfile}/>}
-            </div>
-        </div>
-    )
-};
-
-type ProfilePropsType = {
-    currentProfile: ProfileType,
-    status: string,
-    updateProfileStatus: (status: string) => void,
-    updatePhoto: (newPhoto: any) => void
-    isOwner: boolean,
-    updateProfileInfoThunkCreator: (profileData: any, setStatus: any) => void ,
-    isProfileDataUploadSucces: boolean,
-    posts: Array<PostType>
-    newPostText: string,
-    onUpdatePostText: (text: string) => void,
-    addPost: () => void,
-    isProfileLoading: boolean
-};
+import {ProfileInformation} from './profile-information';
 
 export const Profile: React.FC<ProfilePropsType> = (props) => {
     const {posts, newPostText, onUpdatePostText, addPost, currentProfile, 
@@ -109,12 +48,18 @@ export const Profile: React.FC<ProfilePropsType> = (props) => {
     );
 };
 
-type ProfileInformationPropsType = {
-    currentProfile: ProfileType;
-    status: string;
-    updateProfileStatus: (status: string) => void;
-    updatePhoto: (newPhoto: File) => void;
-    isOwner: boolean;
-    updateProfileInfoThunkCreator: (profileData: any, setStatus: any) => void;
-    isProfileDataUploadSucces: boolean;
+type ProfilePropsType = {
+    currentProfile: ProfileType,
+    status: string,
+    updateProfileStatus: (status: string) => void,
+    updatePhoto: (newPhoto: any) => void
+    isOwner: boolean,
+    updateProfileInfoThunkCreator: (profileData: any, setStatus: any) => void ,
+    isProfileDataUploadSucces: boolean,
+    posts: Array<PostType>
+    newPostText: string,
+    onUpdatePostText: (text: string) => void,
+    addPost: () => void,
+    isProfileLoading: boolean
 };
+
