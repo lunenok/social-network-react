@@ -1,33 +1,40 @@
 import {
-    addPostActionCreator,
-    updatePostActionCreator,
     setProfileThunkCreator,
     setProfileStatusThunkCreator,
-    updateProfileStatusThunkCreator,
-    updatePhotoThunkCreator,
-    updateProfileInfoThunkCreator
 } from "../redux/profile-reducer";
 import {Profile} from "./profile";
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import * as React from "react";
-import {withRouter, RouteComponentProps} from "react-router";
+import {useParams} from "react-router";
 import { AppStateType } from "../redux/store";
-import { PostType, ProfileType } from "../types/types";
+import { useHistory } from "react-router-dom";
 
-export const ProfileComponent: React.FC<StatePropsType & DispatchPropsType & RouteComponentProps<PathParamsPropsType>> = (props) => {
+export const ProfileContainer: React.FC = (props) => {
 
-    const  {isProfileLoading, currentProfile, posts, newPostText, 
-        updatePostActionCreator, addPostActionCreator, status, setProfileThunkCreator, 
-        setProfileStatusThunkCreator, updateProfileStatusThunkCreator, updatePhotoThunkCreator, 
-        updateProfileInfoThunkCreator, isProfileDataUploadSucces} = props;
+    const params = useParams<{userId: string}>();
+    const history = useHistory();
+
+    const authorizedUserId = useSelector((state: AppStateType) => {
+        return state.authData.id
+    });
+
+    const dispatch = useDispatch();
 
     React.useEffect(() => {
+        const setProfileStatus = (userId: number) => {
+            dispatch(setProfileStatusThunkCreator(userId));
+        };
+
+        const setProfile = (userId: number) => {
+            dispatch(setProfileThunkCreator(userId));
+        };
+
         const refreshProfile =  () => {
-            let userId: number | null = parseInt(props.match.params.userId);
+            let userId: number | null = parseInt(params.userId);
             if (!userId) {
-                userId = props.authorizedUserId;
+                userId = authorizedUserId;
                 if (!userId) {
-                    props.history.push('/login');
+                    history.push('/login');
                     return
                 };
             };
@@ -36,78 +43,17 @@ export const ProfileComponent: React.FC<StatePropsType & DispatchPropsType & Rou
             if (!userId) {
                 console.error("ID should exists in URI params or in state ('authorizedUserId')");
             } else {
-                setProfileThunkCreator(userId);
-                setProfileStatusThunkCreator(userId);
+                setProfile(userId);
+                setProfileStatus(userId);
             };
         };
 
         refreshProfile();
-    }, [props.authorizedUserId, props.history, props.match.params.userId, setProfileThunkCreator, setProfileStatusThunkCreator]);
+    }, [authorizedUserId, dispatch, params.userId, history]);
 
     return (
         <Profile
-            isProfileLoading={isProfileLoading}
-            currentProfile={currentProfile}
-            posts={posts}
-            newPostText={newPostText}
-            onUpdatePostText={updatePostActionCreator}
-            addPost={addPostActionCreator}
-            status={status}
-            updateProfileStatus={updateProfileStatusThunkCreator}
-            updatePhoto={updatePhotoThunkCreator}
-            isOwner={!props.match.params.userId}
-            updateProfileInfoThunkCreator={updateProfileInfoThunkCreator}
-            isProfileDataUploadSucces={isProfileDataUploadSucces}
+            isOwner={!params.userId}
         />
     )
-};
-
-const mapStateToProps = (state: AppStateType) => {
-    return {
-        currentProfile: state.profilePage.currentProfile,
-        isProfileLoading: state.profilePage.isProfileLoading,
-        posts: state.profilePage.posts,
-        newPostText: state.profilePage.newPostText,
-        status: state.profilePage.status,
-        authorizedUserId: state.authData.id,
-        isProfileDataUploadSucces: state.profilePage.isProfileDataUploadSucces
-    };
-};
-
-const mapDispatchToProps = {
-    updatePostActionCreator,
-    addPostActionCreator,
-    setProfileThunkCreator,
-    setProfileStatusThunkCreator,
-    updateProfileStatusThunkCreator,
-    updatePhotoThunkCreator,
-    updateProfileInfoThunkCreator
-};
-
-const withRouterProfileContainer = withRouter(ProfileComponent);
-
-export const ProfileContainer = connect(mapStateToProps, mapDispatchToProps)(withRouterProfileContainer);
-
-type DispatchPropsType = {
-    updatePostActionCreator: (text: string) => void,
-    addPostActionCreator: () => void,
-    setProfileThunkCreator: (profile: number) => void,
-    setProfileStatusThunkCreator: (userId: number) => void,
-    updateProfileStatusThunkCreator: (status: string) => void,
-    updatePhotoThunkCreator: (photo: File) => void ,
-    updateProfileInfoThunkCreator: (profileData: ProfileType, setStatus: any) => void 
-};
-
-type StatePropsType = {
-    currentProfile: ProfileType,
-    isProfileLoading: boolean,
-    posts: Array<PostType>,
-    newPostText: string
-    status: string,
-    authorizedUserId: number | null,
-    isProfileDataUploadSucces: boolean
-};
-
-type PathParamsPropsType = {
-    userId: string
 };

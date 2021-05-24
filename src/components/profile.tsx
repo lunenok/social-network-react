@@ -1,14 +1,39 @@
 import React from 'react'; 
 import {Posts} from "./post";
 import {Loader} from './loader';
-import { PostType, ProfileType } from '../types/types';
 import {ProfileInformation} from './profile-information';
+import { useDispatch, useSelector } from 'react-redux';
+import { addPostActionCreator, updatePhotoThunkCreator, updatePostActionCreator, updateProfileInfoThunkCreator, updateProfileStatusThunkCreator } from '../redux/profile-reducer';
+import { getCurrentProfile, getIsProfileDataUploadSucces, getIsProfileLoading, getNewPostText, getPosts, getStatus } from '../redux/profile-selectors';
 
 export const Profile: React.FC<ProfilePropsType> = (props) => {
-    const {posts, newPostText, onUpdatePostText, addPost, currentProfile, 
-        isProfileLoading, status, updateProfileStatus, updatePhoto, 
-        isOwner, updateProfileInfoThunkCreator, isProfileDataUploadSucces} = props;
-    
+    const {isOwner } = props;
+
+    const currentProfile = useSelector(getCurrentProfile);
+    const isProfileLoading = useSelector(getIsProfileLoading);
+    const posts = useSelector(getPosts);
+    const newPostText = useSelector(getNewPostText);
+    const status = useSelector(getStatus);
+    const isProfileDataUploadSucces = useSelector(getIsProfileDataUploadSucces);
+
+    const dispatch = useDispatch();
+
+    const onUpdatePostText = (text: string) => {
+        dispatch(updatePostActionCreator(text));
+    };
+    const addPost = () => {
+        dispatch(addPostActionCreator());
+    };
+    const updateProfileStatus = (status: string) => {
+        dispatch(updateProfileStatusThunkCreator(status));
+    };
+    const updatePhoto = (photo: any) => {
+        dispatch(updatePhotoThunkCreator(photo))
+    };
+    const updateProfileInfo = (profileData: any, setStatus: any) => {
+        dispatch(updateProfileInfoThunkCreator(profileData, setStatus))
+    };
+
     const onTextChange = (evt: any) => {
         const text = evt.target.value;
         onUpdatePostText(text);
@@ -20,7 +45,7 @@ export const Profile: React.FC<ProfilePropsType> = (props) => {
 
     return (
         <div className="content">
-            {isProfileLoading ? <Loader/> : <ProfileInformation currentProfile={currentProfile} status={status} updateProfileStatus={updateProfileStatus} updatePhoto={updatePhoto} isOwner={isOwner} updateProfileInfoThunkCreator={updateProfileInfoThunkCreator} isProfileDataUploadSucces={isProfileDataUploadSucces}/>}
+            {isProfileLoading ? <Loader/> : <ProfileInformation currentProfile={currentProfile} status={status} updateProfileStatus={updateProfileStatus} updatePhoto={updatePhoto} isOwner={isOwner} updateProfileInfoThunkCreator={updateProfileInfo} isProfileDataUploadSucces={isProfileDataUploadSucces}/>}
             <div className="posts">
                 <h2 className="posts__title">
                     My posts
@@ -49,17 +74,6 @@ export const Profile: React.FC<ProfilePropsType> = (props) => {
 };
 
 type ProfilePropsType = {
-    currentProfile: ProfileType,
-    status: string,
-    updateProfileStatus: (status: string) => void,
-    updatePhoto: (newPhoto: any) => void
     isOwner: boolean,
-    updateProfileInfoThunkCreator: (profileData: any, setStatus: any) => void ,
-    isProfileDataUploadSucces: boolean,
-    posts: Array<PostType>
-    newPostText: string,
-    onUpdatePostText: (text: string) => void,
-    addPost: () => void,
-    isProfileLoading: boolean
 };
 
