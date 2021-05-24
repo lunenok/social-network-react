@@ -1,18 +1,29 @@
 import React from 'react';
 import {Message} from "./message";
 import {Dialog} from "./dialog";
+import {sendMessageAction} from '../redux/dialogs-reducer';
 import { Formik, Field, Form } from 'formik';
-import {DialogNameType, MessageType} from './../types/types';
+import {getMessages, getDialogsName} from './../redux/dialogs-selectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { withAuthComponent } from '../hocs/withAuthComponent';
 
-export const Dialogs: React.FC<PropsType> = (props) => {
-    const {dialogsName, messages, sendMessageCreator} = props;
-    
+const DialogsComponent: React.FC = () => {
+    const dialogsName = useSelector(getDialogsName);
+    const messages = useSelector(getMessages);
+
+    const dispatch = useDispatch();
+
+    const sendMessage = (values: ValueType) => {
+        dispatch(sendMessageAction(values.message));
+    };
+
+
     type ValueType = {
         message: string
     };
 
     const onSendButtonClick = (values: ValueType) => {
-        sendMessageCreator(values.message);
+        dispatch(sendMessage(values))
     }
 
     const initialValues = {
@@ -56,8 +67,4 @@ export const Dialogs: React.FC<PropsType> = (props) => {
     );
 };
 
-type PropsType = {
-    dialogsName: Array<DialogNameType>;
-    messages: Array<MessageType>;
-    sendMessageCreator: (values: string) => void;
-};
+export const Dialogs = withAuthComponent(DialogsComponent) as React.FC;

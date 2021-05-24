@@ -1,13 +1,20 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {setLogoutThunkCreator} from "../redux/auth-reducer";
 import {NavLink} from "react-router-dom";
 import { AppStateType } from '../redux/store';
 
-type PropsType = {
-    loginData: AppStateType['authData'];
-    setLogoutThunkCreator: () => void;
-};
+export const Header: React.FC = () => {
 
-export const Header: React.FC<PropsType> = ({loginData, setLogoutThunkCreator}) => {
+    const loginData = useSelector((state: AppStateType) => {
+        return state.authData;
+    });
+
+    const dispatch = useDispatch();
+
+    const logout = () => {
+        dispatch(setLogoutThunkCreator());
+    };
 
     const renderLoginButton = () => {
         if (loginData.isAuth) {
@@ -30,7 +37,7 @@ export const Header: React.FC<PropsType> = ({loginData, setLogoutThunkCreator}) 
             <h1>My social media with React</h1>
             <span className="header__login-info">
                 {renderLoginButton()}
-                <button className='header__logout-button' onClick={setLogoutThunkCreator}>
+                <button className='header__logout-button' onClick={logout}>
                         logout
                     </button>
             </span>

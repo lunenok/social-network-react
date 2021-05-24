@@ -3,11 +3,11 @@ import {connect} from 'react-redux';
 import {Menu} from './components/menu';
 import {ProfileContainer} from './components/profile-container';
 import {Footer} from './components/footer';
-import {DialogsContainer} from './components/dialogs-container';
+import {Dialogs} from './components/dialogs';
 import {Developing} from './components/developing';
 import {BrowserRouter, Route} from 'react-router-dom';
 import {Users} from './components/users';
-import {HeaderContainer} from './components/header-container';
+import {Header} from './components/header';
 import {Login} from './components/login';
 import {setInitializeDataThunkCreator} from './redux/app-reducer';
 import { Loader } from './components/loader';
@@ -23,11 +23,10 @@ const AppComponent: React.FC<AppPropsType> = ({setInitializeDataThunkCreator, is
         return <Loader/>
     };
 
-    
     return (
         <BrowserRouter>
             <div className="main">
-                <HeaderContainer/>
+                <Header/>
                 <Menu/>
                     <Route path="/profile/:userId?" render={() =>
                         <ProfileContainer/>
@@ -36,7 +35,7 @@ const AppComponent: React.FC<AppPropsType> = ({setInitializeDataThunkCreator, is
                         <Users/>
                     }/>
                     <Route path='/dialogs' render={() =>
-                        <DialogsContainer/>
+                        <Dialogs/>
                     }/>
                     <Route path='/news' component={Developing}/>
                     <Route path='/music' component={Developing}/>
