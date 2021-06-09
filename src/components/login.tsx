@@ -4,6 +4,8 @@ import {setLoginThunkCreator} from '../redux/auth-reducer';
 import {connect} from 'react-redux';
 import { Redirect } from 'react-router';
 import { AppStateType } from '../redux/store';
+import Title from 'antd/lib/typography/Title';
+import { Content } from 'antd/lib/layout/layout';
 
 export const LoginComponent: React.FC<PropsType> = ({setLoginThunkCreator, isAuth, captcha}) => {
     const initialValues = {
@@ -40,8 +42,8 @@ export const LoginComponent: React.FC<PropsType> = ({setLoginThunkCreator, isAut
     if (isAuth) return <Redirect to={`/profile/`}/> 
 
     return (
-        <div className='login__wrapper'>
-            <h1 className='login__title'>Login</h1>
+        <Content>
+            <Title level={3}>Login</Title>
             <Formik initialValues={initialValues} onSubmit={onFormSubmit}>
                 {({errors, touched, isValidating, status}) => (
                     <Form className='login__input-wrapper'>
@@ -77,7 +79,7 @@ export const LoginComponent: React.FC<PropsType> = ({setLoginThunkCreator, isAut
                 )}
             </Formik>
 
-        </div>
+        </Content>
     );
 };
 

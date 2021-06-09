@@ -8,6 +8,7 @@ import { Loader } from './loader';
 import { UsersList } from './user-list';
 import { useHistory } from 'react-router';
 import * as queryString from 'query-string';
+import { Content } from 'antd/lib/layout/layout';
 
 export const Users: React.FC = () => {
 
@@ -85,11 +86,11 @@ export const Users: React.FC = () => {
     };
 
     return (
-        <div className="users">
+        <Content>
             <UsersFilter onPageClick={onPageClick} currentFilter={currentFilter} usersToShow={usersToShow} />
             <Paginator itemsCount={usersCount} usersToShow={usersToShow} currentPage={currentPage} onPageClick={onPageClick} currentFilter={currentFilter}/>
             {isLoading ? <Loader/> : <UsersList users={users} subscribingInProgress={subscribingInProgress} followUserThunkCreator={follow} unFollowUserThunkCreator={unfollow}/>}
-        </div>
+        </Content>
     )
 };
 

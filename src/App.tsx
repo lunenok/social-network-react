@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Menu} from './components/menu';
+import {MenuComponent} from './components/menu';
 import {ProfileContainer} from './components/profile-container';
 import {Footer} from './components/footer';
 import {Dialogs} from './components/dialogs';
@@ -12,6 +12,9 @@ import {Login} from './components/login';
 import {setInitializeDataThunkCreator} from './redux/app-reducer';
 import { Loader } from './components/loader';
 import { AppStateType } from './redux/store';
+import 'antd/dist/antd.css'
+import { Col, Layout, Row } from 'antd';
+// import Layout from 'antd/lib/layout/layout';
 
 const AppComponent: React.FC<AppPropsType> = ({setInitializeDataThunkCreator, isInitialized}) => {
 
@@ -25,11 +28,12 @@ const AppComponent: React.FC<AppPropsType> = ({setInitializeDataThunkCreator, is
 
     return (
         <BrowserRouter>
-            <div className="main">
+            <Layout className="layout" style={{maxWidth: '1200px', margin: '0 auto'}}>
                 <Header/>
-                <Menu/>
+                <Layout hasSider>
+                    <MenuComponent/>
                     <Route path="/profile/:userId?" render={() =>
-                        <ProfileContainer/>
+                            <ProfileContainer/>
                     }/>
                     <Route path="/users" render={() =>
                         <Users/>
@@ -41,8 +45,9 @@ const AppComponent: React.FC<AppPropsType> = ({setInitializeDataThunkCreator, is
                     <Route path='/music' component={Developing}/>
                     <Route path='/settings' component={Developing}/>
                     <Route path='/login' component={Login}/>
+                </Layout>
                 <Footer/>
-            </div>
+            </Layout>
         </BrowserRouter>
     );
 }

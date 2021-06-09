@@ -3,6 +3,7 @@ import { ProfileType } from "../types/types";
 import {ProfileStatus} from './profile-status';
 import {ProfileEdit} from './profile-edit';
 import {ProfileDescription} from './profile-description';
+import { Button } from "antd";
 
 export const ProfileInformation: React.FC<ProfileInformationPropsType> = ({currentProfile, status, updateProfileStatus, updatePhoto, isOwner, updateProfileInfoThunkCreator, isProfileDataUploadSucces}) => {
 
@@ -35,7 +36,7 @@ export const ProfileInformation: React.FC<ProfileInformationPropsType> = ({curre
                     className="profile__img"
                 />
                 {renderUploadButton()}
-                {isOwner && <button onClick={()=>{setEditMode(true)}} className='profile__edit-button'>Редактировать профиль</button>}
+                {isOwner && <Button onClick={()=>{setEditMode(true)}} type='primary'>Edit</Button>}
             </div>
             <div className="profile__info">
                 <div className="profile__name">

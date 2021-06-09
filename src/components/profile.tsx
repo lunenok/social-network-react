@@ -5,6 +5,8 @@ import {ProfileInformation} from './profile-information';
 import { useDispatch, useSelector } from 'react-redux';
 import { addPostActionCreator, updatePhotoThunkCreator, updatePostActionCreator, updateProfileInfoThunkCreator, updateProfileStatusThunkCreator } from '../redux/profile-reducer';
 import { getCurrentProfile, getIsProfileDataUploadSucces, getIsProfileLoading, getNewPostText, getPosts, getStatus } from '../redux/profile-selectors';
+import { Content } from 'antd/lib/layout/layout';
+import { Col } from 'antd';
 
 export const Profile: React.FC<ProfilePropsType> = (props) => {
     const {isOwner } = props;
@@ -44,7 +46,7 @@ export const Profile: React.FC<ProfilePropsType> = (props) => {
     };
 
     return (
-        <div className="content">
+        <Content>
             {isProfileLoading ? <Loader/> : <ProfileInformation currentProfile={currentProfile} status={status} updateProfileStatus={updateProfileStatus} updatePhoto={updatePhoto} isOwner={isOwner} updateProfileInfoThunkCreator={updateProfileInfo} isProfileDataUploadSucces={isProfileDataUploadSucces}/>}
             <div className="posts">
                 <h2 className="posts__title">
@@ -69,7 +71,7 @@ export const Profile: React.FC<ProfilePropsType> = (props) => {
                     )}
                 </ul>
             </div>
-        </div>
+        </Content>
     );
 };
 

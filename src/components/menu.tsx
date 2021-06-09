@@ -1,39 +1,43 @@
+import { Menu } from 'antd';
+import Sider from 'antd/lib/layout/Sider';
 import React from 'react';
 import {NavLink} from "react-router-dom";
 
-export const Menu: React.FC = () => {
+export const MenuComponent: React.FC = () => {
     return (
-        <ul className="main__menu">
-            <li className="main__menu-item">
-                <NavLink to="/profile">
-                    Profile
-                </NavLink>
-            </li>
-            <li className="main__menu-item">
-                <NavLink to="/users">
-                    Users
-                </NavLink>
-            </li>
-            <li className="main__menu-item">
-                <NavLink to="/dialogs">
-                    Messages
-                </NavLink>
-            </li>
-            <li className="main__menu-item">
-                <NavLink to="/news">
-                    News
-                </NavLink>
-            </li>
-            <li className="main__menu-item">
-                <NavLink to="/music">
-                    Music
-                </NavLink>
-            </li>
-            <li className="main__menu-item">
-                <NavLink to="/settings">
-                    Settings
-                </NavLink>
-            </li>
-        </ul>
+        <Sider>
+            <Menu>
+                <Menu.Item key='profile'>
+                    <NavLink to="/profile">
+                        Profile
+                    </NavLink>
+                </Menu.Item>
+                <Menu.Item key='users'>
+                    <NavLink to="/users">
+                        Users
+                    </NavLink>
+                </Menu.Item>
+                <Menu.Item key='dialogs'>
+                    <NavLink to="/dialogs">
+                        Messages
+                    </NavLink>
+                </Menu.Item>
+                <Menu.Item key='news'>
+                    <NavLink to="/news">
+                        News
+                    </NavLink>
+                </Menu.Item>
+                <Menu.Item key='music'>
+                    <NavLink to="/music">
+                        Music
+                    </NavLink>
+                </Menu.Item>
+                <Menu.Item key='settings'>
+                    <NavLink to="/settings">
+                        Settings
+                    </NavLink>
+                </Menu.Item>
+            </Menu>
+        </Sider>
     );
 };

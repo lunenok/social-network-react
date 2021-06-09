@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import {setLogoutThunkCreator} from "../redux/auth-reducer";
 import {NavLink} from "react-router-dom";
 import { AppStateType } from '../redux/store';
+import {Button, Col, PageHeader, Row} from 'antd';
+import Title from 'antd/lib/typography/Title';
+import Text from 'antd/lib/typography/Text';
 
 export const Header: React.FC = () => {
 
@@ -16,31 +19,20 @@ export const Header: React.FC = () => {
         dispatch(setLogoutThunkCreator());
     };
 
-    const renderLoginButton = () => {
-        if (loginData.isAuth) {
-            return (
-                <React.Fragment>
-                    <span>{loginData.login}</span>
-                </React.Fragment>
-            )
-        } else {
-            return (
-                <NavLink to="/login">
-                    <span>login</span>
-                </NavLink>
-            )
-        }
-    };
-
     return (
-        <header className="header">
-            <h1>My social media with React</h1>
-            <span className="header__login-info">
-                {renderLoginButton()}
-                <button className='header__logout-button' onClick={logout}>
-                        logout
-                    </button>
-            </span>
-        </header>
+        <PageHeader>
+            <Row align='middle'>
+                <Col span='15'>
+                    <Title>My social media with React</Title>
+                </Col>
+                <Col span='5'>
+                    {loginData.isAuth ? <Text style={{float: 'right'}}>{loginData.login}</Text> : (<NavLink to="/login" style={{float: 'right'}}><Button type='primary'>Login</Button></NavLink>)}
+                </Col>
+                <Col span='4'>
+                    <Button type='primary' style={{float: 'right'}} onClick={logout} disabled={(!loginData.isAuth)}>Logout</Button>
+                </Col>
+            </Row>
+        </PageHeader>
+
     );
 };
