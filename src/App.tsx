@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {MenuComponent} from './components/menu';
 import {ProfileContainer} from './components/profile-container';
-import {Footer} from './components/footer';
+import {FooterComponent} from './components/footer';
 import {Dialogs} from './components/dialogs';
 import {Developing} from './components/developing';
 import {BrowserRouter, Route} from 'react-router-dom';
@@ -14,7 +14,6 @@ import { Loader } from './components/loader';
 import { AppStateType } from './redux/store';
 import 'antd/dist/antd.css'
 import { Col, Layout, Row } from 'antd';
-// import Layout from 'antd/lib/layout/layout';
 
 const AppComponent: React.FC<AppPropsType> = ({setInitializeDataThunkCreator, isInitialized}) => {
 
@@ -46,7 +45,7 @@ const AppComponent: React.FC<AppPropsType> = ({setInitializeDataThunkCreator, is
                     <Route path='/settings' component={Developing}/>
                     <Route path='/login' component={Login}/>
                 </Layout>
-                <Footer/>
+                <FooterComponent/>
             </Layout>
         </BrowserRouter>
     );

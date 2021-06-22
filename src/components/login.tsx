@@ -1,11 +1,13 @@
 import React from 'react';
-import { Formik, Field, Form } from 'formik';
+import { Formik} from 'formik';
+import {SubmitButton, Input, Checkbox, Form, FormItem } from 'formik-antd';
 import {setLoginThunkCreator} from '../redux/auth-reducer';
 import {connect} from 'react-redux';
 import { Redirect } from 'react-router';
 import { AppStateType } from '../redux/store';
 import Title from 'antd/lib/typography/Title';
 import { Content } from 'antd/lib/layout/layout';
+import { Button, Col, Row } from 'antd';
 
 export const LoginComponent: React.FC<PropsType> = ({setLoginThunkCreator, isAuth, captcha}) => {
     const initialValues = {
@@ -42,43 +44,41 @@ export const LoginComponent: React.FC<PropsType> = ({setLoginThunkCreator, isAut
     if (isAuth) return <Redirect to={`/profile/`}/> 
 
     return (
-        <Content>
-            <Title level={3}>Login</Title>
-            <Formik initialValues={initialValues} onSubmit={onFormSubmit}>
-                {({errors, touched, isValidating, status}) => (
-                    <Form className='login__input-wrapper'>
-                        <div className="login__input-container">
-                            <label className='login__label' htmlFor='login'>Login</label>
-                            <Field className='login__input' id='login' name='login' type='text' validate={validateLogin} placeholder='login' />
-                            {errors.login && touched.login && <div className='login__error'>{errors.login}</div>}
-                        </div>
-                        <div className="login__input-container">
-                            <label className='login__label' htmlFor='password'>Password</label>
-                            <Field className='login__input' id='password' name='password' type='text' validate={validatePassword} placeholder='password' />
-                            {errors.password && touched.password && <div className='login__error'>{errors.password}</div>}
-                        </div>
-                        <div className="login__input-container">
-                            <label className='login__label login__label--remember' htmlFor='rememberMe'>Remember me</label>
-                            <Field className='login__input--remember' id='rememberMe' name='rememberMe' type='checkbox' />
-                        </div>
+        <Content style={{background: 'white', padding: '16px'}}>
+            <Row>
+                <Col span='12' offset='6'>
+                    <Title level={3}>Login</Title>
+                    <Formik initialValues={initialValues} onSubmit={onFormSubmit}>
+                        {({errors, touched, isValidating, status}) => (
+                            <Form className='login__input-wrapper'>
+                                <FormItem name='login' label='Login' validate={validateLogin}>
+                                    <Input name="login" placeholder="login" />
+                                </FormItem>
+                                <FormItem name='password' label='Password' validate={validatePassword}>
+                                    <Input name="password" placeholder="password" />
+                                </FormItem>
+                                <FormItem name='rememberMe'>
+                                    <Checkbox name="rememberMe">Remember me</Checkbox>
+                                </FormItem>
 
-                        {captcha && 
-                            <div>
-                                <img src={captcha} alt='captcha'></img>
-                                <div className="login__input-container">
-                                    <label className='login__label' htmlFor='captcha'>Captcha</label>
-                                    <Field className='login__input' id='captcha' name='captcha' type='text' />
-                                </div>
-                            </div>
-                        }
 
-                        {status && <span className='login__error'>{status}</span>}
-                        <button className='login__button' type='submit'>Submit</button>
+                                {captcha && 
+                                    <div>
+                                        <img src={captcha} alt='captcha'></img>
+                                        <FormItem name='captcha'>
+                                            <Input name="captcha" placeholder="captcha" />
+                                        </FormItem>
+                                    </div>
+                                }
 
-                    </Form>
-                )}
-            </Formik>
+                                {status && <span className='login__error'>{status}</span>}
+                                <Button htmlType='submit' type='primary'>Enter</Button>
 
+                            </Form>
+                        )}
+                    </Formik>
+                </Col>
+            </Row>
         </Content>
     );
 };
@@ -98,3 +98,42 @@ type PropsType = {
     isAuth: boolean;
     captcha: string | null;
 };
+
+// return (
+//     <Content style={{background: 'white', padding: '16px'}}>
+//         <Row>
+//             <Col span='12' offset='6'>
+//                 <Title level={3}>Login</Title>
+//                 <Formik initialValues={initialValues} onSubmit={onFormSubmit}>
+//                     {({errors, touched, isValidating, status}) => (
+//                         <Form className='login__input-wrapper'>
+//                             <FormItem name='login' label='Login' validate={validateLogin}>
+//                                 <Input name="login" placeholder="login" />
+//                             </FormItem>
+//                             <FormItem name='password' label='Password' validate={validatePassword}>
+//                                 <Input name="password" placeholder="password" />
+//                             </FormItem>
+//                             <FormItem name='rememberMe'>
+//                                 <Checkbox name="rememberMe">Remember me</Checkbox>
+//                             </FormItem>
+
+
+//                             {captcha && 
+//                                 <div>
+//                                     <img src={captcha} alt='captcha'></img>
+//                                     <FormItem name='captcha'>
+//                                         <Input name="captcha" placeholder="captcha" />
+//                                     </FormItem>
+//                                 </div>
+//                             }
+
+//                             {status && <span className='login__error'>{status}</span>}
+//                             <SubmitButton>Enter</SubmitButton>
+
+//                         </Form>
+//                     )}
+//                 </Formik>
+//             </Col>
+//         </Row>
+//     </Content>
+// );

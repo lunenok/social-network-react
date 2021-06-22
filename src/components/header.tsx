@@ -20,7 +20,7 @@ export const Header: React.FC = () => {
     };
 
     return (
-        <PageHeader>
+        <PageHeader style={{background: 'white', padding: '16px', marginBottom: '1px'}}>
             <Row align='middle'>
                 <Col span='15'>
                     <Title>My social media with React</Title>
