@@ -4,12 +4,18 @@ export const ProfileStatus: React.FC<PropsType> = (props) => {
 
     const [editMode, setEditMode] = useState(false);
     const [status, setStatus] = useState(props.status);
+    const isOwner = props.isOwner;
 
     useEffect(() => {
         setStatus(props.status)
     }, [props.status]);
 
-    const _activateEditMode = () => setEditMode(true);
+    const _activateEditMode = () => {
+        if (isOwner) {
+            setEditMode(true);
+        };
+    };
+
     const _deactivateEditMode = () => {
         setEditMode(false);
         props.updateProfileStatus(status);
@@ -29,4 +35,5 @@ export const ProfileStatus: React.FC<PropsType> = (props) => {
 type PropsType = {
     status: string;
     updateProfileStatus: (status: string) => void;
+    isOwner: boolean;
 }

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Formik} from 'formik';
-import {SubmitButton, Input, Checkbox, Form, FormItem } from 'formik-antd';
+import {Formik} from 'formik';
+import { Input, Checkbox, Form, FormItem } from 'formik-antd';
 import {setLoginThunkCreator} from '../redux/auth-reducer';
 import {connect} from 'react-redux';
 import { Redirect } from 'react-router';

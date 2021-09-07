@@ -5,7 +5,7 @@ import {NavLink} from "react-router-dom";
 
 export const MenuComponent: React.FC = () => {
     return (
-        <Sider>
+        <Sider theme={'light'}>
             <Menu>
                 <Menu.Item key='profile'>
                     <NavLink to="/profile">

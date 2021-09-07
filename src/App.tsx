@@ -13,7 +13,7 @@ import {setInitializeDataThunkCreator} from './redux/app-reducer';
 import { Loader } from './components/loader';
 import { AppStateType } from './redux/store';
 import 'antd/dist/antd.css'
-import { Col, Layout, Row } from 'antd';
+import { Layout } from 'antd';
 
 const AppComponent: React.FC<AppPropsType> = ({setInitializeDataThunkCreator, isInitialized}) => {
 

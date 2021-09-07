@@ -1,14 +1,17 @@
 import React from 'react'; 
-import {Posts} from "./post";
+// import {Posts} from "./post";
 import {Loader} from './loader';
 import {ProfileInformation} from './profile-information';
 import { useDispatch, useSelector } from 'react-redux';
 import { addPostActionCreator, updatePhotoThunkCreator, updatePostActionCreator, updateProfileInfoThunkCreator, updateProfileStatusThunkCreator } from '../redux/profile-reducer';
 import { getCurrentProfile, getIsProfileDataUploadSucces, getIsProfileLoading, getNewPostText, getPosts, getStatus } from '../redux/profile-selectors';
 import { Content } from 'antd/lib/layout/layout';
-import { Col } from 'antd';
+import { Avatar, Button, Col, List, Row } from 'antd';
+import TextArea from 'antd/lib/input/TextArea';
+import Title from 'antd/lib/typography/Title';
 
 export const Profile: React.FC<ProfilePropsType> = (props) => {
+
     const {isOwner } = props;
 
     const currentProfile = useSelector(getCurrentProfile);
@@ -23,6 +26,7 @@ export const Profile: React.FC<ProfilePropsType> = (props) => {
     const onUpdatePostText = (text: string) => {
         dispatch(updatePostActionCreator(text));
     };
+
     const addPost = () => {
         dispatch(addPostActionCreator());
     };
@@ -46,31 +50,44 @@ export const Profile: React.FC<ProfilePropsType> = (props) => {
     };
 
     return (
-        <Content>
+        <Content style={{background: 'white'}}>
             {isProfileLoading ? <Loader/> : <ProfileInformation currentProfile={currentProfile} status={status} updateProfileStatus={updateProfileStatus} updatePhoto={updatePhoto} isOwner={isOwner} updateProfileInfoThunkCreator={updateProfileInfo} isProfileDataUploadSucces={isProfileDataUploadSucces}/>}
-            <div className="posts">
-                <h2 className="posts__title">
-                    My posts
-                </h2>
-                <div className="posts__new">
-                    <textarea
+            <Row>
+                <Col span={24}>
+                    <Title level={3}>
+                        My posts
+                    </Title>
+                </Col>
+            </Row>
+            <Row>
+                <Col span={24}>
+                    <TextArea
                         value={newPostText}
                         onChange={onTextChange}
-                        className="posts__input"
+                        autoSize={true}
+                        showCount
                         placeholder="Your new post..."
+                        style={{marginBottom: '8px'}}
                     />
-                    <button
-                        onClick={onSendButtonClick}
-                        className="posts__button"
-                    >Send</button>
-                </div>
-                <ul className="posts__list">
-                    {posts.map((message, index) => {
-                        return <Posts key={index} text={message}/>
-                    }
-                    )}
-                </ul>
-            </div>
+                    <Button type='primary' onClick={onSendButtonClick}>Send</Button>
+                </Col>
+            </Row>
+            <Row>
+                <Col span={24}>
+                    <List
+                        itemLayout="horizontal"
+                        dataSource={posts}
+                        renderItem={item => (
+                          <List.Item>
+                            <List.Item.Meta
+                              avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                              description={item.text}
+                            />
+                          </List.Item>
+                        )}
+                      />
+                </Col>
+            </Row>
         </Content>
     );
 };

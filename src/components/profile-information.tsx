@@ -42,7 +42,7 @@ export const ProfileInformation: React.FC<ProfileInformationPropsType> = ({curre
                 <div className="profile__name">
                     {currentProfile.fullName}
                 </div>
-                <ProfileStatus status={status} updateProfileStatus={updateProfileStatus}/>
+                <ProfileStatus status={status} updateProfileStatus={updateProfileStatus} isOwner={isOwner}/>
                 {editMode ? <ProfileEdit currentProfile={currentProfile} updateProfileInfoThunkCreator={updateProfileInfoThunkCreator} setEditMode={setEditMode} isProfileDataUploadSucces={isProfileDataUploadSucces}/> : <ProfileDescription currentProfile={currentProfile}/>}
             </div>
         </div>

@@ -1,6 +1,8 @@
 import React from 'react';
-import { Formik, Field, Form } from 'formik';
+import { Formik } from 'formik';
 import { FilterType } from '../redux/users-reducer';
+import {SubmitButton, Input, Form, FormItem, Radio } from 'formik-antd';
+import Title from 'antd/lib/typography/Title';
 
 type PropsType = {
     onPageClick: (page: number, usersToShow: number, defaultFilter: FilterType) => void;
@@ -27,27 +29,21 @@ export const UsersFilter: React.FC<PropsType> = ({onPageClick, usersToShow, curr
 
     return (
         <React.Fragment>
+            <Title level={3}>Filter developers</Title>
             <Formik initialValues={initialValues} onSubmit={onSubmit} enableReinitialize>
             {({errors, touched, isValidating, status}) => (
-                    <Form className='filter__wrapper'>
-                        <label className='filter__label' htmlFor='value'>Find: </label>
-                        <Field className='filter__input' id='value' name='value' type='text' placeholder='Name...'/>
-                        <Field component='div'>
-                            Choose only:
-                            <label>
-                              <Field type="radio" name="followed" value="null"/>
-                              Everybody
-                            </label>
-                            <label>
-                              <Field type="radio" name="followed" value="true"/>
-                              Followed
-                            </label>
-                            <label>
-                              <Field type="radio" name="followed" value="false"/>
-                              Not followed
-                            </label>
-                        </Field>
-                        <button className='filter__button' type='submit'>Find developers</button>
+                    <Form>
+                        <FormItem name='value' label='Find:'>
+                            <Input name="value" placeholder="name"></Input>
+                        </FormItem>
+                        <FormItem name='choose'>
+                            <Radio.Group name='followed'>
+                                <Radio name='followed' value={'null'}>Everybody</Radio>
+                                <Radio name='followed' value={'true'}>Followed</Radio>
+                                <Radio name='followed' value={'false'}>Not followed</Radio>
+                            </Radio.Group>
+                        </FormItem>
+                        <SubmitButton className='filter__button'>Find developers</SubmitButton>
                     </Form>
                 )}
             </Formik>

@@ -9,6 +9,8 @@ import { UsersList } from './user-list';
 import { useHistory } from 'react-router';
 import * as queryString from 'query-string';
 import { Content } from 'antd/lib/layout/layout';
+import { Col, Row } from 'antd';
+import Title from 'antd/lib/typography/Title';
 
 export const Users: React.FC = () => {
 
@@ -86,10 +88,17 @@ export const Users: React.FC = () => {
     };
 
     return (
-        <Content>
-            <UsersFilter onPageClick={onPageClick} currentFilter={currentFilter} usersToShow={usersToShow} />
-            <Paginator itemsCount={usersCount} usersToShow={usersToShow} currentPage={currentPage} onPageClick={onPageClick} currentFilter={currentFilter}/>
-            {isLoading ? <Loader/> : <UsersList users={users} subscribingInProgress={subscribingInProgress} followUserThunkCreator={follow} unFollowUserThunkCreator={unfollow}/>}
+        <Content style={{background: 'white'}}>
+            <Row style={{marginTop: '24px'}}>
+                <Col span={12} offset={1}>
+                    <Title level={3}>Developers list</Title>
+                    <Paginator itemsCount={usersCount} usersToShow={usersToShow} currentPage={currentPage} onPageClick={onPageClick} currentFilter={currentFilter}/>
+                    {isLoading ? <Loader/> : <UsersList users={users} subscribingInProgress={subscribingInProgress} followUserThunkCreator={follow} unFollowUserThunkCreator={unfollow}/>}
+                </Col>
+                <Col span={9} offset={1}>
+                    <UsersFilter onPageClick={onPageClick} currentFilter={currentFilter} usersToShow={usersToShow} />
+                </Col>
+            </Row>
         </Content>
     )
 };
